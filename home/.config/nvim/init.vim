@@ -79,7 +79,7 @@ set timeoutlen=500
 set ttimeoutlen=20
 set mouse=a
 set selectmode=mouse
-set clipboard=
+set clipboard=unnamed
 set backspace=2
 set backspace=eol,start,indent
 set whichwrap=b,s,<,>,[,]
@@ -186,6 +186,7 @@ Plug 'vim-python/python-syntax'
 Plug 'neoclide/coc.nvim', {'do': 'npm install'}
 " Style
 Plug 'Yggdroot/indentLine'
+Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'guns/xterm-color-table.vim', {'on': 'XtermColorTable'}
 Plug 'itchyny/lightline.vim'
 Plug 'kshenoy/vim-signature'
@@ -194,16 +195,16 @@ Plug 'mhinz/vim-startify', {'on': 'Startify'}
 Plug 'ryanoasis/vim-devicons'
 " Git
 Plug 'tpope/vim-fugitive'
-Plug 'rhysd/git-messenger.vim', {'on': 'GitMessenger'}
+Plug 'tpope/vim-git'
 " Others
-" Plug 'brglng/vim-im-select'
+Plug 'brglng/vim-im-select', {'on': 'ImSelectEnable'}
 " Plug 'puremourning/vimspector'
 Plug 'easymotion/vim-easymotion'
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 Plug 'andrewradev/sideways.vim', {'on': ['SidewaysLeft', 'SidewaysRight']}
-Plug 'foosoft/vim-argwrap', {'on': 'ArgWrap'}
+Plug 'foosoft/vim-argwrap', {'on': '<Plug>(ArgWrapToggle)'}
 Plug 'junegunn/vader.vim'
-Plug 'junegunn/vim-easy-align'
+Plug 'junegunn/vim-easy-align', {'on': '<Plug>(EasyAlign)'}
 Plug 'junegunn/vim-peekaboo'
 Plug 'kristijanhusak/vim-carbon-now-sh', {'on': 'CarbonNowSh'}
 Plug 'voldikss/vim-mark', {'on': '<Plug>MarkSet'}
@@ -214,7 +215,7 @@ Plug 'skywind3000/asyncrun.vim', {'on': ['AsyncRun', 'AsyncStop'] }
 Plug 'skywind3000/asynctasks.vim'
 Plug 'skywind3000/vim-dict'
 Plug 'tommcdo/vim-exchange'
-Plug 'tpope/vim-commentary'
+Plug 'tomtom/tcomment_vim'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'voldikss/vim-browser-search'
@@ -229,6 +230,7 @@ call plug#end()
 " }}}
 
 " Autocmds: {{{
+" autocmd CmdlineEnter * call feedkeys("\<C-p>")
 augroup ParenColor
   autocmd!
   autocmd VimEnter,BufWinEnter *
@@ -246,7 +248,6 @@ augroup FileTypeAutocmds
   autocmd FileType floaterm setlocal nocursorline
   autocmd FileType help setlocal number
   autocmd FileType * set formatoptions-=cro
-  autocmd FileType coc-explorer setlocal relativenumber
 augroup END
 
 augroup UserAutoSaveBuffer
@@ -276,12 +277,12 @@ augroup END
 augroup UserKeywordHighlight
   autocmd!
   autocmd Syntax *
-    \ call matchadd('Todo',  '\W\zs\(@TODO\|@FIXME\|@CHANGED\|@XXX\|@BUG\|@HACK\)') |
-    \ call matchadd('Todo',  '\W\zs\(@todo\|@fixme\|@changed\|@xxx\|@bug\|@hack\)') |
-    \ call matchadd('Todo',  '\W\zs\(@NOTE\|@INFO\|@IDEA\|@NOTICE\)') |
-    \ call matchadd('Todo',  '\W\zs\(@note\|@info\|@idea\|@notice\)') |
-    \ call matchadd('Debug', '\W\zs\(@DEBUG\|@Debug\|@debug\)') |
-    \ call matchadd('Tag', '\W\zs\(@VOLDIKSS\|@voldikss\)')
+    \ call matchadd('Special', '\W\zs\(@TODO\|@FIXME\|@CHANGED\|@XXX\|@BUG\|@HACK\)') |
+    \ call matchadd('Special', '\W\zs\(@todo\|@fixme\|@changed\|@xxx\|@bug\|@hack\)') |
+    \ call matchadd('Special', '\W\zs\(@NOTE\|@INFO\|@IDEA\|@NOTICE\|@TMP\)') |
+    \ call matchadd('Special', '\W\zs\(@note\|@info\|@idea\|@notice\|@tmp\)') |
+    \ call matchadd('Special', '\W\zs\(@DEBUG\|@Debug\|@debug\)') |
+    \ call matchadd('Special', '\W\zs\(@VOLDIKSS\|@voldikss\)')
 augroup END
 
 augroup UserAutoChangeDir
@@ -312,9 +313,18 @@ augroup UserStartifyAutocmds
   autocmd User Startified setlocal buflisted
 augroup END
 
-augroup AutoNohlsearch
+" augroup AutoNohlsearch
+"   autocmd!
+"   autocmd CursorMoved * call userfunc#myhlsearch#start_hl()
+" augroup END
+
+augroup CocExplorerCustom
   autocmd!
-  autocmd CursorMoved * call userfunc#myhlsearch#start_hl()
+  autocmd FileType coc-explorer setlocal relativenumber
+  autocmd BufEnter *
+    \ if &ft == 'coc-explorer'
+    \ | call CocAction('runCommand', 'explorer.doAction', 'closest', ['refresh'])
+    \ | endif
 augroup END
 
 if has('nvim')
@@ -327,7 +337,8 @@ augroup UserTermSettings " neovim only
     \ setlocal modifiable |
     \ nmap <silent><buffer> <Esc> <Cmd>hide<CR>|
     \ nmap <silent><buffer> q :q<CR> |
-    \ hi TermCursor guifg=yellow
+    \ hi TermCursor guifg=yellow |
+    \ call timer_start(10, 'userfunc#asyncrun#term_style')
 augroup END
 
 function! s:OnColorSchemeLoaded() abort
@@ -343,6 +354,7 @@ function! s:OnColorSchemeLoaded() abort
   exe 'hi CocWarningSign        guifg=#ff922b guibg=' . s:scl_guibg
   exe 'hi CocErrorSign          guifg=#ff0000 guibg=' . s:scl_guibg
   exe 'hi CursorLineNr          guibg=' . s:scl_guibg
+  exe 'hi MyBookmarkSign        guifg=#0000FF guibg=' . s:scl_guibg
   exe 'hi NonText               guifg=' . s:scl_guibg
   " coclist will(might) change my cursor highlight
   hi Cursor gui=reverse guifg=NONE guibg=NONE
@@ -397,11 +409,11 @@ call s:SetCommandAbbrs('w!!', '%!sudo tee >/dev/null %')
 
 " Commands: {{{
 command! -nargs=0 AutoFormat call userfunc#file#AutoFormat()
-command! -nargs=0 CloseHiddenBuffers call userfunc#buffer#CloseNoDisplayedBuffers()
 command! -nargs=0 OpenFileExplorer call userfunc#utils#OpenFileExplorer()
 command! -nargs=0 CloseNoBuflistedBuffers call userfunc#buffer#CloseNoBuflistedBuffers()
 command! -nargs=0 CloseNoCurrentBuffers call userfunc#buffer#CloseNoCurrentBuffers()
 command! -nargs=0 CloseNoDisplayedBuffers call userfunc#buffer#CloseNoDisplayedBuffers()
+command! -nargs=* Zeal call userfunc#utils#Zeal(<q-args>)
 command! -nargs=? Bline call userfunc#utils#DelimiterLine('bold', <f-args>)
 command! -nargs=? Cline call userfunc#utils#DelimiterLine('comment', <f-args>)
 command! -nargs=? Line call userfunc#utils#DelimiterLine('light', <f-args>)
@@ -413,6 +425,11 @@ command! -nargs=+ -complete=file  BrowserOpen  call userfunc#utils#BrowserOpen(<
 command! -nargs=+ -complete=command  TabMessage call userfunc#utils#TabMessage(<q-args>)
 command! -nargs=? -complete=customlist,userfunc#quickrun#Complete QuickRun call userfunc#quickrun#Run(<f-args>)
 command! -nargs=+ -complete=customlist,userfunc#window#Complete SwitchWindow call userfunc#window#SwitchWindow(<q-args>)
+command! -nargs=0 YarnWatch call floaterm#new(0, 'yarn watch', {}, {
+  \ 'on_stdout': function('userfunc#floaterm#WatchCallback'),
+  \ 'on_stderr': function('userfunc#floaterm#WatchCallback'),
+  \ 'on_exit': function('userfunc#floaterm#WatchCallback')
+  \ })
 " }}}
 
 " Mappings: {{{
@@ -441,16 +458,17 @@ vnoremap <silent> [[  {j
 vnoremap <silent> ]]  }k
 " Jump:
 noremap <silent> <C-j>      <C-]>
-noremap <silent> <C-W><C-j> <C-W><C-]>
 noremap <silent> <C-k>      :<C-u>call userfunc#coc#ShowDocument()<CR>
+nnoremap <silent> <C-w><C-j> <C-W>v<C-]>zz
+nnoremap <silent> <C-w><C-o> :<C-u>call userfunc#utils#Return()<CR>
 " Search:
 " use set shortmess-=S to display searchindex
 nnoremap <silent> n  nzz
 nnoremap <silent> N  Nzz
-nnoremap <silent> *  *zz
-nnoremap <silent> #  #zz
-xnoremap * :<C-u>call userfunc#keymap#VisualStarSearch('/')<CR>/<C-R>=@/<CR><CR>
-xnoremap # :<C-u>call userfunc#keymap#VisualStarSearch('?')<CR>?<C-R>=@/<CR><CR>
+nnoremap * m`:keepjumps normal! *``zz<cr>
+nnoremap # #zz
+xnoremap * :<C-u>call userfunc#keymap#VisualStarSearch('/')<CR>/<C-R>=@/<CR><CR>N
+xnoremap # :<C-u>call userfunc#keymap#VisualStarSearch('?')<CR>?<C-R>=@/<CR><CR>n
 " TextObject:
 " whole buffer
 xnoremap <silent> ie GoggV
@@ -496,7 +514,7 @@ vnoremap <silent> <Leader>D :<C-u>call userfunc#keymap#incdelete()<CR>
 " InsertMode: move
 inoremap <silent> <C-k> <Up>
 inoremap <silent> <C-j> <Down>
-snoremap <silent> <C-j> <Down>
+" snoremap <silent> <C-j> <Down>
 inoremap <silent> <C-h> <Left>
 inoremap <silent> <C-l> <Right>
 inoremap <silent> <C-b> <C-r>=userfunc#keymap#Exec('normal! b')<CR>
@@ -509,11 +527,11 @@ inoremap <silent> <C-d> <Esc>ddi
 
 nnoremap <silent>       <Leader>w :w<CR>
 nnoremap <silent>       <Leader>W :wa<CR>
-nnoremap <silent>       gq        q
-nnoremap <silent>       gQ        Q
+nnoremap <silent>       <Leader>q q
+nnoremap <silent>       <Leader>Q Q
 nnoremap <silent>       q         :q!<CR>
 nnoremap <silent>       Q         :qa!<CR>
-nnoremap <silent><expr> gd        userfunc#keymap#Normal_q()
+nnoremap <silent><expr> <Leader>d userfunc#keymap#Normal_q()
 " nnoremap <silent> <Leader>Q :qa!<CR>
 " noremap  <silent> <Leader>d :bp<bar>sp<bar>bn<bar>bd!<bar>:redraw!<CR>
 " QuickMessage:
@@ -536,7 +554,7 @@ cnoremap <expr> {    userfunc#keymap#Command_Pairs('{}')
 cnoremap <expr> <BS> userfunc#keymap#Command_BS()
 " TerminalMode:
 tnoremap <Esc>  <C-\><C-n>
-tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
+" tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
 if has('win32') || has('win64')
   nnoremap <silent> <Leader>n :vert term<CR>
   nnoremap <silent> ,n        :term<CR>
@@ -631,7 +649,13 @@ let g:python_highlight_all = 1
 let g:python_highlight_space_errors = 0
 " lervag/vimtex
 let g:tex_flavor='latex'
-let g:vimtex_view_method='mupdf'
+let g:vimtex_quickfix_mode = 0
+" let g:vimtex_view_method='general'
+let g:vimtex_view_method='zathura'
+" @todo
+" let g:vimtex_view_general_viewer = 'okular'
+" let g:vimtex_view_general_options = '--unique file:@pdf\#src:@line@tex'
+" let g:vimtex_view_general_options_latexmk = '--unique'
 let g:vimtex_mappings_enabled = 0
 let g:vimtex_fold_enabled = 1
 let g:vimtex_quickfix_open_on_warning = 0
@@ -644,20 +668,29 @@ let g:mkdp_auto_close = 0
 let g:semshi#always_update_all_highlights = v:true
 let g:semshi#error_sign = v:false
 " neoclide/coc.nvim
-inoremap <silent><expr> <C-j> coc#util#has_float() ? userfunc#coc#FloatScroll(1) : "\<down>"
-inoremap <silent><expr> <C-k> coc#util#has_float() ? userfunc#coc#FloatScroll(0) :  "\<up>"
+let g:coc_data_home = '~/.config/coc'
+nnoremap <silent><expr> <C-f> coc#util#has_float() ? coc#util#float_scroll(1) : "\<C-f>"
+nnoremap <silent><expr> <C-b> coc#util#has_float() ? coc#util#float_scroll(0) : "\<C-b>"
+inoremap <silent><expr> <M-j> coc#util#has_float() ? userfunc#coc#FloatScroll(1) : "\<down>"
+inoremap <silent><expr> <M-k> coc#util#has_float() ? userfunc#coc#FloatScroll(0) :  "\<up>"
 nmap <expr> <silent> <C-c> <SID>select_current_word_and_go_next()
 function! s:select_current_word_and_go_next()
   if !get(g:, 'coc_cursors_activated', 0)
     return "\<Plug>(coc-cursors-word)"
   endif
-  return "*\<Plug>(coc-cursors-word):nohlsearch\<CR>"
+  " based on coc readme, this has been modified
+  " because I have mapped * to m`:keepjumps normal! *``zz<cr>
+  return "*n\<Plug>(coc-cursors-word):nohlsearch\<CR>"
 endfunction
+nmap <silent> <C-s> :CocSearch <C-r><C-w><Cr>
 nmap <silent> <M-n> <Plug>(coc-diagnostic-next)
 nmap <silent> <M-p> <Plug>(coc-diagnostic-prev)
 nmap <silent> <Leader>ca :CocAction<CR>
 nmap <silent> <Leader>cd :call userfunc#coc#GoToDefinition()<CR>
 nmap <silent> <Leader>ci <Plug>(coc-implementation)
+" nmap <silent> gd :call userfunc#coc#GoToDefinition()<CR>
+" nmap <silent> gr <Plug>(coc-references)
+nmap <silent> <Leader>cf <Plug>(coc-fix-current)
 nmap <silent> <Leader>cf <Plug>(coc-fix-current)
 nmap <silent> <Leader>rf <Plug>(coc-references)
 nmap <silent> <Leader>cr :CocRestart<CR>
@@ -677,6 +710,7 @@ nnoremap <silent> <Leader>hs :CocCommand git.chunkStage<CR>
 nnoremap <silent> <Leader>hu :CocCommand git.chunkUndo<CR>
 nnoremap <silent> <Leader>go :CocCommand git.browserOpen<CR>
 nnoremap <silent> <Leader>gv :CocCommand git.chunkInfo<CR>
+nnoremap <silent> <Leader>gm :CocCommand git.showCommit<CR>
 omap ic <Plug>(coc-text-object-inner)
 xmap ic <Plug>(coc-text-object-inner)
 " coc-pairs
@@ -702,6 +736,7 @@ let g:coc_global_extensions = [
   \ 'coc-css',
   \ 'coc-diagnostic',
   \ 'coc-dictionary',
+  \ 'coc-ecdict',
   \ 'coc-emmet',
   \ 'coc-emoji',
   \ 'coc-eslint',
@@ -710,14 +745,16 @@ let g:coc_global_extensions = [
   \ 'coc-git',
   \ 'coc-highlight',
   \ 'coc-html',
+  \ 'coc-java',
   \ 'coc-json',
-  \ 'coc-kite',
+  \ 'coc-leetcode',
   \ 'coc-lists',
   \ 'coc-marketplace',
   \ 'coc-pairs',
   \ 'coc-post',
   \ 'coc-prettier',
   \ 'coc-python',
+  \ 'coc-rainbow-fart',
   \ 'coc-rust-analyzer',
   \ 'coc-snippets',
   \ 'coc-syntax',
@@ -730,14 +767,14 @@ let g:coc_global_extensions = [
   \ 'coc-tsserver',
   \ 'coc-vimlsp',
   \ 'coc-vimtex',
-  \ 'coc-yank',
-  \ 'coc-zi'
+  \ 'coc-word',
+  \ 'coc-yank'
 \ ]
 " Yggdroot/indentLine
 let g:indentLine_char = '│'
 let g:indentLine_enabled = 1
 let g:indentLine_color_term = 238
-let g:indentLine_fileTypeExclude = ['startify', 'vista', 'json', 'codi', 'vtm', 'jsonc', 'coc-explorer']
+let g:indentLine_fileTypeExclude = ['startify', 'vista', 'json', 'codi', 'vtm', 'jsonc', 'coc-explorer', 'man']
 " mhinz/vim-startify
 let g:webdevicons_enable_startify = 1
 noremap <silent> <Space><Space> <Esc>:Startify<CR>
@@ -785,8 +822,8 @@ let g:lightline = {
     \ 'codelf_status': '%{g:codelf_status}',
     \ 'translator_status': '%{g:translator_status}',
     \ 'asyncrun_status': '%{g:asyncrun_status}',
-    \ 'close': '%{has("nvim") ? " NVIM " : " VIM "}',
-    \ 'vim_logo': "\ue7c5"
+    \ 'close': '%{has("nvim") ? " NVIM 😆" : " VIM "}',
+    \ 'vim_logo': "😆 "
   \ },
   \ 'component_function': {
     \ 'mode': 'userfunc#lightline#Mode',
@@ -857,7 +894,7 @@ let g:asynctasks_term_reuse = 1
 let g:asynctasks_term_rows = 10
 " Yggdroot/LeaderF
 nmap <silent> <Leader>fb :Leaderf buffer<CR>
-nmap <silent> <Leader>fc :Leaderf command<CR>
+nmap <silent> <Leader>fc :Leaderf cmdHistory<CR>
 nmap <silent> <Leader>ff :Leaderf file<CR>
 nmap <silent> <Leader>fg :Leaderf rg<CR>
 nmap <silent> <Leader>fl :Leaderf line<CR>
@@ -886,8 +923,12 @@ let g:Lf_PreviewResult        = {'Function':0, 'BufTag':0}
 let g:Lf_RgConfig = [
   \"--glob=!OmegaOptions.bak",
   \"--glob=!node_modules",
+  \"--glob=!lib/index.js",
   \"--glob=!target",
+  \"--glob=!tags",
+  \"--glob=!build",
   \"--glob=!.git",
+  \"--glob=!.ccls-cache",
   \"--no-ignore",
   \"--hidden"
 \]
@@ -914,10 +955,12 @@ let g:Lf_WildIgnore = {
     \'.hg',
     \'.cache',
     \'.idea',
+    \'.ccls-cache',
     \'.android',
     \'.gradle',
     \'.IntelliJIdea*',
-    \'node_modules'
+    \'node_modules',
+    \'build'
   \],
   \'file': [
     \'*.sw?',
@@ -943,19 +986,24 @@ nmap <silent>    ,r        <Plug>TranslateR
 vmap <silent>    ,t        <Plug>TranslateV
 vmap <silent>    ,w        <Plug>TranslateWV
 vmap <silent>    ,r        <Plug>TranslateRV
+let g:translator_status = ''
 let g:translator_history_enable = 1
-let g:translator_default_engines = ['baicizhan', 'bing', 'google', 'haici', 'iciba', 'trans', 'youdao']
+let g:translator_default_engines = ['baicizhan', 'bing', 'google', 'haici', 'youdao']
 let g:translator_window_max_height = 0.8
 let g:translator_window_max_width = 0.8
 " voldikss/vim-floaterm
+let g:floaterm_width = 0.6
+let g:floaterm_height = 0.6
 let g:floaterm_position = 'center'
 let g:floaterm_gitcommit = 'split'
 let g:floaterm_autoclose = v:true
+let g:floaterm_autohide = v:true
 let g:floaterm_keymap_new    = '<F7>'
 let g:floaterm_keymap_prev   = '<F8>'
 let g:floaterm_keymap_next   = '<F9>'
 let g:floaterm_keymap_toggle = '<F12>'
-let g:floaterm_rootmarkers   = ['.git', '.gitignore', '*.pro', 'Cargo.toml']
+" let g:floaterm_rootmarkers   = ['.git', '.gitignore', '*.pro', 'Cargo.toml']
+" hi FloatermNC guibg=skyblue
 hi FloatermBorder guifg=orange
 command! PythonREPL  :FloatermNew --wintype=normal --width=0.5 --position=right python
 " function! s:runner_proc(opts)
@@ -1006,21 +1054,16 @@ xmap as <Plug>SidewaysArgumentTextobjA
 omap is <Plug>SidewaysArgumentTextobjI
 xmap is <Plug>SidewaysArgumentTextobjI
 " foosoft/vim-argwrap
-noremap <silent> <Leader>aw :ArgWrap<CR>
+nmap <silent> <leader>aw <Plug>(ArgWrapToggle)
 " junegunn/vim-easy-align
 xmap <silent> ga <Plug>(EasyAlign)
 nmap <silent> ga <Plug>(EasyAlign)
-" rhysd/git-messenger
-noremap <silent> <Leader>gm :GitMessenger<CR>
 " puremourning/vimspector
 let g:vimspector_enable_mappings = 'HUMAN'
 " easymotion.vim
 let g:EasyMotion_do_mapping = 0
-nmap <Space>f <Plug>(easymotion-overwin-f2)
 let g:EasyMotion_smartcase = 1
-nmap <Space>j <Plug>(easymotion-j)
-nmap <Space>k <Plug>(easymotion-k)
-nmap <Space>l <Plug>(easymotion-bd-jk)
-nmap <Space>w <Plug>(easymotion-bd-w)
-nmap <Space>f <Plug>(easymotion-bd-f)
+nmap <Space>f <Plug>(easymotion-overwin-w)
+" brglng/vim-im-select
+let g:im_select_enable_focus_events = 0
 " }}}

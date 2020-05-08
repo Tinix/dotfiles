@@ -154,10 +154,11 @@ export FZF_DEFAULT_COMMAND='rg --hidden -l ""'
 # path
 #=============================================================================
 export PATH="/usr/local/bin:$PATH"
+export PATH="/home/voldikss/.local/bin:$PATH"
 # Yarn
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 # GoLang
-export GOROOT=/usr/local/go
+export GOROOT=/usr/lib/go
 export GOBIN=$GOPATH/bin
 export PATH=$PATH:$GOBIN
 export GOPATH="$HOME/go"

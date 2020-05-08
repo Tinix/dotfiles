@@ -10,8 +10,11 @@ nmap <silent> <buffer> q :quit<CR>
 autocmd BufWinEnter <buffer> wincmd H
 
 setlocal number
+setlocal relativenumber
 setlocal nospell
 setlocal foldmethod=indent
+
+setlocal textwidth=82
 setlocal formatoptions+=t
 setlocal formatoptions-=c
 setlocal formatoptions-=r

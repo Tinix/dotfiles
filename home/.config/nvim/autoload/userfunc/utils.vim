@@ -119,3 +119,28 @@ function! userfunc#utils#DelimiterLine(style, ...) abort
   endif
   call append(line('.'), line)
 endfunction
+
+" Zeal:
+function! userfunc#utils#Zeal(query) abort
+  if empty(a:query)
+    let query = expand('<cword>')
+  else
+    let query = a:query
+  endif
+  let cmd = printf("zeal '%s:%s' 2> /dev/null &", &ft, query)
+  call jobstart(cmd)
+endfunction
+
+
+" Delete buffer and go back:
+function! userfunc#utils#Return() abort
+  let buf = bufnr('%')
+  let jumplst = getjumplist()
+  let pos = jumplst[0][jumplst[-1]-1]
+  if buf != pos.bufnr && bufexists(pos.bufnr)
+    execute 'bd ' . buf
+  endif
+  if bufexists(pos.bufnr)
+    execute pos.bufnr.'buffer ++call\ cursor('.pos.lnum.','.(pos.col+pos.coladd+1).')'
+  endif
+endfunction
