@@ -128,7 +128,8 @@ set expandtab
 set shiftround
 set relativenumber number
 set foldlevel=99
-set foldmethod=indent
+set foldmethod=expr
+set foldexpr=nvim_treesitter#foldexpr()
 set conceallevel=0
 set autoindent
 set smartindent
@@ -168,20 +169,18 @@ endif
 " Plugin: {{{
 call plug#begin('~/.cache/nvim/plugged')
 " Languages
-Plug 'HerringtonDarkholme/yats.vim'
+Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'alvan/vim-closetag', {'for': ['html', 'xml']}
 Plug 'fatih/vim-go'
 Plug 'iamcco/markdown-preview.nvim', {'for': 'markdown', 'do': 'cd app && npm install'}
 Plug 'lervag/vimtex'
-Plug 'numirias/semshi', {'for': 'python'}
+" Plug 'numirias/semshi', {'for': 'python'}
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'othree/html5.vim'
-Plug 'pangloss/vim-javascript'
 Plug 'plasticboy/vim-markdown'
 Plug 'posva/vim-vue', {'for': 'vue'}
 Plug 'rust-lang/rust.vim', {'for': 'rust'}
 Plug 'tpope/vim-dadbod', {'for': ['sql', 'mysql']}
-Plug 'vim-python/python-syntax'
 " Completion
 Plug 'neoclide/coc.nvim', {'do': 'npm install'}
 " Style
@@ -1066,4 +1065,38 @@ let g:EasyMotion_smartcase = 1
 nmap <Space>f <Plug>(easymotion-overwin-w)
 " brglng/vim-im-select
 let g:im_select_enable_focus_events = 0
+" nvim-treesitter
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+    highlight = {
+        enable = true,
+        disable = { 'c', 'cpp', 'rust', 'markdown' },
+    },
+    incremental_selection = {
+        enable = true,
+        disable = { 'cpp', 'lua' },
+        keymaps = {
+          init_selection = 'gnn',
+          node_incremental = "grn",
+          scope_incremental = "grc",
+          node_decremental = "grm",
+        }
+    },
+    refactor = {
+      highlight_defintions = {
+        enable = true
+      },
+      smart_rename = {
+        enable = true,
+        smart_rename = "grr"
+      },
+      navigation = {
+        enable = true,
+        goto_definition = "gnd",
+        list_definitions = "gnD"
+      }
+    },
+    ensure_installed = 'all'
+}
+EOF
 " }}}
