@@ -291,7 +291,7 @@ augroup END
 
 augroup UserAutoTemplate
   autocmd!
-  autocmd BufNewFile .gitignore,.tasks,.clang-format CocCommand template.templateTop
+  autocmd BufNewFile .gitignore,.npmignore,.tasks,.clang-format,Solution.cpp CocCommand template.templateTop
 augroup END
 
 augroup UserChecktime
@@ -649,8 +649,8 @@ let g:python_highlight_space_errors = 0
 " lervag/vimtex
 let g:tex_flavor='latex'
 let g:vimtex_quickfix_mode = 0
-" let g:vimtex_view_method='general'
-let g:vimtex_view_method='zathura'
+let g:vimtex_view_method='general'
+" let g:vimtex_view_method='zathura'
 " @todo
 " let g:vimtex_view_general_viewer = 'okular'
 " let g:vimtex_view_general_options = '--unique file:@pdf\#src:@line@tex'
@@ -753,7 +753,6 @@ let g:coc_global_extensions = [
   \ 'coc-post',
   \ 'coc-prettier',
   \ 'coc-python',
-  \ 'coc-rainbow-fart',
   \ 'coc-rust-analyzer',
   \ 'coc-snippets',
   \ 'coc-syntax',
@@ -949,6 +948,7 @@ let g:Lf_StlSeparator   = {'left': '', 'right': '', 'font': ''}
 let g:Lf_UseVersionControlTool = 0
 let g:Lf_WildIgnore = {
   \'dir': [
+    \'lib',
     \'.svn',
     \'.git',
     \'.hg',
@@ -1065,6 +1065,9 @@ let g:EasyMotion_smartcase = 1
 nmap <Space>f <Plug>(easymotion-overwin-w)
 " brglng/vim-im-select
 let g:im_select_enable_focus_events = 0
+" vista.vim
+let g:vista_echo_cursor_strategy = 'floating_win'
+let g:vista_close_on_jump = 1
 " nvim-treesitter
 lua <<EOF
 require'nvim-treesitter.configs'.setup {

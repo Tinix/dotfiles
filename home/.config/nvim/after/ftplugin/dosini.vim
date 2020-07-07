@@ -1,4 +1,5 @@
 setlocal commentstring=#\ %s
+" setlocal comments=:#
 
 function! IniFoldExpr(lnum)
   let line = getline(a:lnum)

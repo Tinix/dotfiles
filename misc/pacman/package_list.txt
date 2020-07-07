@@ -95,6 +95,7 @@ lib32-mpg123
 libinput-gestures
 libkscreen
 libksysguard
+libpthread-stubs
 libtool
 linux
 linux-firmware
@@ -110,6 +111,7 @@ luarocks
 lxrandr
 m4
 make
+man-pages
 mariadb
 milou
 miredo
@@ -117,10 +119,12 @@ mlocate
 mupdf
 mycli
 ncdu
+neofetch
 netctl
 netease-cloud-music
 nethack
 ninja
+nmap
 nnn
 npm
 ntfs-3g
@@ -167,8 +171,10 @@ sddm
 sddm-kcm
 sed
 spectacle
+strace
 sudo
 systemsettings
+teamviewer
 telegram-desktop
 terminator
 texinfo
