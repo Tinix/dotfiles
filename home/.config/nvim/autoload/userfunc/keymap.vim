@@ -168,3 +168,11 @@ function! userfunc#keymap#incdelete() abort
   call setreg('"', new)
   call setreg('a', tmp)
 endfunction
+
+function! userfunc#keymap#jump() abort
+  if &ft == 'man'
+    execute 'Man ' . expand('<cword>')
+  else
+    call feedkeys("\<C-]>")
+  endif
+endfunction

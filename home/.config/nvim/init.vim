@@ -224,6 +224,7 @@ Plug 'voldikss/vim-fnote'
 Plug 'voldikss/vim-hello-word'
 Plug 'voldikss/vim-translator'
 Plug 'wellle/targets.vim'
+Plug 'vim-utils/vim-man'
 Plug 'yianwillis/vimcdoc'
 call plug#end()
 " }}}
@@ -395,6 +396,7 @@ call s:SetCommandAbbrs('gpull', 'AsyncRun git pull')
 call s:SetCommandAbbrs('gpush', 'AsyncRun git push')
 call s:SetCommandAbbrs('gs', 'Gstatus')
 call s:SetCommandAbbrs('gw', 'Gw')
+call s:SetCommandAbbrs('man', 'Man')
 call s:SetCommandAbbrs('pc', 'PlugClean')
 call s:SetCommandAbbrs('pi', 'PlugInstall')
 call s:SetCommandAbbrs('pu', 'PlugUpdate')
@@ -456,7 +458,7 @@ nnoremap <silent> ]]  :<C-u>call userfunc#keymap#Square_Brackets_Right()<CR>
 vnoremap <silent> [[  {j
 vnoremap <silent> ]]  }k
 " Jump:
-noremap <silent> <C-j>      <C-]>
+noremap <silent> <C-j>      :<C-u>call userfunc#keymap#jump()<CR>
 noremap <silent> <C-k>      :<C-u>call userfunc#coc#ShowDocument()<CR>
 nnoremap <silent> <C-w><C-j> <C-W>v<C-]>zz
 nnoremap <silent> <C-w><C-o> :<C-u>call userfunc#utils#Return()<CR>
