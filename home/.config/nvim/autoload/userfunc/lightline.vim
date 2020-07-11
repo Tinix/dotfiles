@@ -31,14 +31,7 @@ endfunction
 
 " FileName:
 function! userfunc#lightline#FileName()
-  let filename = &filetype ==# 'denite' ? '' :
-    \ &filetype ==# 'gitv' ? '' :
-    \ &filetype ==# 'help' ? '' :
-    \ &filetype ==# 'man' ? '' :
-    \ &filetype ==# 'startify' ? '' :
-    \ &filetype ==# 'Mundo' ? '' :
-    \ expand('%:t') =~ '__vista__' ? '' :
-    \ expand('%:t') !=# '' ? expand('%:t') : '[No Name]'
+  let filename = expand('%:t') !=# '' ? expand('%:t') : ''
   let modified = &modified ? ' ✎' : ''
   return filename . modified
 endfunction
@@ -68,15 +61,7 @@ endfunction
 
 " FileType:
 function! userfunc#lightline#FileType()
-  return &filetype !=# 'denite' &&
-    \ &filetype !=# 'gitv' &&
-    \ &filetype !=# 'help' &&
-    \ &filetype !=# 'man' &&
-    \ &filetype !=# 'qf' &&
-    \ &filetype !=# 'startify' &&
-    \ &filetype !=# 'Mundo' &&
-    \ expand('%:t') !~ '__vista__' &&
-    \ winwidth(0) > 70 ? (strlen(&filetype) ? WebDevIconsGetFileTypeSymbol() . ' ' . &filetype : 'no ft') : ''
+  return strlen(&filetype) ? (WebDevIconsGetFileTypeSymbol() . ' ' . &filetype) : ''
 endfunction
 
 " FileEncoding:
