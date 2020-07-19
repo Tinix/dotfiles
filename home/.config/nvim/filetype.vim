@@ -41,4 +41,4 @@ augroup filetypedetect
   autocmd BufNewFile,BufRead cgdbrc             setfiletype vim
 augroup END
 
-let did_load__my_filetypes=1
+let did_load_my_filetypes=1

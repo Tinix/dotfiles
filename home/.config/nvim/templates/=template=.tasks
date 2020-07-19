@@ -7,7 +7,7 @@ command=:AsyncTask qmake-build-and-run
 
 [file-build-and-run]
 command:c=gcc -g "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/a.out" && "$(VIM_FILEDIR)/a.out"
-command:cpp=g++ -g "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/a.out" && "$(VIM_FILEDIR)/a.out"
+command:cpp=g++ -std=c++17 -g "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/a.out" && "$(VIM_FILEDIR)/a.out"
 command:html=:BrowserOpen %
 command:java=javac "$(VIM_FILEPATH)" && java "$(VIM_FILENOEXT)" && rm "$(VIM_PATHNOEXT).class"
 command:javascript=node "$(VIM_FILEPATH)"
@@ -19,6 +19,7 @@ command:python=python "$(VIM_FILEPATH)"
 command:rust=RUST_BACKTRACE=1 cargo run
 command:sh=sh "$(VIM_FILEPATH)"
 command:sql=:%DB
+command:tex=:execute(b:vimtex.compiler.is_running() ? 'VimtexView' : 'VimtexCompile')
 command:typescript=tsc %
 command:vim=:source %
 cwd=$(VIM_FILEDIR)
