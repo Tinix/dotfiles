@@ -79,7 +79,7 @@ set timeoutlen=500
 set ttimeoutlen=20
 set mouse=a
 set selectmode=mouse
-set clipboard=unnamed
+" set clipboard=unnamed
 set backspace=2
 set backspace=eol,start,indent
 set whichwrap=b,s,<,>,[,]
@@ -510,8 +510,8 @@ vnoremap <silent> <Leader>y "+y
 nnoremap <silent> <Leader>Y "+y$
 nnoremap <silent> <Leader>p "+p
 nnoremap <silent> <Leader>P "+P
-vnoremap <silent> <Leader>Y :<C-u>call userfunc#keymap#incyank()<CR>
-vnoremap <silent> <Leader>D :<C-u>call userfunc#keymap#incdelete()<CR>
+nnoremap <silent><expr> D (v:hlsearch ? ':%s///g<CR>' : 'D')
+vnoremap <silent><expr> D (v:hlsearch ? ':s///g<CR>' : 'D')
 " InsertMode: move
 inoremap <silent> <C-k> <Up>
 inoremap <silent> <C-j> <Down>

@@ -151,24 +151,6 @@ function! userfunc#keymap#Exec(cmd)
   return ''
 endfunction
 
-function! userfunc#keymap#incyank() abort
-  let old = getreg('"')
-  let tmp = getreg('a')
-  normal! gv"ay
-  let new = trim(old) . "\n" . trim(getreg('"'))
-  call setreg('"', new)
-  call setreg('a', tmp)
-endfunction
-
-function! userfunc#keymap#incdelete() abort
-  let old = getreg('"')
-  let tmp = getreg('a')
-  normal! gv"ad
-  let new = trim(old) . "\n" . trim(getreg('"'))
-  call setreg('"', new)
-  call setreg('a', tmp)
-endfunction
-
 function! userfunc#keymap#jump() abort
   if &ft == 'man'
     execute 'Man ' . expand('<cword>')
