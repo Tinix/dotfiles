@@ -471,14 +471,12 @@ nnoremap # #zz
 xnoremap * :<C-u>call userfunc#keymap#VisualStarSearch('/')<CR>/<C-R>=@/<CR><CR>N
 xnoremap # :<C-u>call userfunc#keymap#VisualStarSearch('?')<CR>?<C-R>=@/<CR><CR>n
 " TextObject:
-" whole buffer
-xnoremap <silent> ie GoggV
-onoremap <silent> ie :normal vie<CR>
+" document
+xnoremap <silent> id GoggV
+onoremap <silent> id :normal vie<CR>
 " line
 xnoremap <silent> il g_o^
 onoremap <silent> il :normal vil<CR>
-xnoremap <silent> al $o0
-onoremap <silent> al :normal val<CR>
 " block comment
 xnoremap i? [*o]*
 onoremap i? :<C-u>normal va?V<CR>
@@ -698,8 +696,8 @@ nmap <silent> <Leader>cr :CocRestart<CR>
 nmap <silent> cl :CocList<CR>
 nmap <silent> <Leader>ct :CocList tasks<CR>
 nmap <silent> ,cr        :call CocAction('rename')<CR>
-xmap if <Plug>(coc-funcobj-a)
-omap if <Plug>(coc-funcobj-a)
+" xmap if <Plug>(coc-funcobj-a)
+" omap if <Plug>(coc-funcobj-a)
 omap ig <Plug>(coc-git-chunk-inner)
 xmap ig <Plug>(coc-git-chunk-inner)
 " coc-git
@@ -712,8 +710,8 @@ nnoremap <silent> <Leader>hu :CocCommand git.chunkUndo<CR>
 nnoremap <silent> <Leader>go :CocCommand git.browserOpen<CR>
 nnoremap <silent> <Leader>gv :CocCommand git.chunkInfo<CR>
 nnoremap <silent> <Leader>gm :CocCommand git.showCommit<CR>
-omap ic <Plug>(coc-text-object-inner)
-xmap ic <Plug>(coc-text-object-inner)
+" omap ic <Plug>(coc-text-object-inner)
+" xmap ic <Plug>(coc-text-object-inner)
 " coc-pairs
 let g:coc_pairs_expand = [['（', '）'], ['“', '”'], ['‘', '’'], ['《', '》']]
 " coc-smartf
@@ -1089,20 +1087,51 @@ require'nvim-treesitter.configs'.setup {
         }
     },
     refactor = {
-      highlight_defintions = {
+      highlight_definitions = {
+        enable = false
+      },
+      highlight_current_scope = {
         enable = true
       },
       smart_rename = {
         enable = true,
-        smart_rename = "grr"
+        keymaps = {
+          smart_rename = "grr"
+        }
       },
       navigation = {
         enable = true,
-        goto_definition = "gnd",
-        list_definitions = "gnD"
+        keymaps = {
+          goto_definition = "gnd",
+          list_definitions = "gnD"
+        }
       }
     },
-    ensure_installed = 'all'
+    textobjects = {
+      enable = true,
+      disable = {},
+      keymaps = {
+          ["iL"] = {
+            -- you can define your own textobjects directly here
+            python = "(function_definition) @function",
+            cpp = "(function_definition) @function",
+            c = "(function_definition) @function",
+            java = "(method_declaration) @function"
+          },
+          -- or you use the queries from supported languages with textobjects.scm
+          ["af"] = "@function.outer",
+          ["if"] = "@function.inner",
+          ["aC"] = "@class.outer",
+          ["iC"] = "@class.inner",
+          ["ac"] = "@conditional.outer",
+          ["ic"] = "@conditional.inner",
+          ["ae"] = "@block.outer",
+          ["ie"] = "@block.inner",
+          ["al"] = "@loop.outer",
+          ["il"] = "@loop.inner",
+      }
+    },
+    ensure_installed = 'all' -- one of 'all', 'language', or a list of languages
 }
 EOF
 " }}}
