@@ -12,7 +12,7 @@
         ]
       },
       "streamSettings": {
-        "network": "ws",
+        "network": "tcp",
         "security": "tls", // security 要设置为 tls 才会启用 TLS
         "tlsSettings": {
           "certificates": [

@@ -30,7 +30,7 @@
         ]
       },
       "streamSettings": {
-        "network": "ws",
+        "network": "tcp",
         "security": "tls" // 客户端的 security 也要设置为 tls
       }
     }
