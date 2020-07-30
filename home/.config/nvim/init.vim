@@ -177,7 +177,6 @@ Plug 'lervag/vimtex'
 " Plug 'numirias/semshi', {'for': 'python'}
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'othree/html5.vim'
-Plug 'plasticboy/vim-markdown'
 Plug 'posva/vim-vue', {'for': 'vue'}
 Plug 'rust-lang/rust.vim', {'for': 'rust'}
 Plug 'tpope/vim-dadbod', {'for': ['sql', 'mysql']}
@@ -473,7 +472,7 @@ xnoremap # :<C-u>call userfunc#keymap#VisualStarSearch('?')<CR>?<C-R>=@/<CR><CR>
 " TextObject:
 " document
 xnoremap <silent> id GoggV
-onoremap <silent> id :normal vie<CR>
+onoremap <silent> id :normal vid<CR>
 " line
 xnoremap <silent> il g_o^
 onoremap <silent> il :normal vil<CR>
