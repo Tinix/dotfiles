@@ -334,10 +334,15 @@ augroup UserTermSettings " neovim only
     \ setlocal nobuflisted |
     \ setlocal nospell |
     \ setlocal modifiable |
-    \ nmap <silent><buffer> <Esc> <Cmd>hide<CR>|
     \ nmap <silent><buffer> q :q<CR> |
-    \ hi TermCursor guifg=yellow |
     \ call timer_start(10, 'userfunc#asyncrun#term_style')
+augroup END
+
+augroup FloatermSettings
+  autocmd!
+  autocmd FileType floaterm
+    \ nmap <silent><buffer> <Esc> <Cmd>hide<CR>|
+    \ hi TermCursor guifg=yellow
 augroup END
 
 function! s:OnColorSchemeLoaded() abort
@@ -1090,7 +1095,7 @@ require'nvim-treesitter.configs'.setup {
         enable = false
       },
       highlight_current_scope = {
-        enable = true
+        enable = false
       },
       smart_rename = {
         enable = true,
