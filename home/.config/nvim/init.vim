@@ -105,7 +105,7 @@ set shortmess+=c
 set shortmess-=S
 set scrolloff=6
 set listchars=tab:\|\ ,trail:.,extends:>,precedes:<
-colorscheme molokai
+colorscheme onedark
 " match & search
 set showmatch
 set matchtime=0
@@ -389,6 +389,10 @@ call s:SetCommandAbbrs('cm', 'CocCommand')
 call s:SetCommandAbbrs('cr', 'CocRestart')
 call s:SetCommandAbbrs('cs', 'CocSearch')
 call s:SetCommandAbbrs('cu', 'CocUninstall')
+call s:SetCommandAbbrs('fk', 'FloatermKill')
+call s:SetCommandAbbrs('fn', 'FloatermNew')
+call s:SetCommandAbbrs('fs', 'FloatermSend')
+call s:SetCommandAbbrs('fu', 'FloatermUpdate')
 call s:SetCommandAbbrs('gap', 'Git add -p')
 call s:SetCommandAbbrs('gc', 'Gcommit -v')
 call s:SetCommandAbbrs('gca', 'Gcommit --amend -v')
