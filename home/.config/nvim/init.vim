@@ -822,9 +822,9 @@ let g:lightline = {
   \ },
   \ 'component': {
     \ 'lineinfo': ' %4l,%-3v',
-    \ 'codelf_status': '%{g:codelf_status}',
-    \ 'translator_status': '%{g:translator_status}',
-    \ 'asyncrun_status': '%{g:asyncrun_status}',
+    \ 'codelf_status': '%{exists("g:codelf_status") ? g:codelf_status : ""}',
+    \ 'translator_status': '%{exists("g:translator_status") ? g:translator_status : ""}',
+    \ 'asyncrun_status': '%{exists("g:asyncrun_status") ? g:asyncrun_status : ""}',
     \ 'close': '%{has("nvim") ? " NVIM 😆" : " VIM "}',
     \ 'vim_logo': "😆 "
   \ },
