@@ -4,6 +4,6 @@
 " GitHub: https://github.com/voldikss
 " ============================================================================
 
-function! fn#textobj#number#() abort
-  call fn#textobj#('\v[0-9]+')
+function! lib#textobj#number#() abort
+  call lib#textobj#('\v[0-9]+')
 endfunc

@@ -5,7 +5,7 @@
 " ============================================================================
 
 " Insert: <BS>
-function! fn#keymap#i#BS() abort
+function! lib#keymap#i#BS() abort
   if col('.') == 1
     if line('.')  != 1
       return  "\<ESC>kA\<Del>"
@@ -31,7 +31,7 @@ function! fn#keymap#i#BS() abort
 endfunc
 
 " Insert: <CR>
-function! fn#keymap#i#CR() abort
+function! lib#keymap#i#CR() abort
   let line = getline('.') " can not use trim
   if pumvisible()
     return "\<C-y>"
@@ -45,7 +45,7 @@ function! fn#keymap#i#CR() abort
 endfunc
 
 " Insert: <Esc>
-function! fn#keymap#i#ESC()
+function! lib#keymap#i#ESC()
   let colnr = getpos('.')[2]
   let linelen = len(getline('.'))
   if colnr == (linelen + 1)
@@ -56,6 +56,6 @@ function! fn#keymap#i#ESC()
 endfunc
 
 " Insert: FlyOutPairs
-function! fn#keymap#i#flyoutpairs(key)
+function! lib#keymap#i#flyoutpairs(key)
   return "\<ESC>:call search("."'".a:key."'".")\<CR>a"
 endfunc

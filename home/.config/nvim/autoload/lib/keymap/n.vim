@@ -5,7 +5,7 @@
 " ============================================================================
 
 " Normal: [[
-function! fn#keymap#n#left_square_brackets() abort
+function! lib#keymap#n#left_square_brackets() abort
   let curline = line('.')
   if empty(getline(curline-1))
     normal! {
@@ -18,7 +18,7 @@ function! fn#keymap#n#left_square_brackets() abort
 endfunc
 
 " Normal: ]]
-function! fn#keymap#n#right_square_brackets() abort
+function! lib#keymap#n#right_square_brackets() abort
   let curline = line('.')
   if empty(getline(curline+1))
     normal! }
@@ -31,7 +31,7 @@ function! fn#keymap#n#right_square_brackets() abort
 endfunc
 
 " Normal: <CR>
-function! fn#keymap#n#CR() abort
+function! lib#keymap#n#CR() abort
   let line = trim(getline('.'))
   let disable_if_begin_with = ['#', '/']
   let disable_if_end_with = [',', ';', '{','[', '(', '/', '\', '<', '>']
@@ -50,7 +50,7 @@ function! fn#keymap#n#CR() abort
 endfunc
 
 " Normal: q
-function! fn#keymap#n#q() abort
+function! lib#keymap#n#q() abort
   " is the last buffer
   if len(getbufinfo({'buflisted':1})) == 1 && winnr('$') == 1 && bufname() == ''
     return ":q!\<CR>"
@@ -59,7 +59,7 @@ function! fn#keymap#n#q() abort
   endif
 endfunc
 
-function! fn#keymap#n#jump() abort
+function! lib#keymap#n#jump() abort
   if &ft == 'man'
     execute 'Man ' . expand('<cword>')
   else

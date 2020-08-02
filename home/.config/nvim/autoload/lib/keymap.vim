@@ -4,7 +4,7 @@
 " GitHub: https://github.com/voldikss
 " ============================================================================
 
-function! fn#keymap#exec(cmd)
+function! lib#keymap#exec(cmd)
   execute a:cmd
   return ''
 endfunc

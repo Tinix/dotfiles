@@ -251,7 +251,7 @@ augroup END
 
 augroup UserAutoSaveBuffer
   autocmd!
-  autocmd FocusLost,InsertLeave * call fn#file#AutoSave()
+  autocmd FocusLost,InsertLeave * call lib#file#AutoSave()
 augroup END
 
 augroup UserLineNumber
@@ -313,7 +313,7 @@ augroup END
 
 " augroup AutoNohlsearch
 "   autocmd!
-"   autocmd CursorMoved * call fn#hlsearch#start_hl()
+"   autocmd CursorMoved * call lib#hlsearch#start_hl()
 " augroup END
 
 augroup CocExplorerCustom
@@ -334,7 +334,7 @@ augroup UserTermSettings " neovim only
     \ setlocal nospell |
     \ setlocal modifiable |
     \ nmap <silent><buffer> q :q<CR> |
-    \ call timer_start(10, 'fn#asyncrun#term_style')
+    \ call timer_start(10, 'lib#asyncrun#term_style')
 augroup END
 
 augroup FloatermSettings
@@ -413,28 +413,28 @@ call s:SetCommandAbbrs('w!!', '%!sudo tee >/dev/null %')
 
 " Commands: {{{
 command! CwordhiToggle call CwordhiToggle()
-command! AutoFormat call fn#file#AutoFormat()
-command! OpenFileExplorer call fn#utils#OpenFileExplorer()
-command! CloseNoBuflistedBuffers call fn#buffer#CloseNoBuflistedBuffers()
-command! CloseNoCurrentBuffers call fn#buffer#CloseNoCurrentBuffers()
-command! CloseNoDisplayedBuffers call fn#buffer#CloseNoDisplayedBuffers()
-command! -nargs=* Zeal call fn#utils#Zeal(<q-args>)
-command! -nargs=* SyntaxAt call fn#utils#SyntaxAt(<f-args>)
-command! -nargs=? Bline call fn#utils#DelimiterLine('bold', <f-args>)
-command! -nargs=? Cline call fn#utils#DelimiterLine('comment', <f-args>)
-command! -nargs=? Line call fn#utils#DelimiterLine('light', <f-args>)
-command! -nargs=? RenameFile call fn#file#Rename(<q-args>)
-command! -nargs=? RemoveFile call fn#file#Remove()
-command! -nargs=+ Grep  call fn#utils#Grep(<q-args>)
-command! -nargs=? -bang Conceal call fn#conceal#pattern(<bang>0, <q-args>)
-command! -nargs=+ -complete=file  BrowserOpen  call fn#utils#BrowserOpen(<q-args>)
-command! -nargs=+ -complete=command  TabMessage call fn#utils#TabMessage(<q-args>)
-command! -nargs=? -complete=customlist,fn#quickrun#Complete QuickRun call fn#quickrun#Run(<f-args>)
-command! -nargs=+ -complete=customlist,fn#window#Complete SwitchWindow call fn#window#SwitchWindow(<q-args>)
+command! AutoFormat call lib#file#AutoFormat()
+command! OpenFileExplorer call lib#utils#OpenFileExplorer()
+command! CloseNoBuflistedBuffers call lib#buffer#CloseNoBuflistedBuffers()
+command! CloseNoCurrentBuffers call lib#buffer#CloseNoCurrentBuffers()
+command! CloseNoDisplayedBuffers call lib#buffer#CloseNoDisplayedBuffers()
+command! -nargs=* Zeal call lib#utils#Zeal(<q-args>)
+command! -nargs=* SyntaxAt call lib#utils#SyntaxAt(<f-args>)
+command! -nargs=? Bline call lib#utils#DelimiterLine('bold', <f-args>)
+command! -nargs=? Cline call lib#utils#DelimiterLine('comment', <f-args>)
+command! -nargs=? Line call lib#utils#DelimiterLine('light', <f-args>)
+command! -nargs=? RenameFile call lib#file#Rename(<q-args>)
+command! -nargs=? RemoveFile call lib#file#Remove()
+command! -nargs=+ Grep  call lib#utils#Grep(<q-args>)
+command! -nargs=? -bang Conceal call lib#conceal#pattern(<bang>0, <q-args>)
+command! -nargs=+ -complete=file  BrowserOpen  call lib#utils#BrowserOpen(<q-args>)
+command! -nargs=+ -complete=command  TabMessage call lib#utils#TabMessage(<q-args>)
+command! -nargs=? -complete=customlist,lib#quickrun#Complete QuickRun call lib#quickrun#Run(<f-args>)
+command! -nargs=+ -complete=customlist,lib#window#Complete SwitchWindow call lib#window#SwitchWindow(<q-args>)
 command! -nargs=0 YarnWatch call floaterm#new(0, 'yarn watch', {}, {
-  \ 'on_stdout': function('fn#floaterm#WatchCallback'),
-  \ 'on_stderr': function('fn#floaterm#WatchCallback'),
-  \ 'on_exit': function('fn#floaterm#WatchCallback')
+  \ 'on_stdout': function('lib#floaterm#WatchCallback'),
+  \ 'on_stderr': function('lib#floaterm#WatchCallback'),
+  \ 'on_exit': function('lib#floaterm#WatchCallback')
   \ })
 " }}}
 
@@ -444,9 +444,9 @@ let g:mapleader = ';'
 noremap  H  ^
 noremap  L  $
 " Esc:
-inoremap <C-c> <C-R>=fn#keymap#i#ESC()<CR>
-inoremap <C-[> <C-R>=fn#keymap#i#ESC()<CR>
-inoremap <Esc> <C-r>=fn#keymap#i#ESC()<CR>
+inoremap <C-c> <C-R>=lib#keymap#i#ESC()<CR>
+inoremap <C-[> <C-R>=lib#keymap#i#ESC()<CR>
+inoremap <Esc> <C-r>=lib#keymap#i#ESC()<CR>
 "cannot use noremap
 nmap     M  %
 omap     M  %
@@ -457,24 +457,24 @@ vnoremap <  <gv
 vnoremap >  >gv
 nnoremap <C-u> <C-u>zz
 nnoremap <C-d> <C-d>zz
-nnoremap <silent> <C-g> :call fn#keymap#ctrlg#()<CR>
+nnoremap <silent> <C-g> :call lib#keymap#ctrlg#()<CR>
 " Move:
-nnoremap <silent> [[  :<C-u>call fn#keymap#n#right_square_brackets()<CR>
-nnoremap <silent> ]]  :<C-u>call fn#keymap#n#left_square_brackets()<CR>
+nnoremap <silent> [[  :<C-u>call lib#keymap#n#right_square_brackets()<CR>
+nnoremap <silent> ]]  :<C-u>call lib#keymap#n#left_square_brackets()<CR>
 vnoremap <silent> [[  {j
 vnoremap <silent> ]]  }k
 " Jump:
-nnoremap <silent> <C-j>      :<C-u>call fn#keymap#n#jump()<CR>
-nnoremap <silent> <C-k>      :<C-u>call fn#coc#showdoc()<CR>
+nnoremap <silent> <C-j>      :<C-u>call lib#keymap#n#jump()<CR>
+nnoremap <silent> <C-k>      :<C-u>call lib#coc#showdoc()<CR>
 nnoremap <silent> <C-w><C-j> <C-W>v<C-]>zz
-nnoremap <silent> <C-w><C-o> :<C-u>call fn#utils#jumpback()<CR>
+nnoremap <silent> <C-w><C-o> :<C-u>call lib#utils#jumpback()<CR>
 " Search:
 nnoremap <expr> n  'Nn'[v:searchforward].'zz'
 nnoremap <expr> N  'nN'[v:searchforward].'zz'
 nnoremap * m`:keepjumps normal! *``zz<cr>
 nnoremap # #zz
-xnoremap * :<C-u>call fn#keymap#x#visual_star_search('/')<CR>/<C-R>=@/<CR><CR>N
-xnoremap # :<C-u>call fn#keymap#x#visual_star_search('?')<CR>?<C-R>=@/<CR><CR>n
+xnoremap * :<C-u>call lib#keymap#x#visual_star_search('/')<CR>/<C-R>=@/<CR><CR>N
+xnoremap # :<C-u>call lib#keymap#x#visual_star_search('?')<CR>?<C-R>=@/<CR><CR>n
 " TextObject:
 " document
 xnoremap <silent> id GoggV
@@ -486,19 +486,19 @@ onoremap <silent> il :normal vil<CR>
 xnoremap i? [*o]*
 onoremap i? :<C-u>normal va?V<CR>
 " url
-xnoremap <silent> iu :<C-u>call fn#textobj#url#()<CR>
+xnoremap <silent> iu :<C-u>call lib#textobj#url#()<CR>
 onoremap <silent> iu :normal viu<CR>
 " ip
-xnoremap <silent> iI :<C-u>call fn#textobj#ip#()<CR>
+xnoremap <silent> iI :<C-u>call lib#textobj#ip#()<CR>
 onoremap <silent> iI :normal viI<CR>
 " number
-xnoremap <silent> in :<C-u>call fn#textobj#number#()<CR>
+xnoremap <silent> in :<C-u>call lib#textobj#number#()<CR>
 onoremap <silent> in :normal vin<CR>
 " function argument
-xnoremap <silent> ia :<C-u>call fn#textobj#argument#(1, 1)<CR>
-xnoremap <silent> aa :<C-u>call fn#textobj#argument#(0, 1)<CR>
-onoremap <silent> ia :<C-u>call fn#textobj#argument#(1, 0)<CR>
-onoremap <silent> aa :<C-u>call fn#textobj#argument#(0, 0)<CR>
+xnoremap <silent> ia :<C-u>call lib#textobj#argument#(1, 1)<CR>
+xnoremap <silent> aa :<C-u>call lib#textobj#argument#(0, 1)<CR>
+onoremap <silent> ia :<C-u>call lib#textobj#argument#(1, 0)<CR>
+onoremap <silent> aa :<C-u>call lib#textobj#argument#(0, 0)<CR>
 " BufferOperation:
 nnoremap <expr> <silent> <C-h>  (&filetype == 'floaterm') ? ':FloatermPrev<CR>' : ':bprev<CR>'
 nnoremap <expr> <silent> <C-l>  (&filetype == 'floaterm') ? ':FloatermNext<CR>' : ':bnext<CR>'
@@ -521,8 +521,8 @@ inoremap <silent> <C-j> <Down>
 " snoremap <silent> <C-j> <Down>
 inoremap <silent> <C-h> <Left>
 inoremap <silent> <C-l> <Right>
-inoremap <silent> <C-b> <C-r>=fn#keymap#exec('normal! b')<CR>
-inoremap <silent> <C-f> <C-r>=fn#keymap#exec('normal! w')<CR>
+inoremap <silent> <C-b> <C-r>=lib#keymap#exec('normal! b')<CR>
+inoremap <silent> <C-f> <C-r>=lib#keymap#exec('normal! w')<CR>
 inoremap <silent> <C-a> <Home>
 inoremap <silent> <C-e> <End>
 inoremap <silent> <C-o> <End><CR>
@@ -536,7 +536,7 @@ nnoremap <silent>       <Leader>q q
 nnoremap <silent>       <Leader>Q Q
 nnoremap <silent>       q         :q!<CR>
 nnoremap <silent>       Q         :qa!<CR>
-nnoremap <silent><expr> <Leader>d fn#keymap#n#q()
+nnoremap <silent><expr> <Leader>d lib#keymap#n#q()
 " nnoremap <silent> <Leader>Q :qa!<CR>
 " noremap  <silent> <Leader>d :bp<bar>sp<bar>bn<bar>bd!<bar>:redraw!<CR>
 " QuickMessage:
@@ -551,12 +551,12 @@ cnoremap <C-b> <S-Left>
 cnoremap <C-f> <S-Right>
 cnoremap <C-h> <Left>
 cnoremap <C-l> <Right>
-" cnoremap <expr> '    fn#keymap#c#pairs("''")
-cnoremap <expr> <    fn#keymap#c#pairs('<>')
-" cnoremap <expr> (    fn#keymap#c#pairs('()')
-cnoremap <expr> [    fn#keymap#c#pairs('[]')
-cnoremap <expr> {    fn#keymap#c#pairs('{}')
-cnoremap <expr> <BS> fn#keymap#c#BS()
+" cnoremap <expr> '    lib#keymap#c#pairs("''")
+cnoremap <expr> <    lib#keymap#c#pairs('<>')
+" cnoremap <expr> (    lib#keymap#c#pairs('()')
+cnoremap <expr> [    lib#keymap#c#pairs('[]')
+cnoremap <expr> {    lib#keymap#c#pairs('{}')
+cnoremap <expr> <BS> lib#keymap#c#BS()
 " TerminalMode:
 tnoremap <Esc>  <C-\><C-n>
 " tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
@@ -585,9 +585,9 @@ if has('nvim')
   cnoremap <expr> <C-p>  pumvisible() ? '<Left>' : '<Up>'
   cnoremap <expr> <Up>   pumvisible() ? '<C-p>' : '<up>'
   cnoremap <expr> <Down> pumvisible() ? '<C-n>' : '<down>'
-  inoremap <silent> <M-]> <C-R>=fn#keymap#i#flyoutpairs(']')<CR>
-  inoremap <silent> <M-}> <C-R>=fn#keymap#i#flyoutpairs('}')<CR>
-  inoremap <silent> <M-)> <C-R>=fn#keymap#i#flyoutpairs(')')<CR>
+  inoremap <silent> <M-]> <C-R>=lib#keymap#i#flyoutpairs(']')<CR>
+  inoremap <silent> <M-}> <C-R>=lib#keymap#i#flyoutpairs('}')<CR>
+  inoremap <silent> <M-)> <C-R>=lib#keymap#i#flyoutpairs(')')<CR>
 endif
 " WindowSize:
 if has('nvim')
@@ -627,9 +627,9 @@ tnoremap <silent> <F10>            <C-\><C-n>:SwitchWindow vista<CR>
 noremap  <silent> <F12>            <Esc>:SwitchWindow floaterm<CR>
 noremap! <silent> <F12>            <Esc>:SwitchWindow floaterm<CR>
 tnoremap <silent> <F12>            <C-\><C-n>:SwitchWindow floaterm<CR>
-nnoremap <expr>   <CR>             fn#keymap#n#CR() . "\<Esc>"
-inoremap <expr>   <CR>             fn#keymap#i#CR()
-inoremap <expr>   <BS>             fn#keymap#i#BS()
+nnoremap <expr>   <CR>             lib#keymap#n#CR() . "\<Esc>"
+inoremap <expr>   <CR>             lib#keymap#i#CR()
+inoremap <expr>   <BS>             lib#keymap#i#BS()
 " }}}
 
 " Plugin Config: {{{
@@ -676,8 +676,8 @@ let g:semshi#error_sign = v:false
 let g:coc_data_home = '~/.config/coc'
 nnoremap <silent><expr> <C-f> coc#util#has_float() ? coc#util#float_scroll(1) : "\<C-f>"
 nnoremap <silent><expr> <C-b> coc#util#has_float() ? coc#util#float_scroll(0) : "\<C-b>"
-inoremap <silent><expr> <M-j> coc#util#has_float() ? fn#coc#FloatScroll(1) : "\<down>"
-inoremap <silent><expr> <M-k> coc#util#has_float() ? fn#coc#FloatScroll(0) :  "\<up>"
+inoremap <silent><expr> <M-j> coc#util#has_float() ? lib#coc#FloatScroll(1) : "\<down>"
+inoremap <silent><expr> <M-k> coc#util#has_float() ? lib#coc#FloatScroll(0) :  "\<up>"
 nmap <expr> <silent> <C-c> <SID>select_current_word_and_go_next()
 function! s:select_current_word_and_go_next()
   if !get(g:, 'coc_cursors_activated', 0)
@@ -691,9 +691,9 @@ nmap <silent> <C-s> :CocSearch <C-r><C-w><Cr>
 nmap <silent> <M-n> <Plug>(coc-diagnostic-next)
 nmap <silent> <M-p> <Plug>(coc-diagnostic-prev)
 nmap <silent> <Leader>ca :CocAction<CR>
-nmap <silent> <Leader>cd :call fn#coc#GoToDefinition()<CR>
+nmap <silent> <Leader>cd :call lib#coc#GoToDefinition()<CR>
 nmap <silent> <Leader>ci <Plug>(coc-implementation)
-" nmap <silent> gd :call fn#coc#GoToDefinition()<CR>
+" nmap <silent> gd :call lib#coc#GoToDefinition()<CR>
 " nmap <silent> gr <Plug>(coc-references)
 nmap <silent> <Leader>cf <Plug>(coc-fix-current)
 nmap <silent> <Leader>rf <Plug>(coc-references)
@@ -829,15 +829,15 @@ let g:lightline = {
     \ 'vim_logo': "😆 "
   \ },
   \ 'component_function': {
-    \ 'mode': 'fn#lightline#Mode',
-    \ 'fugitive': 'fn#lightline#GitBranch',
+    \ 'mode': 'lib#lightline#Mode',
+    \ 'fugitive': 'lib#lightline#GitBranch',
     \ 'cocstatus': 'coc#status',
-    \ 'readonly': 'fn#lightline#ReadOnly',
-    \ 'filename': 'fn#lightline#FileName',
-    \ 'fileformat': 'fn#lightline#FileFormat',
-    \ 'fileencoding': 'fn#lightline#FileEncoding',
-    \ 'filetype': 'fn#lightline#FileType',
-    \ 'absolutepath': 'fn#lightline#AbsPath'
+    \ 'readonly': 'lib#lightline#ReadOnly',
+    \ 'filename': 'lib#lightline#FileName',
+    \ 'fileformat': 'lib#lightline#FileFormat',
+    \ 'fileencoding': 'lib#lightline#FileEncoding',
+    \ 'filetype': 'lib#lightline#FileType',
+    \ 'absolutepath': 'lib#lightline#AbsPath'
   \ },
   \ 'tabline': {
     \ 'left': [['vim_logo', 'buffers']],

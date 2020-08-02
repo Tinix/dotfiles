@@ -7,7 +7,7 @@
 let s:exclude_filetypes = ['floaterm', 'coc-explorer', 'vista']
 
 " CloseNoDisplayedBuffers: Close buffers which are not opened in window
-function! fn#buffer#CloseNoDisplayedBuffers() abort
+function! lib#buffer#CloseNoDisplayedBuffers() abort
   let visible = {}
   for t in range(1, tabpagenr('$'))
     for b in tabpagebuflist(t)
@@ -32,7 +32,7 @@ function! fn#buffer#CloseNoDisplayedBuffers() abort
 endfunc
 
 " CloseNoCurrentBuffers: Close other buffers
-function! fn#buffer#CloseNoCurrentBuffers() abort
+function! lib#buffer#CloseNoCurrentBuffers() abort
   let tally = 0
   for b in range(1, bufnr('$'))
     if index(s:exclude_filetypes, getbufvar(b, '&filetype')) > -1
@@ -50,7 +50,7 @@ function! fn#buffer#CloseNoCurrentBuffers() abort
 endfunc
 
 " CloseNoBuflistedBuffers: Close buffers which is nobuflisted
-function! fn#buffer#CloseNoBuflistedBuffers() abort
+function! lib#buffer#CloseNoBuflistedBuffers() abort
   let tally = 0
   for b in range(1, bufnr('$'))
     if index(s:exclude_filetypes, getbufvar(b, '&filetype')) > -1

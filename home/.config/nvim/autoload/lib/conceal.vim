@@ -8,7 +8,7 @@
 " https://github.com/mg979/vim-mini-plugins/blob/master/plugin/conceal.vim
 "-----------------------------------------------------------------------------
 
-function! fn#conceal#pattern(reset, pattern)
+function! lib#conceal#pattern(reset, pattern)
   " Entry point.
   hi Invisible guibg=NONE guifg=bg
   let b:patterns = get(b:, 'patterns', {})

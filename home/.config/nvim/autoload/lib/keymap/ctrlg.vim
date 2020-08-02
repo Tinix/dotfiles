@@ -5,7 +5,7 @@
 " ============================================================================
 
 " https://github.com/mg979/vim-mini-plugins/blob/master/plugin/ctrlg.vim
-function! fn#keymap#ctrlg#() abort
+function! lib#keymap#ctrlg#() abort
   let is_win  = has("win32") || has("win64") || has("win16")
   let l = str2float(line('.').".0") / line("$") * 100
   let perc = string(float2nr(l)) . "%"

@@ -4,7 +4,7 @@
 " GitHub: https://github.com/voldikss
 " ============================================================================
 
-function! fn#textobj#(pattern) abort
+function! lib#textobj#(pattern) abort
   let pos = getpos('.')
   let lnum = pos[1]
   let cnum = pos[2]

@@ -2,7 +2,7 @@
 " GitHub: https://github.com/voldikss
 
 " AbsPath:
-function! fn#lightline#AbsPath()
+function! lib#lightline#AbsPath()
   let path = substitute(expand('%:p'), $HOME, '~', 'g')
   if len(path) > winwidth(0)/2.5
     let path = pathshorten(path)
@@ -14,7 +14,7 @@ function! fn#lightline#AbsPath()
 endfunc
 
 " Mode:
-function! fn#lightline#Mode()
+function! lib#lightline#Mode()
   return &filetype ==# 'coc-explorer' ? 'coc-explorer' :
     \ &filetype ==# 'denite' ? 'Denite' :
     \ &filetype ==# 'gitv' ? 'GitV' :
@@ -30,14 +30,14 @@ function! fn#lightline#Mode()
 endfunc
 
 " FileName:
-function! fn#lightline#FileName()
+function! lib#lightline#FileName()
   let filename = expand('%:t') !=# '' ? expand('%:t') : ''
   let modified = &modified ? ' ✎' : ''
   return filename . modified
 endfunc
 
 " GitBranch:
-function! fn#lightline#GitBranch()
+function! lib#lightline#GitBranch()
   if exists('*FugitiveHead') && &filetype !~# '\v(denite|help|man|qf|tagbar|Mundo|vista)'
     let branch = FugitiveHead()
     return branch !=# '' ? ''. branch : ''
@@ -46,7 +46,7 @@ function! fn#lightline#GitBranch()
 endfunc
 
 " FileFormat:
-function! fn#lightline#FileFormat()
+function! lib#lightline#FileFormat()
   return &filetype !=# 'denite' &&
     \ &filetype !=# 'gitv' &&
     \ &filetype !=# 'help' &&
@@ -60,12 +60,12 @@ function! fn#lightline#FileFormat()
 endfunc
 
 " FileType:
-function! fn#lightline#FileType()
+function! lib#lightline#FileType()
   return strlen(&filetype) ? (WebDevIconsGetFileTypeSymbol() . ' ' . &filetype) : ''
 endfunc
 
 " FileEncoding:
-function! fn#lightline#FileEncoding()
+function! lib#lightline#FileEncoding()
   return &filetype !=# 'denite' &&
     \ &filetype !=# 'gitv' &&
     \ &filetype !=# 'help' &&
@@ -79,6 +79,6 @@ function! fn#lightline#FileEncoding()
 endfunc
 
 " ReadOnly:
-function! fn#lightline#ReadOnly()
+function! lib#lightline#ReadOnly()
   return &readonly && &filetype !~# '\v(denite|help|man|qf|startify)' && expand('%:t') !~ ('__vista__') ? '' : ''
 endfunc
