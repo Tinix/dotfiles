@@ -470,9 +470,8 @@ nnoremap <silent> <C-k>      :<C-u>call fn#coc#showdoc()<CR>
 nnoremap <silent> <C-w><C-j> <C-W>v<C-]>zz
 nnoremap <silent> <C-w><C-o> :<C-u>call fn#utils#jumpback()<CR>
 " Search:
-" use set shortmess-=S to display searchindex
-nnoremap <silent> n  nzz
-nnoremap <silent> N  Nzz
+nnoremap <expr> n  'Nn'[v:searchforward].'zz'
+nnoremap <expr> N  'nN'[v:searchforward].'zz'
 nnoremap * m`:keepjumps normal! *``zz<cr>
 nnoremap # #zz
 xnoremap * :<C-u>call fn#keymap#x#visual_star_search('/')<CR>/<C-R>=@/<CR><CR>N
