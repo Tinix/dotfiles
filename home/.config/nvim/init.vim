@@ -696,7 +696,6 @@ nmap <silent> <Leader>ci <Plug>(coc-implementation)
 " nmap <silent> gd :call fn#coc#GoToDefinition()<CR>
 " nmap <silent> gr <Plug>(coc-references)
 nmap <silent> <Leader>cf <Plug>(coc-fix-current)
-nmap <silent> <Leader>cf <Plug>(coc-fix-current)
 nmap <silent> <Leader>rf <Plug>(coc-references)
 nmap <silent> <Leader>cr :CocRestart<CR>
 nmap <silent> cl :CocList<CR>
