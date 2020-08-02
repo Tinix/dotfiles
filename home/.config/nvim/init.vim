@@ -528,6 +528,7 @@ inoremap <silent> <C-e> <End>
 inoremap <silent> <C-o> <End><CR>
 inoremap <silent> <M-o> <Esc>O
 inoremap <silent> <C-d> <Esc>ddi
+inoremap <silent> <C-v> <C-o>"+]p
 
 nnoremap <silent>       <Leader>w :w<CR>
 nnoremap <silent>       <Leader>W :wa<CR>
