@@ -413,6 +413,7 @@ call s:SetCommandAbbrs('w!!', '%!sudo tee >/dev/null %')
 " }}}
 
 " Commands: {{{
+command! CwordhiToggle call CwordhiToggle()
 command! AutoFormat call fn#file#AutoFormat()
 command! OpenFileExplorer call fn#utils#OpenFileExplorer()
 command! CloseNoBuflistedBuffers call fn#buffer#CloseNoBuflistedBuffers()
