@@ -277,11 +277,10 @@ augroup UserKeywordHighlight
   autocmd!
   autocmd Syntax *
     \ call matchadd('Special', '\W\zs\(TODO\|FIXME\|CHANGED\|XXX\|BUG\|HACK\)') |
-    \ call matchadd('Special', '\W\zs\(todo\|fixme\|changed\|xxx\|bug\|hack\)') |
+    \ call matchadd('Special', '\W\zs\(todo\|fixme\|xxx\|bug\)') |
     \ call matchadd('Special', '\W\zs\(NOTE\|INFO\|IDEA\|NOTICE\|TMP\)') |
-    \ call matchadd('Special', '\W\zs\(note\|info\|idea\|notice\|tmp\)') |
-    \ call matchadd('Special', '\W\zs\(DEBUG\|Debug\|debug\)') |
-    \ call matchadd('Special', '\W\zs\(VOLDIKSS\|voldikss\)')
+    \ call matchadd('Special', '\W\zs\(DEBUG\|Debug\)') |
+    \ call matchadd('Special', '\W\zs\(@VOLDIKSS\|@voldikss\)')
 augroup END
 
 augroup UserAutoChangeDir
