@@ -5,7 +5,7 @@
 " ============================================================================
 
 " AutoFormat:
-function! userfunc#file#AutoFormat() abort
+function! fn#file#AutoFormat() abort
   if &readonly || !&modifiable | return | endif
   let curr_pos = getpos('.')
   " 1. use coc
@@ -16,10 +16,10 @@ function! userfunc#file#AutoFormat() abort
   call s:RemoveBlankLines()
   if expand('%') != '' | update | endif
   call setpos('.', curr_pos)
-endfunction
+endfunc
 
 " AutoSave:
-function! userfunc#file#AutoSave() abort
+function! fn#file#AutoSave() abort
   if &readonly || !&modifiable | return | endif
   " resolve CocSearch acwrite invcompatibility
   if &buftype == 'acwrite' | return | endif
@@ -32,7 +32,7 @@ function! userfunc#file#AutoSave() abort
   endif
   if !empty(expand('%')) | update | endif
   call setpos('.', curr_pos)
-endfunction
+endfunc
 
 " RemoveBlankLines:
 function! s:RemoveBlankLines() abort
@@ -43,17 +43,17 @@ function! s:RemoveBlankLines() abort
   if endlnum == lastnoblank | return | endif
   execute printf('%s,%sdelete', lastnoblank+1, endlnum)
   let @" = reg_tmp
-endfunction
+endfunc
 
 " RemoveWhiteSpaces:
 function! s:RemoveWhiteSpaces()
   if mode() ==# 'n'
     silent! keeppatterns keepjumps execute 'undojoin | %s/[ \t]\+$//g'
   endif
-endfunction
+endfunc
 
 " RenameFile:
-function! userfunc#file#Rename(new_name) abort
+function! fn#file#Rename(new_name) abort
   let old_name = expand('%')
   if empty(a:new_name)
     let new_name = input('New file name: ', expand('%'), 'file')
@@ -70,10 +70,10 @@ function! userfunc#file#Rename(new_name) abort
     execute 'bdelete ' old_name
     redraw!
   endif
-endfunction
+endfunc
 
 " RemoveFile: remove current file
-function! userfunc#file#Remove() abort
+function! fn#file#Remove() abort
   let fname = expand('%')
   execute 'bdelete ' fname
   if has('unix')
@@ -82,4 +82,4 @@ function! userfunc#file#Remove() abort
     execute 'silent !del ' fname
   endif
   redraw!
-endfunction
+endfunc

@@ -5,7 +5,7 @@
 " ============================================================================
 
 " BrowserOpen:
-function! userfunc#utils#BrowserOpen(obj) abort
+function! fn#utils#BrowserOpen(obj) abort
   if has('win32') || has('win64') || has('win32unix')
     let cmd = 'rundll32 url.dll,FileProtocolHandler ' . a:obj
   elseif has('mac') || has('macunix') || has('gui_macvim') || system('uname') =~? '^darwin'
@@ -16,16 +16,16 @@ function! userfunc#utils#BrowserOpen(obj) abort
     echoerr "No browser found, please contact the developer."
   endif
   exec 'AsyncRun -silent' . ' ' . cmd
-endfunction
+endfunc
 
 " OpenFileExplore:
-function! userfunc#utils#OpenFileExplorer() abort
+function! fn#utils#OpenFileExplorer() abort
   let path = expand(getcwd())
-  call userfunc#utils#BrowserOpen(path)
-endfunction
+  call fn#utils#BrowserOpen(path)
+endfunc
 
 " Grep:
-function! userfunc#utils#Grep(string) abort
+function! fn#utils#Grep(string) abort
   if executable('rg')
     execute "AsyncRun! rg -n " . a:string . " * "
     " execute "AsyncRun! -post=copen\ 8 rg -n " . a:string . " * "
@@ -41,24 +41,24 @@ function! userfunc#utils#Grep(string) abort
       \ "--exclude='.IntelliJIdea' " .
       \ "--exclude='*.py[co]'"
   endif
-endfunction
+endfunc
 
 " TabMessage:
-function! userfunc#utils#TabMessage(cmd) abort
+function! fn#utils#TabMessage(cmd) abort
   redir => message
   silent execute a:cmd
   redir END
   if empty(message)
-    call userfunc#utils#ShowMsg('No Output', 'warning')
+    call fn#utils#ShowMsg('No Output', 'warning')
   else
     new
     setlocal buftype=nofile bufhidden=wipe noswapfile nobuflisted nomodified
     silent put=message
   endif
-endfunction
+endfunc
 
 " ShowMessage:
-function! userfunc#utils#ShowMsg(message, ...) abort
+function! fn#utils#ShowMsg(message, ...) abort
   if a:0 == 0
     let msg_type = 'more'
   else
@@ -78,10 +78,10 @@ function! userfunc#utils#ShowMsg(message, ...) abort
   endif
   echo message
   echohl None
-endfunction
+endfunc
 
 " SyntaxAt:
-function! userfunc#utils#SyntaxAt(...)
+function! fn#utils#SyntaxAt(...)
   syntax sync fromstart
   if a:0 < 2
     let l:pos = getpos('.')
@@ -100,10 +100,10 @@ function! userfunc#utils#SyntaxAt(...)
   endif
   call map(synstack(l:lnum, l:col), 'synIDattr(v:val, "name")')
   echom synIDattr(synID(l:lnum, l:col, 1), 'name')
-endfunction
+endfunc
 
 " DelimiterLine:
-function! userfunc#utils#DelimiterLine(style, ...) abort
+function! fn#utils#DelimiterLine(style, ...) abort
   if a:0 > 0
     let count = a:1
   else
@@ -118,10 +118,10 @@ function! userfunc#utils#DelimiterLine(style, ...) abort
     let line = repeat(&commentstring[0], count)
   endif
   call append(line('.'), line)
-endfunction
+endfunc
 
 " Zeal:
-function! userfunc#utils#Zeal(query) abort
+function! fn#utils#Zeal(query) abort
   if empty(a:query)
     let query = expand('<cword>')
   else
@@ -129,11 +129,11 @@ function! userfunc#utils#Zeal(query) abort
   endif
   let cmd = printf("zeal '%s:%s' 2> /dev/null &", &ft, query)
   call jobstart(cmd)
-endfunction
+endfunc
 
 
 " Delete buffer and go back:
-function! userfunc#utils#Return() abort
+function! fn#utils#jumpback() abort
   let buf = bufnr('%')
   let jumplst = getjumplist()
   let pos = jumplst[0][jumplst[-1]-1]
@@ -143,4 +143,4 @@ function! userfunc#utils#Return() abort
   if bufexists(pos.bufnr)
     execute pos.bufnr.'buffer ++call\ cursor('.pos.lnum.','.(pos.col+pos.coladd+1).')'
   endif
-endfunction
+endfunc

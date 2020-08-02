@@ -10,7 +10,7 @@ function! s:getSrcColor(group) abort
   let l:guiColor = synIDattr(hlID(a:group), 'fg', 'gui')
   let l:termColor = synIDattr(hlID(a:group), 'fg', 'cterm')
   return [ l:guiColor, l:termColor ]
-endfunction
+endfunc
 
 if exists('g:lightline')
 

@@ -2,7 +2,7 @@
 " GitHub: https://github.com/voldikss
 
 " QuickRun:
-function! userfunc#quickrun#Run(...) abort
+function! fn#quickrun#Run(...) abort
   update
   if g:asyncrun_status ==# 'running'
     AsyncStop
@@ -26,9 +26,9 @@ function! userfunc#quickrun#Run(...) abort
   else
     AsyncTask start
   endif
-endfunction
+endfunc
 
-function! userfunc#quickrun#Complete(arg_lead,cmd_line,cursor_pos) abort
+function! fn#quickrun#Complete(arg_lead,cmd_line,cursor_pos) abort
   let lst = ['AsyncRun'] + getcompletion('', 'shellcmd')
   let cmd_line_before_cursor = a:cmd_line[:a:cursor_pos - 1]
   let args = split(cmd_line_before_cursor, '\v\\@<!(\\\\)*\zs\s+', 1)
@@ -43,4 +43,4 @@ function! userfunc#quickrun#Complete(arg_lead,cmd_line,cursor_pos) abort
       return candidates
     endif
   endif
-endfunction
+endfunc

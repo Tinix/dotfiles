@@ -721,8 +721,8 @@ function! coc#source#mysql#init() abort
     \ 'filetypes': ['mysql', 'sql'],
     \ 'triggerCharacters': ['']
     \ }
-endfunction
+endfunc
 
 function! coc#source#mysql#complete(opt, cb) abort
   call a:cb(s:mysql_reserved_words)
-endfunction
+endfunc

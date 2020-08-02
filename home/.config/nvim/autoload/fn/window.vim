@@ -25,7 +25,7 @@ let s:winmgr_windows = {
   \ }
 \ }
 
-function! userfunc#window#SwitchWindow(winname) abort
+function! fn#window#SwitchWindow(winname) abort
   let found_winnr = 0
   let other_winids = []
   for winnr in range(1, winnr('$'))
@@ -47,9 +47,9 @@ function! userfunc#window#SwitchWindow(winname) abort
     endif
     execute s:winmgr_windows[a:winname]['open']
   endif
-endfunction
+endfunc
 
-function! userfunc#window#Complete(arg_lead,cmd_line,cursor_pos) abort
+function! fn#window#Complete(arg_lead,cmd_line,cursor_pos) abort
   let lst = keys(s:winmgr_windows)
   let cmd_line_before_cursor = a:cmd_line[:a:cursor_pos - 1]
   let args = split(cmd_line_before_cursor, '\v\\@<!(\\\\)*\zs\s+', 1)
@@ -64,4 +64,4 @@ function! userfunc#window#Complete(arg_lead,cmd_line,cursor_pos) abort
       return sort(candidates)
     endif
   endif
-endfunction
+endfunc

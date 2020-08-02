@@ -1,5 +1,5 @@
 " ============================================================================
-" FileName: myhlsearch.vim
+" FileName: hlsearch.vim
 " Author: voldikss <dyzplus@gmail.com>
 " GitHub: https://github.com/voldikss
 " Info: modified from romainl/vim-cool
@@ -7,7 +7,7 @@
 
 noremap <silent> <Plug>(StopHL) :<C-U>nohlsearch<cr>
 
-function! userfunc#myhlsearch#start_hl()
+function! fn#hlsearch#start_hl()
   if !v:hlsearch || mode() isnot 'n'
     return
   endif
@@ -23,11 +23,11 @@ function! userfunc#myhlsearch#start_hl()
   finally
     call winrestview(pos)
   endtry
-endfunction
+endfunc
 
 function! s:stop_hl()
   if !v:hlsearch || mode() isnot 'n'
     return
   endif
   silent call feedkeys("\<Plug>(StopHL)", 'm')
-endfunction
+endfunc
