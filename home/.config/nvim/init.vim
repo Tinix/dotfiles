@@ -276,12 +276,12 @@ augroup END
 augroup UserKeywordHighlight
   autocmd!
   autocmd Syntax *
-    \ call matchadd('Special', '\W\zs\(@TODO\|@FIXME\|@CHANGED\|@XXX\|@BUG\|@HACK\)') |
-    \ call matchadd('Special', '\W\zs\(@todo\|@fixme\|@changed\|@xxx\|@bug\|@hack\)') |
-    \ call matchadd('Special', '\W\zs\(@NOTE\|@INFO\|@IDEA\|@NOTICE\|@TMP\)') |
-    \ call matchadd('Special', '\W\zs\(@note\|@info\|@idea\|@notice\|@tmp\)') |
-    \ call matchadd('Special', '\W\zs\(@DEBUG\|@Debug\|@debug\)') |
-    \ call matchadd('Special', '\W\zs\(@VOLDIKSS\|@voldikss\)')
+    \ call matchadd('Special', '\W\zs\(TODO\|FIXME\|CHANGED\|XXX\|BUG\|HACK\)') |
+    \ call matchadd('Special', '\W\zs\(todo\|fixme\|changed\|xxx\|bug\|hack\)') |
+    \ call matchadd('Special', '\W\zs\(NOTE\|INFO\|IDEA\|NOTICE\|TMP\)') |
+    \ call matchadd('Special', '\W\zs\(note\|info\|idea\|notice\|tmp\)') |
+    \ call matchadd('Special', '\W\zs\(DEBUG\|Debug\|debug\)') |
+    \ call matchadd('Special', '\W\zs\(VOLDIKSS\|voldikss\)')
 augroup END
 
 augroup UserAutoChangeDir
@@ -454,8 +454,9 @@ noremap  U  <C-R>
 noremap  '  `
 vnoremap <  <gv
 vnoremap >  >gv
-noremap <C-u> <C-u>zz
-noremap <C-d> <C-d>zz
+nnoremap <C-u> <C-u>zz
+nnoremap <C-d> <C-d>zz
+nnoremap <silent> <C-g> :call userfunc#keymap#ctrl_g()<CR>
 " Move:
 nnoremap <silent> [[  :<C-u>call userfunc#keymap#Square_Brackets_Left()<CR>
 nnoremap <silent> ]]  :<C-u>call userfunc#keymap#Square_Brackets_Right()<CR>
@@ -776,7 +777,7 @@ let g:coc_global_extensions = [
 let g:indentLine_char = '│'
 let g:indentLine_enabled = 1
 let g:indentLine_color_term = 238
-let g:indentLine_fileTypeExclude = ['startify', 'vista', 'json', 'codi', 'vtm', 'jsonc', 'coc-explorer', 'man']
+let g:indentLine_fileTypeExclude = ['startify', 'vista', 'json', 'codi', 'translator', 'jsonc', 'coc-explorer', 'man']
 " mhinz/vim-startify
 let g:webdevicons_enable_startify = 1
 noremap <silent> <Space><Space> <Esc>:Startify<CR>
@@ -1131,8 +1132,6 @@ require'nvim-treesitter.configs'.setup {
           ["ic"] = "@conditional.inner",
           ["ae"] = "@block.outer",
           ["ie"] = "@block.inner",
-          ["al"] = "@loop.outer",
-          ["il"] = "@loop.inner",
       }
     },
     ensure_installed = 'all' -- one of 'all', 'language', or a list of languages
