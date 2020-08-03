@@ -105,7 +105,7 @@ set shortmess+=c
 set shortmess-=S
 set scrolloff=6
 set listchars=tab:\|\ ,trail:.,extends:>,precedes:<
-colorscheme onedark
+colorscheme molokai
 " match & search
 set showmatch
 set matchtime=0
@@ -345,20 +345,21 @@ augroup FloatermSettings
 augroup END
 
 function! s:OnColorSchemeLoaded() abort
-  let s:scl_guibg = matchstr(execute('hi SignColumn'), 'guibg=\zs\S*')
-  if empty(s:scl_guibg) | let s:scl_guibg = 'NONE' | endif
-  exe 'hi GitAdd                guifg=#00FF00 guibg=' . s:scl_guibg
-  exe 'hi GitModify             guifg=#00FFFF guibg=' . s:scl_guibg
-  exe 'hi GitDeleteTop          guifg=#FF2222 guibg=' . s:scl_guibg
-  exe 'hi GitDeleteBottom       guifg=#FF2222 guibg=' . s:scl_guibg
-  exe 'hi GitDeleteTopAndBottom guifg=#FF2222 guibg=' . s:scl_guibg
-  exe 'hi CocHintSign           guifg=#15aabf guibg=' . s:scl_guibg
-  exe 'hi CocInfoSign           guifg=#fab005 guibg=' . s:scl_guibg
-  exe 'hi CocWarningSign        guifg=#ff922b guibg=' . s:scl_guibg
-  exe 'hi CocErrorSign          guifg=#ff0000 guibg=' . s:scl_guibg
-  exe 'hi CursorLineNr          guibg=' . s:scl_guibg
-  exe 'hi MyBookmarkSign        guifg=#0000FF guibg=' . s:scl_guibg
-  exe 'hi NonText               guifg=' . s:scl_guibg
+  let signcolumn_bg = matchstr(execute('hi SignColumn'), 'guibg=\zs\S*')
+  if empty(signcolumn_bg) | let signcolumn_bg = 'NONE' | endif
+  exe 'hi GitAdd                guifg=#00FF00 guibg=' . signcolumn_bg
+  exe 'hi GitModify             guifg=#00FFFF guibg=' . signcolumn_bg
+  exe 'hi GitDeleteTop          guifg=#FF2222 guibg=' . signcolumn_bg
+  exe 'hi GitDeleteBottom       guifg=#FF2222 guibg=' . signcolumn_bg
+  exe 'hi GitDeleteTopAndBottom guifg=#FF2222 guibg=' . signcolumn_bg
+  exe 'hi CocHintSign           guifg=#15aabf guibg=' . signcolumn_bg
+  exe 'hi CocInfoSign           guifg=#fab005 guibg=' . signcolumn_bg
+  exe 'hi CocWarningSign        guifg=#ff922b guibg=' . signcolumn_bg
+  exe 'hi CocErrorSign          guifg=#ff0000 guibg=' . signcolumn_bg
+  exe 'hi CursorLineNr          guibg='               . signcolumn_bg
+  exe 'hi MyBookmarkSign        guifg=#0000FF guibg=' . signcolumn_bg
+  let normal_bg = matchstr(execute('hi Normal'), 'guibg=\zs\S*')
+  exe 'hi EndOfBuffer           guifg=' . normal_bg
   " coclist will(might) change my cursor highlight
   hi Cursor gui=reverse guifg=NONE guibg=NONE
 endfunc
