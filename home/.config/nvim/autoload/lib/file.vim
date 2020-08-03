@@ -5,75 +5,75 @@
 " ============================================================================
 
 " AutoFormat:
-function! lib#file#AutoFormat() abort
+function! lib#file#autoformat() abort
   if &readonly || !&modifiable | return | endif
-  let curr_pos = getpos('.')
+  let curpos = getpos('.')
   " 1. use coc
   call CocAction('format')
   " 2. remove whitespace
-  call s:RemoveWhiteSpaces()
+  call s:rm_white_spaces()
   " 3. remove blank lines
-  call s:RemoveBlankLines()
+  call s:rm_blank_lines()
   if expand('%') != '' | update | endif
-  call setpos('.', curr_pos)
+  call setpos('.', curpos)
 endfunc
 
 " AutoSave:
-function! lib#file#AutoSave() abort
+function! lib#file#autosave() abort
   if &readonly || !&modifiable | return | endif
   " resolve CocSearch acwrite invcompatibility
   if &buftype == 'acwrite' | return | endif
-  let curr_pos = getpos('.')
+  let curpos = getpos('.')
   if getpos('.')[1] != line('$')
-    call s:RemoveBlankLines()
+    call s:rm_blank_lines()
   endif
   if trim(getline('.')) != ''
-    call s:RemoveWhiteSpaces()
+    call s:rm_white_spaces()
   endif
   if !empty(expand('%')) | update | endif
-  call setpos('.', curr_pos)
+  call setpos('.', curpos)
 endfunc
 
 " RemoveBlankLines:
-function! s:RemoveBlankLines() abort
+function! s:rm_blank_lines() abort
   if !&modifiable | return | endif
-  let reg_tmp = @"
+  let save_reg = @"
   let endlnum = line('$')
   let lastnoblank = prevnonblank(endlnum)
   if endlnum == lastnoblank | return | endif
   execute printf('%s,%sdelete', lastnoblank+1, endlnum)
-  let @" = reg_tmp
+  let @" = save_reg
 endfunc
 
 " RemoveWhiteSpaces:
-function! s:RemoveWhiteSpaces()
+function! s:rm_white_spaces()
   if mode() ==# 'n'
     silent! keeppatterns keepjumps execute 'undojoin | %s/[ \t]\+$//g'
   endif
 endfunc
 
 " RenameFile:
-function! lib#file#Rename(new_name) abort
-  let old_name = expand('%')
-  if empty(a:new_name)
-    let new_name = input('New file name: ', expand('%'), 'file')
+function! lib#file#rename(name) abort
+  let old = expand('%')
+  if empty(a:name)
+    let new = input('New file name: ', expand('%'), 'file')
   else
-    let new_name = a:new_name
+    let new = a:name
   endif
-  if new_name != '' && new_name != old_name
-    execute ':saveas ' new_name
+  if new != '' && new != old
+    execute ':saveas ' new
     if has('unix')
-      execute 'silent !rm ' old_name
+      execute 'silent !rm ' old
     else
-      execute 'silent !del ' old_name
+      execute 'silent !del ' old
     endif
-    execute 'bdelete ' old_name
+    execute 'bdelete ' old
     redraw!
   endif
 endfunc
 
 " RemoveFile: remove current file
-function! lib#file#Remove() abort
+function! lib#file#remove() abort
   let fname = expand('%')
   execute 'bdelete ' fname
   if has('unix')

@@ -2,7 +2,7 @@
 " GitHub: https://github.com/voldikss
 
 " QuickRun:
-function! lib#quickrun#Run(...) abort
+function! lib#quickrun#run(...) abort
   update
   if g:asyncrun_status ==# 'running'
     AsyncStop

@@ -25,7 +25,7 @@ let s:winmgr_windows = {
   \ }
 \ }
 
-function! lib#window#SwitchWindow(winname) abort
+function! lib#window#switch_window(winname) abort
   let found_winnr = 0
   let other_winids = []
   for winnr in range(1, winnr('$'))

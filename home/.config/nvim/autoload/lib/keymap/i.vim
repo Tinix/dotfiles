@@ -45,7 +45,7 @@ function! lib#keymap#i#CR() abort
 endfunc
 
 " Insert: <Esc>
-function! lib#keymap#i#ESC()
+function! lib#keymap#i#Esc()
   let colnr = getpos('.')[2]
   let linelen = len(getline('.'))
   if colnr == (linelen + 1)

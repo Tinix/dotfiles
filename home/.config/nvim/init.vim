@@ -251,7 +251,7 @@ augroup END
 
 augroup UserAutoSaveBuffer
   autocmd!
-  autocmd FocusLost,InsertLeave * call lib#file#AutoSave()
+  autocmd FocusLost,InsertLeave * call lib#file#autosave()
 augroup END
 
 augroup UserLineNumber
@@ -417,28 +417,28 @@ call s:SetCommandAbbrs('w!!', '%!sudo tee >/dev/null %')
 
 " Commands: {{{
 command! CwordhiToggle call CwordhiToggle()
-command! AutoFormat call lib#file#AutoFormat()
-command! OpenFileExplorer call lib#utils#OpenFileExplorer()
-command! CloseNoBuflistedBuffers call lib#buffer#CloseNoBuflistedBuffers()
-command! CloseNoCurrentBuffers call lib#buffer#CloseNoCurrentBuffers()
-command! CloseNoDisplayedBuffers call lib#buffer#CloseNoDisplayedBuffers()
-command! -nargs=* Zeal call lib#utils#Zeal(<q-args>)
-command! -nargs=* SyntaxAt call lib#utils#SyntaxAt(<f-args>)
-command! -nargs=? Bline call lib#utils#DelimiterLine('bold', <f-args>)
-command! -nargs=? Cline call lib#utils#DelimiterLine('comment', <f-args>)
-command! -nargs=? Line call lib#utils#DelimiterLine('light', <f-args>)
-command! -nargs=? RenameFile call lib#file#Rename(<q-args>)
-command! -nargs=? RemoveFile call lib#file#Remove()
-command! -nargs=+ Grep  call lib#utils#Grep(<q-args>)
+command! AutoFormat call lib#file#autoformat()
+command! OpenFileExplorer call lib#utils#open_file_explorer()
+command! CloseNoBuflistedBuffers call lib#buffer#close_nobuflisted_bufs()
+command! CloseNoCurrentBuffers call lib#buffer#close_nocurrent_bufs()
+command! CloseNoDisplayedBuffers call lib#buffer#close_nodisplayed_bufs()
+command! -nargs=* Zeal call lib#utils#zeal(<q-args>)
+command! -nargs=* SyntaxAt call lib#utils#syntax_at(<f-args>)
+command! -nargs=? Bline call lib#utils#insert_line('bold', <f-args>)
+command! -nargs=? Cline call lib#utils#insert_line('comment', <f-args>)
+command! -nargs=? Line call lib#utils#insert_line('light', <f-args>)
+command! -nargs=? RenameFile call lib#file#rename(<q-args>)
+command! -nargs=? RemoveFile call lib#file#remove()
+command! -nargs=+ Grep  call lib#utils#grep(<q-args>)
 command! -nargs=? -bang Conceal call lib#conceal#pattern(<bang>0, <q-args>)
-command! -nargs=+ -complete=file  BrowserOpen  call lib#utils#BrowserOpen(<q-args>)
-command! -nargs=+ -complete=command  TabMessage call lib#utils#TabMessage(<q-args>)
-command! -nargs=? -complete=customlist,lib#quickrun#Complete QuickRun call lib#quickrun#Run(<f-args>)
-command! -nargs=+ -complete=customlist,lib#window#Complete SwitchWindow call lib#window#SwitchWindow(<q-args>)
+command! -nargs=+ -complete=file  BrowserOpen  call lib#utils#browser_open(<q-args>)
+command! -nargs=+ -complete=command  TabMessage call lib#utils#tab_message(<q-args>)
+command! -nargs=? -complete=customlist,lib#quickrun#Complete QuickRun call lib#quickrun#run(<f-args>)
+command! -nargs=+ -complete=customlist,lib#window#Complete SwitchWindow call lib#window#switch_window(<q-args>)
 command! -nargs=0 YarnWatch call floaterm#new(0, 'yarn watch', {}, {
-  \ 'on_stdout': function('lib#floaterm#WatchCallback'),
-  \ 'on_stderr': function('lib#floaterm#WatchCallback'),
-  \ 'on_exit': function('lib#floaterm#WatchCallback')
+  \ 'on_stdout': function('lib#floaterm#watch_cb'),
+  \ 'on_stderr': function('lib#floaterm#watch_cb'),
+  \ 'on_exit': function('lib#floaterm#watch_cb')
   \ })
 " }}}
 
@@ -448,9 +448,9 @@ let g:mapleader = ';'
 noremap  H  ^
 noremap  L  $
 " Esc:
-inoremap <C-c> <C-R>=lib#keymap#i#ESC()<CR>
-inoremap <C-[> <C-R>=lib#keymap#i#ESC()<CR>
-inoremap <Esc> <C-r>=lib#keymap#i#ESC()<CR>
+inoremap <C-c> <C-R>=lib#keymap#i#Esc()<CR>
+inoremap <C-[> <C-R>=lib#keymap#i#Esc()<CR>
+inoremap <Esc> <C-r>=lib#keymap#i#Esc()<CR>
 "cannot use noremap
 nmap     M  %
 omap     M  %
@@ -680,8 +680,8 @@ let g:semshi#error_sign = v:false
 let g:coc_data_home = '~/.config/coc'
 nnoremap <silent><expr> <C-f> coc#util#has_float() ? coc#util#float_scroll(1) : "\<C-f>"
 nnoremap <silent><expr> <C-b> coc#util#has_float() ? coc#util#float_scroll(0) : "\<C-b>"
-inoremap <silent><expr> <M-j> coc#util#has_float() ? lib#coc#FloatScroll(1) : "\<down>"
-inoremap <silent><expr> <M-k> coc#util#has_float() ? lib#coc#FloatScroll(0) :  "\<up>"
+inoremap <silent><expr> <M-j> coc#util#has_float() ? lib#coc#float_scroll(1) : "\<down>"
+inoremap <silent><expr> <M-k> coc#util#has_float() ? lib#coc#float_scroll(0) :  "\<up>"
 nmap <expr> <silent> <C-c> <SID>select_current_word_and_go_next()
 function! s:select_current_word_and_go_next()
   if !get(g:, 'coc_cursors_activated', 0)
@@ -695,9 +695,9 @@ nmap <silent> <C-s> :CocSearch <C-r><C-w><Cr>
 nmap <silent> <M-n> <Plug>(coc-diagnostic-next)
 nmap <silent> <M-p> <Plug>(coc-diagnostic-prev)
 nmap <silent> <Leader>ca :CocAction<CR>
-nmap <silent> <Leader>cd :call lib#coc#GoToDefinition()<CR>
+nmap <silent> <Leader>cd :call lib#coc#goto_def()<CR>
 nmap <silent> <Leader>ci <Plug>(coc-implementation)
-" nmap <silent> gd :call lib#coc#GoToDefinition()<CR>
+" nmap <silent> gd :call lib#coc#goto_def()<CR>
 " nmap <silent> gr <Plug>(coc-references)
 nmap <silent> <Leader>cf <Plug>(coc-fix-current)
 nmap <silent> <Leader>rf <Plug>(coc-references)

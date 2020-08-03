@@ -5,7 +5,7 @@
 " ============================================================================
 
 " BrowserOpen:
-function! lib#utils#BrowserOpen(obj) abort
+function! lib#utils#browser_open(obj) abort
   if has('win32') || has('win64') || has('win32unix')
     let cmd = 'rundll32 url.dll,FileProtocolHandler ' . a:obj
   elseif has('mac') || has('macunix') || has('gui_macvim') || system('uname') =~? '^darwin'
@@ -19,13 +19,13 @@ function! lib#utils#BrowserOpen(obj) abort
 endfunc
 
 " OpenFileExplore:
-function! lib#utils#OpenFileExplorer() abort
+function! lib#utils#open_file_explorer() abort
   let path = expand(getcwd())
-  call lib#utils#BrowserOpen(path)
+  call lib#utils#browser_open(path)
 endfunc
 
 " Grep:
-function! lib#utils#Grep(string) abort
+function! lib#utils#grep(string) abort
   if executable('rg')
     execute "AsyncRun! rg -n " . a:string . " * "
     " execute "AsyncRun! -post=copen\ 8 rg -n " . a:string . " * "
@@ -44,7 +44,7 @@ function! lib#utils#Grep(string) abort
 endfunc
 
 " TabMessage:
-function! lib#utils#TabMessage(cmd) abort
+function! lib#utils#tab_message(cmd) abort
   redir => message
   silent execute a:cmd
   redir END
@@ -81,7 +81,7 @@ function! lib#utils#ShowMsg(message, ...) abort
 endfunc
 
 " SyntaxAt:
-function! lib#utils#SyntaxAt(...)
+function! lib#utils#syntax_at(...)
   syntax sync fromstart
   if a:0 < 2
     let l:pos = getpos('.')
@@ -103,7 +103,7 @@ function! lib#utils#SyntaxAt(...)
 endfunc
 
 " DelimiterLine:
-function! lib#utils#DelimiterLine(style, ...) abort
+function! lib#utils#insert_line(style, ...) abort
   if a:0 > 0
     let count = a:1
   else
@@ -121,7 +121,7 @@ function! lib#utils#DelimiterLine(style, ...) abort
 endfunc
 
 " Zeal:
-function! lib#utils#Zeal(query) abort
+function! lib#utils#zeal(query) abort
   if empty(a:query)
     let query = expand('<cword>')
   else
