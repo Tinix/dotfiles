@@ -958,7 +958,6 @@ let g:Lf_StlSeparator   = {'left': '', 'right': '', 'font': ''}
 let g:Lf_UseVersionControlTool = 0
 let g:Lf_WildIgnore = {
   \'dir': [
-    \'lib',
     \'.svn',
     \'.git',
     \'.hg',
