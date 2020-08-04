@@ -5,5 +5,5 @@
 " ============================================================================
 
 function! lib#textobj#number#() abort
-  call lib#textobj#('\v[0-9]+')
+  call lib#textobj#('\v\d+')
 endfunc
