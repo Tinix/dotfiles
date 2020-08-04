@@ -2,6 +2,7 @@ adobe-source-han-sans-otc-fonts
 android-emulator
 android-tools
 archlinuxcn-keyring
+aria2
 autoconf
 automake
 base
@@ -10,6 +11,7 @@ biber
 binutils
 bison
 bluedevil
+bluez-utils
 breeze
 breeze-gtk
 bumblebee
@@ -68,6 +70,7 @@ kcm-fcitx
 kdbg
 kde-cli-tools
 kde-gtk-config
+kdeconnect
 kdecoration
 kdeplasma-addons
 kdialog
@@ -90,6 +93,7 @@ kwin
 kwrite
 kwrited
 lazygit
+lf-git
 lib32-gnutls
 lib32-mpg123
 libinput-gestures
@@ -158,9 +162,11 @@ powerdevil
 proxychains-ng
 python-pip
 python-pyopenssl
+qq-linux
 qt5-doc
 qt5-examples
 qtcreator
+qv2ray
 ranger
 renameutils
 ripgrep
@@ -174,6 +180,8 @@ spectacle
 strace
 sudo
 systemsettings
+tcl
+tcping
 teamviewer
 telegram-desktop
 terminator
@@ -187,7 +195,9 @@ texlive-latexextra
 texlive-localmanager-git
 texlive-science
 texstudio
+tk
 tmux
+translate-shell
 transmission-qt
 trash-cli
 tree
@@ -195,6 +205,7 @@ ttf-monaco
 unrar
 unzip
 user-manager
+vifm
 virtualbox-host-dkms
 vlc
 webkit2gtk
@@ -261,6 +272,7 @@ xorg-xvinfo
 xorg-xwd
 xorg-xwininfo
 xorg-xwud
+xterm
 yarn
 yay
 you-get

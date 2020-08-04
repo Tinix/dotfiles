@@ -105,7 +105,7 @@ set shortmess+=c
 set shortmess-=S
 set scrolloff=6
 set listchars=tab:\|\ ,trail:.,extends:>,precedes:<
-colorscheme molokai
+colorscheme onedark
 " match & search
 set showmatch
 set matchtime=0
@@ -898,7 +898,7 @@ let g:asyncrun_rootmarks = [
 command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
 " skywind3000/asynctasks.vim
 let g:asynctasks_term_pos = 'bottom'
-let g:asynctasks_term_reuse = 1
+let g:asynctasks_term_reuse = 0
 let g:asynctasks_term_rows = 10
 " Yggdroot/LeaderF
 nmap <silent> <Leader>fb :Leaderf buffer<CR>

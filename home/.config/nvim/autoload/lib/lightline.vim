@@ -4,9 +4,9 @@
 " AbsPath:
 function! lib#lightline#AbsPath()
   let path = substitute(expand('%:p'), $HOME, '~', 'g')
-  if len(path) > winwidth(0)/2.5
+  if len(path) > winwidth(0)/3
     let path = pathshorten(path)
-    if len(path) > winwidth(0)/2.5
+    if len(path) > winwidth(0)/3
       return ''
     endif
   endif
