@@ -237,6 +237,8 @@
   "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
   "typescript.suggestionActions.enabled": false,
   "vimlsp.indexes.runtimepath": false,
+  "vimlsp.suggest.fromRuntimepath": false,
+  "vimlsp.suggest.fromVimruntime": false,
   "yank.enableCompletion": false,
   // "yank.highlight.duration": 20,
   "yank.highlight.enable": false,
