@@ -141,6 +141,7 @@ let s:colors = {
       \ "green": get(s:overrides, "green", { "gui": "#98C379", "cterm": "114", "cterm16": "2" }),
       \ "yellow": get(s:overrides, "yellow", { "gui": "#E5C07B", "cterm": "180", "cterm16": "3" }),
       \ "dark_yellow": get(s:overrides, "dark_yellow", { "gui": "#D19A66", "cterm": "173", "cterm16": "11" }),
+      \ "origin_yellow": get(s:overrides, "origin_yellow", { "gui": "#ffff00", "cterm": "226", "cterm16": "11" }),
       \ "blue": get(s:overrides, "blue", { "gui": "#61AFEF", "cterm": "39", "cterm16": "4" }),
       \ "purple": get(s:overrides, "purple", { "gui": "#C678DD", "cterm": "170", "cterm16": "5" }),
       \ "cyan": get(s:overrides, "cyan", { "gui": "#56B6C2", "cterm": "38", "cterm16": "6" }),
@@ -161,6 +162,7 @@ let s:dark_red = s:colors.dark_red
 let s:green = s:colors.green
 let s:yellow = s:colors.yellow
 let s:dark_yellow = s:colors.dark_yellow
+let s:origin_yellow = s:colors.origin_yellow
 let s:blue = s:colors.blue
 let s:purple = s:colors.purple
 let s:cyan = s:colors.cyan
@@ -257,7 +259,7 @@ call s:h("SignColumn", {}) " column where signs are displayed
 call s:h("IncSearch", { "fg": s:yellow, "bg": s:comment_grey }) " 'incsearch' highlighting; also used for the text replaced with ":s///c"
 call s:h("LineNr", { "fg": s:gutter_fg_grey }) " Line number for ":number" and ":#" commands, and when 'number' or 'relativenumber' option is set.
 call s:h("CursorLineNr", {}) " Like LineNr when 'cursorline' or 'relativenumber' is set for the cursor line.
-call s:h("MatchParen", { "fg": s:blue, "gui": "underline" }) " The character under the cursor or just before it, if it is a paired bracket, and its match.
+call s:h("MatchParen", { "fg": s:origin_yellow, "gui": "NONE" }) " The character under the cursor or just before it, if it is a paired bracket, and its match.
 call s:h("ModeMsg", {}) " 'showmode' message (e.g., "-- INSERT --")
 call s:h("MoreMsg", {}) " more-prompt
 call s:h("NonText", { "fg": s:special_grey }) " '~' and '@' at the end of the window, characters from 'showbreak' and other characters that do not really exist in the text (e.g., ">" displayed when a double-wide character doesn't fit at the end of the line).
