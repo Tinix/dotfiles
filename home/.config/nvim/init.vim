@@ -358,8 +358,12 @@ function! s:OnColorSchemeLoaded() abort
   exe 'hi CocErrorSign          guifg=#ff0000 guibg=' . signcolumn_bg
   exe 'hi CursorLineNr          guibg='               . signcolumn_bg
   exe 'hi MyBookmarkSign        guifg=#0000FF guibg=' . signcolumn_bg
+
   let normal_bg = matchstr(execute('hi Normal'), 'guibg=\zs\S*')
   exe 'hi EndOfBuffer           guifg=' . normal_bg
+
+  hi VertSplit guifg=yellow
+
   " coclist will(might) change my cursor highlight
   hi Cursor gui=reverse guifg=NONE guibg=NONE
 endfunc
