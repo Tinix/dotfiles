@@ -359,10 +359,12 @@ function! s:OnColorSchemeLoaded() abort
   exe 'hi CursorLineNr          guibg='               . signcolumn_bg
   exe 'hi MyBookmarkSign        guifg=#0000FF guibg=' . signcolumn_bg
 
+  hi VertSplit guifg=cyan
+  hi CursorLineNr guifg=orange
+  hi Normal          guibg=#111111 guifg=#eeeeee
+
   let normal_bg = matchstr(execute('hi Normal'), 'guibg=\zs\S*')
   exe 'hi EndOfBuffer           guifg=' . normal_bg
-
-  hi VertSplit guifg=yellow
 
   " coclist will(might) change my cursor highlight
   hi Cursor gui=reverse guifg=NONE guibg=NONE
@@ -1008,7 +1010,7 @@ let g:floaterm_width = 0.6
 let g:floaterm_height = 0.6
 let g:floaterm_position = 'center'
 let g:floaterm_gitcommit = 'split'
-let g:floaterm_autoclose = v:true
+let g:floaterm_autoclose = 1
 let g:floaterm_autohide = v:true
 " let g:floaterm_autoinsert = v:false
 let g:floaterm_keymap_new    = '<F7>'

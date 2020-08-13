@@ -4,7 +4,7 @@ alias ll='ls -laFh'
 alias la='ls -laF'
 alias lh='ls -lh'
 alias lR='ls -lR'
-alias l='ls -laFh'
+alias l='ls -l'
 
 # vim
 alias vim=nvim
