@@ -650,12 +650,6 @@ let g:cpp_member_variable_highlight              = 1
 let g:cpp_class_decl_highlight                   = 1
 let g:cpp_experimental_simple_template_highlight = 1
 let g:cpp_concepts_highlight                     = 1
-" plasticboy/vim-markdown
-let g:vim_markdown_fenced_languages = ['python=py', 'javascript=js', 'c=c']
-let g:vim_markdown_conceal             = 0
-let g:vim_markdown_conceal_code_blocks = 0
-let g:tex_conceal                      = ""
-let g:vim_markdown_math                = 1
 " pangloss/vim-javascript
 let g:javascript_plugin_jsdoc = 1
 let g:javascript_plugin_ngdoc = 1

@@ -113,7 +113,7 @@
     "bash": {
       "command": "bash-language-server",
       "args": ["start"],
-      "filetypes": ["sh", "zsh"],
+      "filetypes": ["sh", "zsh", "make"],
       "ignoredRootPaths": ["~"]
     },
     "ccls": {
