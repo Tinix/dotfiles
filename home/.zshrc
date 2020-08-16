@@ -66,6 +66,10 @@ vim_starttime() {
     nvim --startuptime ./vim_startup.log && awk -F'[ /]' '/\.vim\/plugged/ {print $3,$12}' vim_startup.log | awk '{plug[$2]++; time[$2]+=$1} END {for (i in plug) {printf "%30s %20.3f ms\n", i, time[i] | "sort -k2nr"}}'
 }
 
+where_alias() {
+    grep -RHi "alias" /etc ~ | grep $1 | less
+}
+
 
 #=============================================================================
 # antigen
@@ -75,7 +79,7 @@ source $HOME/.antigen.zsh
 antigen bundle command-not-found
 antigen bundle common-aliases
 antigen bundle colorize
-antigen bundle git
+# antigen bundle git # it has too many alias...
 antigen bundle git-extras
 antigen bundle git-flow
 antigen bundle github

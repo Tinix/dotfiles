@@ -17,8 +17,8 @@ alias pip_upgrade_all_packages="pip list --outdated --format=freeze | grep -v '^
 
 # git
 alias ga='git add'
-alias gcm='git commit -v'
-alias gcma='git commit --amend'
+alias gc='git commit -v'
+alias gca='git commit --amend'
 alias gco='git checkout'
 alias gcl='git clone --depth 1'
 alias gd='git diff'
