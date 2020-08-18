@@ -1,10 +1,10 @@
 # vim:ft=sh
 # ls
 alias ll='ls -laFh'
-alias la='ls -laF'
+alias la='ls -laFh'
 alias lh='ls -lh'
 alias lR='ls -lR'
-alias l='ls -l'
+alias l='ls -lh'
 
 # vim
 alias vim=nvim
