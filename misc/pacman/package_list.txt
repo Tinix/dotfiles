@@ -57,12 +57,14 @@ google-chrome
 gopls
 gpart
 gparted
+graphicsmagick
 grep
 groff
 grub
 gwenview
 gzip
 htop
+imagemagick
 kactivitymanagerd
 kate
 kcalc
@@ -133,6 +135,7 @@ nnn
 npm
 ntfs-3g
 nvidia
+obs-studio
 okular
 openjdk11-src
 openssh
@@ -143,6 +146,7 @@ oxygen
 p7zip
 pacman
 pamac-aur
+parallel
 patch
 peek
 perl-rename
@@ -162,6 +166,7 @@ powerdevil
 proxychains-ng
 python-pip
 python-pyopenssl
+python2-pip
 qq-linux
 qt5-doc
 qt5-examples
@@ -176,6 +181,7 @@ screenfetch
 sddm
 sddm-kcm
 sed
+simplescreenrecorder
 spectacle
 strace
 sudo
@@ -202,6 +208,7 @@ transmission-qt
 trash-cli
 tree
 ttf-monaco
+typora
 unrar
 unzip
 user-manager

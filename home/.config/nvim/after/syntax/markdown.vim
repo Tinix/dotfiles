@@ -27,11 +27,11 @@ syn sync linebreaks=1
 let s:conceal = ''
 let s:concealends = ''
 let s:concealcode = ''
-if has('conceal') && get(g:, 'vim_markdown_conceal', 1)
+if has('conceal') && get(g:, 'vim_markdown_conceal', 0)
   let s:conceal = ' conceal'
   let s:concealends = ' concealends'
 endif
-if has('conceal') && get(g:, 'vim_markdown_conceal_code_blocks', 1)
+if has('conceal') && get(g:, 'vim_markdown_conceal_code_blocks', 0)
   let s:concealcode = ' concealends'
 endif
 

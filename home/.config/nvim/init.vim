@@ -1000,10 +1000,11 @@ let g:translator_default_engines = ['baicizhan', 'bing', 'google', 'haici', 'you
 let g:translator_window_max_height = 0.8
 let g:translator_window_max_width = 0.8
 " voldikss/vim-floaterm
+let g:floaterm_title = 'floaterm (%s|%s)'
 let g:floaterm_width = 0.6
 let g:floaterm_height = 0.6
 let g:floaterm_position = 'center'
-let g:floaterm_gitcommit = 'split'
+let g:floaterm_gitcommit = 'vsplit'
 let g:floaterm_autoclose = 1
 let g:floaterm_autohide = v:true
 " let g:floaterm_autoinsert = v:false
