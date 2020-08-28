@@ -131,7 +131,6 @@ function! lib#utils#zeal(query) abort
   call jobstart(cmd)
 endfunc
 
-
 " Delete buffer and go back:
 function! lib#utils#jumpback() abort
   let buf = bufnr('%')
@@ -144,3 +143,25 @@ function! lib#utils#jumpback() abort
     execute pos.bufnr.'buffer ++call\ cursor('.pos.lnum.','.(pos.col+pos.coladd+1).')'
   endif
 endfunc
+
+
+" WinDo: Like windo but restore the current window.
+function! lib#utils#windo(command)
+  let curwin=winnr()
+  execute 'windo ' . a:command
+  execute curwin . 'wincmd w'
+endfunction
+
+" BufDo: Like bufdo but restore the current buffer.
+function! lib#utils#bufdo(command)
+  let curbuf=bufnr("%")
+  execute 'bufdo ' . a:command
+  execute 'buffer ' . curbuf
+endfunction
+
+" TabDo: Like tabdo but restore the current tab.
+function! lib#utils#tabdo(command)
+  let curtab=tabpagenr()
+  execute 'tabdo ' . a:command
+  execute 'tabn ' . curtab
+endfunction

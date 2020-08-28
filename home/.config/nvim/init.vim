@@ -105,7 +105,7 @@ set shortmess+=c
 set shortmess-=S
 set scrolloff=6
 set listchars=tab:\|\ ,trail:.,extends:>,precedes:<
-colorscheme onedark
+colorscheme molokai
 " match & search
 set showmatch
 set matchtime=0
@@ -249,23 +249,23 @@ augroup FileTypeAutocmds
   autocmd FileType * set formatoptions-=cro
 augroup END
 
-augroup UserAutoSaveBuffer
+augroup AutoSaveBuffer
   autocmd!
   autocmd FocusLost,InsertLeave * call lib#file#autosave()
 augroup END
 
-augroup UserLineNumber
+augroup LineNumber
   autocmd!
   autocmd BufEnter,FocusGained,InsertLeave,WinEnter * if &nu | set rnu   | endif
   autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &nu | set nornu | endif
 augroup END
 
-" augroup UserEqualWindowSize
+" augroup EqualWindowSize
 "   autocmd!
 "   autocmd VimResized * exec "normal \<C-w>="
 " augroup END
 
-augroup UserJumpToLastPosition
+augroup JumpToLastPosition
   autocmd!
   autocmd BufReadPost *
     \ if line("'\"") > 1 && line("'\"") <= line("$") && &filetype != 'gitcommit' |
@@ -273,7 +273,7 @@ augroup UserJumpToLastPosition
     \ endif
 augroup END
 
-augroup UserKeywordHighlight
+augroup KeywordHighlight
   autocmd!
   autocmd Syntax *
     \ call matchadd('Special', '\W\zs\(TODO\|FIXME\|CHANGED\|XXX\|BUG\|HACK\)') |
@@ -283,30 +283,29 @@ augroup UserKeywordHighlight
     \ call matchadd('Special', '\W\zs\(@VOLDIKSS\|@voldikss\)')
 augroup END
 
-augroup UserAutoChangeDir
+augroup AutoChangeDir
   autocmd!
   autocmd BufEnter * silent! lcd %:p:h
 augroup END
 
-augroup UserAutoTemplate
+augroup AutoTemplate
   autocmd!
   autocmd BufNewFile .gitignore,.npmignore,.tasks,.clang-format,Solution.cpp CocCommand template.templateTop
 augroup END
 
-augroup UserChecktime
+augroup Checktime
   autocmd!
   autocmd FocusGained * checktime
 augroup END
 
-augroup UserCocAutocmds
+augroup CocAutocmds
   autocmd!
-  autocmd User Startified setlocal buflisted
   autocmd User CocStatusChange,CocDiagnosticChange call lightline#update()
   autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup END
 
-augroup UserStartifyAutocmds
+augroup StartifyAutocmds
   autocmd!
   autocmd User Startified setlocal buflisted
 augroup END
@@ -326,7 +325,7 @@ augroup CocExplorerCustom
 augroup END
 
 if has('nvim')
-augroup UserTermSettings " neovim only
+augroup TermSettings " neovim only
   autocmd!
   autocmd TermOpen *
     \ setlocal signcolumn=no |
@@ -370,7 +369,7 @@ function! s:OnColorSchemeLoaded() abort
   hi Cursor gui=reverse guifg=NONE guibg=NONE
 endfunc
 call s:OnColorSchemeLoaded()
-augroup UserGitSignColumnColor
+augroup GitSignColumnColor
   autocmd!
   autocmd ColorScheme * call s:OnColorSchemeLoaded()
 augroup END
@@ -439,6 +438,9 @@ command! -nargs=? RemoveFile call lib#file#remove()
 command! -nargs=+ Grep  call lib#utils#grep(<q-args>)
 command! -nargs=? -bang Conceal call lib#conceal#pattern(<bang>0, <q-args>)
 command! -nargs=+ -complete=file  BrowserOpen  call lib#utils#browser_open(<q-args>)
+command! -nargs=+ -complete=command Windo call lib#utils#windo(<q-args>)
+command! -nargs=+ -complete=command Bufdo call lib#utils#bufdo(<q-args>)
+command! -nargs=+ -complete=command Tabdo call lib#utils#tabdo(<q-args>)
 command! -nargs=+ -complete=command  TabMessage call lib#utils#tab_message(<q-args>)
 command! -nargs=? -complete=customlist,lib#quickrun#Complete QuickRun call lib#quickrun#run(<f-args>)
 command! -nargs=+ -complete=customlist,lib#window#Complete SwitchWindow call lib#window#switch_window(<q-args>)
@@ -1004,7 +1006,7 @@ let g:floaterm_title = 'floaterm (%s|%s)'
 let g:floaterm_width = 0.6
 let g:floaterm_height = 0.6
 let g:floaterm_position = 'center'
-let g:floaterm_gitcommit = 'vsplit'
+let g:floaterm_gitcommit = 'split'
 let g:floaterm_autoclose = 1
 let g:floaterm_autohide = v:true
 " let g:floaterm_autoinsert = v:false
