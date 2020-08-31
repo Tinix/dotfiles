@@ -236,6 +236,7 @@
   "typescript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
   "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
   "typescript.suggestionActions.enabled": false,
+  "vimlsp.filetypes": ["vim", "vader"],
   "vimlsp.indexes.runtimepath": false,
   "vimlsp.suggest.fromRuntimepath": false,
   "vimlsp.suggest.fromVimruntime": false,

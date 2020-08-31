@@ -186,8 +186,8 @@ Plug 'neoclide/coc.nvim', {'do': 'npm install'}
 Plug 'Yggdroot/indentLine'
 Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'guns/xterm-color-table.vim', {'on': 'XtermColorTable'}
-Plug 'itchyny/lightline.vim'
 Plug 'kshenoy/vim-signature'
+Plug 'itchyny/lightline.vim'
 Plug 'mengelbrecht/lightline-bufferline'
 Plug 'mhinz/vim-startify', {'on': 'Startify'}
 Plug 'ryanoasis/vim-devicons'
