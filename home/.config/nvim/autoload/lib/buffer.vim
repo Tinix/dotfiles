@@ -4,7 +4,7 @@
 " GitHub: https://github.com/voldikss
 " ============================================================================
 
-let s:exclude_filetypes = ['floaterm', 'coc-explorer', 'vista']
+let s:exclude_filetypes = ['floaterm', 'coc-explorer', 'vista', 'qf']
 
 " CloseNoDisplayedBuffers: Close buffers which are not opened in window
 function! lib#buffer#close_nodisplayed_bufs() abort
