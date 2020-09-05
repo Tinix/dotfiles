@@ -16,7 +16,7 @@ function! lib#hlsearch#start_hl()
   try
     silent keepjumps norm! n
     if getpos('.') != rpos
-      call s:stop_hl()
+      call <SID>stop_hl()
     endif
   catch
     return
