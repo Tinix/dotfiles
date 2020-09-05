@@ -1,8 +1,4 @@
 adobe-source-han-sans-otc-fonts
-android-emulator
-android-sdk
-android-sdk-build-tools
-android-tools
 archlinuxcn-keyring
 aria2
 autoconf
@@ -41,6 +37,7 @@ fakeroot
 fcitx-lilydjwg-git
 fcitx-sogoupinyin
 fd
+feh
 file
 file-roller
 findutils

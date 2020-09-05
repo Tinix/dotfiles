@@ -14,7 +14,6 @@ setlocal nospell
 nnoremap <silent><buffer> p  :call <SID>preview_file()<CR>
 nnoremap <silent><buffer> q  :pclose!<CR>:quit<CR>
 nnoremap <buffer> o    <CR><C-w>p
-nnoremap <buffer> o    <CR><C-w>p
 
 let b:qf_isLoc = ! empty(getloclist(0))
 if b:qf_isLoc == 1

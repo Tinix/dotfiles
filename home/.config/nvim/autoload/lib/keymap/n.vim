@@ -46,6 +46,8 @@ function! lib#keymap#n#CR() abort
     return "A,"
   elseif index(['qmake'], &ft) > 0
     return "A\\"
+  else
+    return "\<CR>"
   endif
 endfunc
 
