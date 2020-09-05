@@ -444,11 +444,11 @@ command! -nargs=+ -complete=command Tabdo call lib#utils#tabdo(<q-args>)
 command! -nargs=+ -complete=command  TabMessage call lib#utils#tab_message(<q-args>)
 command! -nargs=? -complete=customlist,lib#quickrun#Complete QuickRun call lib#quickrun#run(<f-args>)
 command! -nargs=+ -complete=customlist,lib#window#Complete SwitchWindow call lib#window#switch_window(<q-args>)
-command! -nargs=0 YarnWatch call floaterm#new(0, 'yarn watch', {}, {
+command! -nargs=0 YarnWatch call floaterm#new(0, 'yarn watch', {
   \ 'on_stdout': function('lib#floaterm#watch_cb'),
   \ 'on_stderr': function('lib#floaterm#watch_cb'),
   \ 'on_exit': function('lib#floaterm#watch_cb')
-  \ })
+  \ }, {})
 " }}}
 
 " Mappings: {{{
@@ -722,6 +722,11 @@ nnoremap <silent> <Leader>hu :CocCommand git.chunkUndo<CR>
 nnoremap <silent> <Leader>go :CocCommand git.browserOpen<CR>
 nnoremap <silent> <Leader>gv :CocCommand git.chunkInfo<CR>
 nnoremap <silent> <Leader>gm :CocCommand git.showCommit<CR>
+nnoremap <silent> <Leader>gw :Gwrite<CR>
+nnoremap <silent> <Leader>gW :silent! Bufdo Gwrite<CR>
+nnoremap <silent> <Leader>gc :Gcommit -v<CR>
+nnoremap <silent> <Leader>ga :Gcommit --amend -v<CR>
+nnoremap <silent> <Leader>gp :Gpush<CR>
 " omap ic <Plug>(coc-text-object-inner)
 " xmap ic <Plug>(coc-text-object-inner)
 " coc-pairs
@@ -1002,7 +1007,7 @@ let g:translator_default_engines = ['baicizhan', 'bing', 'google', 'haici', 'you
 let g:translator_window_max_height = 0.8
 let g:translator_window_max_width = 0.8
 " voldikss/vim-floaterm
-let g:floaterm_title = 'floaterm (%s|%s)'
+let g:floaterm_title = 'floaterm ($1|$2)'
 let g:floaterm_width = 0.6
 let g:floaterm_height = 0.6
 let g:floaterm_position = 'center'

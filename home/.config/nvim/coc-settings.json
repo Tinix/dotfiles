@@ -53,8 +53,8 @@
     "l": ["expandable?", "expand", "open"],
     "J": ["toggleSelection", "normal:j"],
     "K": ["toggleSelection", "normal:k"],
-    "gl": "expandRecursive",
-    "gh": "collapseRecursive",
+    "gl": "expand:recursive",
+    "gh": "collapse:recursive",
     "o": "expandOrCollapse",
     "<cr>": "open",
     "<C-l>": "open",
@@ -183,6 +183,7 @@
   "rust-analyzer.serverPath": "~/.cargo/bin/rust-analyzer",
   "session.directory": "~/.cache/nvim/session",
   "session.saveOnVimLeave": false,
+  "signature.preferShownAbove": false,
   "snippets.extends": {
     "cpp": ["c"],
     "javascriptreact": ["javascript"],

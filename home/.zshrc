@@ -168,3 +168,4 @@ export PATH=$PATH:$GOBIN
 export GOPATH="$HOME/go"
 # Cargo
 export PATH="$HOME/.cargo/bin:$PATH"
+source /usr/share/nvm/init-nvm.sh

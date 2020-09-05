@@ -1,5 +1,7 @@
 adobe-source-han-sans-otc-fonts
 android-emulator
+android-sdk
+android-sdk-build-tools
 android-tools
 archlinuxcn-keyring
 aria2
@@ -16,6 +18,7 @@ breeze
 breeze-gtk
 bumblebee
 cajviewer-appimage
+calibre
 ccls-git
 cgdb
 cheat
@@ -135,6 +138,7 @@ nnn
 npm
 ntfs-3g
 nvidia
+nvm
 obs-studio
 okular
 openjdk11-src
