@@ -547,7 +547,7 @@ nnoremap <silent>       <Leader>w :w<CR>
 nnoremap <silent>       <Leader>W :wa<CR>
 nnoremap <silent>       <Leader>q q
 nnoremap <silent>       <Leader>Q Q
-nnoremap <silent>       q         :q!<CR>
+nnoremap <silent><expr> q len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) < 2 ? ":q!\<CR>" : ":bd!\<CR>"
 nnoremap <silent>       Q         :qa!<CR>
 nnoremap <silent><expr> <Leader>d lib#keymap#n#q()
 " nnoremap <silent> <Leader>Q :qa!<CR>
