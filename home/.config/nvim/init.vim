@@ -902,7 +902,7 @@ let g:asyncrun_rootmarks = [
   \ '*.pro',
   \ '.tasks'
   \ ]
-command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
+command! -bang -nargs=* -complete=file Make AsyncRun -cwd=<root> -program=make @ <args>
 " skywind3000/asynctasks.vim
 let g:asynctasks_term_pos = 'bottom'
 let g:asynctasks_term_reuse = 0

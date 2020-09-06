@@ -12,7 +12,7 @@ function! lib#quickrun#run(...) abort
     let b:quickrun_cmd = a:1
   endif
   if exists('b:quickrun_cmd')
-    echom 'b:quickrun_cmd: ' . b:quickrun_cmd
+    " echom 'b:quickrun_cmd: ' . b:quickrun_cmd
     execute b:quickrun_cmd
     return
   elseif expand('%') == 'init.vim'
