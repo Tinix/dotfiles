@@ -129,7 +129,7 @@ set shiftround
 set relativenumber number
 set foldlevel=99
 set foldmethod=expr
-set foldexpr=nvim_treesitter#foldexpr()
+" set foldexpr=nvim_treesitter#foldexpr()
 set conceallevel=0
 set autoindent
 set smartindent
@@ -169,7 +169,7 @@ endif
 " Plugin: {{{
 call plug#begin('~/.cache/nvim/plugged')
 " Languages
-Plug 'nvim-treesitter/nvim-treesitter'
+" Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'alvan/vim-closetag', {'for': ['html', 'xml']}
 Plug 'fatih/vim-go'
 Plug 'iamcco/markdown-preview.nvim', {'for': 'markdown', 'do': 'cd app && npm install'}
@@ -296,6 +296,7 @@ augroup END
 augroup Checktime
   autocmd!
   autocmd FocusGained * checktime
+  autocmd BufEnter * checktime
 augroup END
 
 augroup CocAutocmds
@@ -340,7 +341,8 @@ augroup FloatermSettings
   autocmd!
   autocmd FileType floaterm
     \ nmap <silent><buffer> <Esc> <Cmd>hide<CR>|
-    \ hi TermCursor guifg=yellow
+    \ hi TermCursor guifg=yellow |
+    \ setlocal nonumber norelativenumber
 augroup END
 
 function! s:OnColorSchemeLoaded() abort
@@ -526,8 +528,8 @@ vnoremap <silent> <Leader>y "+y
 nnoremap <silent> <Leader>Y "+y$
 nnoremap <silent> <Leader>p "+p
 nnoremap <silent> <Leader>P "+P
-nnoremap <silent><expr> D (v:hlsearch ? ':%s///g<CR>' : 'D')
-vnoremap <silent><expr> D (v:hlsearch ? ':s///g<CR>' : 'D')
+nnoremap <silent> <M-d> :%s///g<CR>
+vnoremap <silent> <M-d> :s///g<CR>
 " InsertMode: move
 inoremap <silent> <C-k> <Up>
 inoremap <silent> <C-j> <Down>
@@ -742,6 +744,15 @@ nmap <silent> ,a <Plug>(coc-bookmark-annotate)
 nmap <silent> gh <Plug>(coc-bookmark-prev)
 nmap <silent> gl <Plug>(coc-bookmark-next)
 " coc-snippets
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? coc#_select_confirm() :
+      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
 let g:coc_snippet_next = '<tab>'
 " coc extensions
 let g:coc_global_extensions = [
@@ -789,7 +800,7 @@ let g:coc_global_extensions = [
 let g:indentLine_char = '│'
 let g:indentLine_enabled = 1
 let g:indentLine_color_term = 238
-let g:indentLine_fileTypeExclude = ['startify', 'vista', 'json', 'codi', 'translator', 'jsonc', 'coc-explorer', 'man']
+let g:indentLine_fileTypeExclude = ['startify', 'vista', 'json', 'codi', 'translator', 'jsonc', 'coc-explorer', 'man', 'help']
 " mhinz/vim-startify
 let g:webdevicons_enable_startify = 1
 noremap <silent> <Space><Space> <Esc>:Startify<CR>
@@ -1012,7 +1023,7 @@ let g:floaterm_width = 0.6
 let g:floaterm_height = 0.6
 let g:floaterm_position = 'center'
 let g:floaterm_gitcommit = 'split'
-let g:floaterm_autoclose = 1
+let g:floaterm_autoclose = 2
 let g:floaterm_autohide = v:true
 " let g:floaterm_autoinsert = v:false
 let g:floaterm_keymap_new    = '<F7>'
@@ -1087,66 +1098,66 @@ let g:im_select_enable_focus_events = 0
 let g:vista_echo_cursor_strategy = 'floating_win'
 let g:vista_close_on_jump = 1
 " nvim-treesitter
-lua <<EOF
-require'nvim-treesitter.configs'.setup {
-    highlight = {
-        enable = true,
-        disable = { 'c', 'cpp', 'rust', 'markdown' },
-    },
-    incremental_selection = {
-        enable = true,
-        disable = { 'cpp', 'lua' },
-        keymaps = {
-          init_selection = 'gnn',
-          node_incremental = "grn",
-          scope_incremental = "grc",
-          node_decremental = "grm",
-        }
-    },
-    refactor = {
-      highlight_definitions = {
-        enable = false
-      },
-      highlight_current_scope = {
-        enable = false
-      },
-      smart_rename = {
-        enable = true,
-        keymaps = {
-          smart_rename = "grr"
-        }
-      },
-      navigation = {
-        enable = true,
-        keymaps = {
-          goto_definition = "gnd",
-          list_definitions = "gnD"
-        }
-      }
-    },
-    textobjects = {
-      enable = true,
-      disable = {},
-      keymaps = {
-          ["iL"] = {
-            -- you can define your own textobjects directly here
-            python = "(function_definition) @function",
-            cpp = "(function_definition) @function",
-            c = "(function_definition) @function",
-            java = "(method_declaration) @function"
-          },
-          -- or you use the queries from supported languages with textobjects.scm
-          ["af"] = "@function.outer",
-          ["if"] = "@function.inner",
-          ["aC"] = "@class.outer",
-          ["iC"] = "@class.inner",
-          ["ac"] = "@conditional.outer",
-          ["ic"] = "@conditional.inner",
-          ["ae"] = "@block.outer",
-          ["ie"] = "@block.inner",
-      }
-    },
-    ensure_installed = 'all' -- one of 'all', 'language', or a list of languages
-}
-EOF
+" lua <<EOF
+" require'nvim-treesitter.configs'.setup {
+"     highlight = {
+"         enable = true,
+"         disable = { 'c', 'cpp', 'rust', 'markdown' },
+"     },
+"     incremental_selection = {
+"         enable = true,
+"         disable = { 'cpp', 'lua' },
+"         keymaps = {
+"           init_selection = 'gnn',
+"           node_incremental = "grn",
+"           scope_incremental = "grc",
+"           node_decremental = "grm",
+"         }
+"     },
+"     refactor = {
+"       highlight_definitions = {
+"         enable = false
+"       },
+"       highlight_current_scope = {
+"         enable = false
+"       },
+"       smart_rename = {
+"         enable = true,
+"         keymaps = {
+"           smart_rename = "grr"
+"         }
+"       },
+"       navigation = {
+"         enable = true,
+"         keymaps = {
+"           goto_definition = "gnd",
+"           list_definitions = "gnD"
+"         }
+"       }
+"     },
+"     textobjects = {
+"       enable = true,
+"       disable = {},
+"       keymaps = {
+"           ["iL"] = {
+"             -- you can define your own textobjects directly here
+"             python = "(function_definition) @function",
+"             cpp = "(function_definition) @function",
+"             c = "(function_definition) @function",
+"             java = "(method_declaration) @function"
+"           },
+"           -- or you use the queries from supported languages with textobjects.scm
+"           ["af"] = "@function.outer",
+"           ["if"] = "@function.inner",
+"           ["aC"] = "@class.outer",
+"           ["iC"] = "@class.inner",
+"           ["ac"] = "@conditional.outer",
+"           ["ic"] = "@conditional.inner",
+"           ["ae"] = "@block.outer",
+"           ["ie"] = "@block.inner",
+"       }
+"     },
+"     ensure_installed = 'all' -- one of 'all', 'language', or a list of languages
+" }
+" EOF
 " }}}

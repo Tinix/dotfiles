@@ -41,10 +41,8 @@
   "explorer.file.showHiddenFiles": true,
   "explorer.icon.enableNerdfont": true,
   "explorer.keyMappings": {
-    "k": "nodePrev",
     "<C-k>": "nodePrev",
     "<M-k>": "indentPrev",
-    "j": "nodeNext",
     "<C-j>": "nodeNext",
     "<M-j>": "indentNext",
     "*": "toggleSelection",
