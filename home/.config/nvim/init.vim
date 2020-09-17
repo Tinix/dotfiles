@@ -446,7 +446,7 @@ command! -nargs=+ -complete=command Tabdo call lib#utils#tabdo(<q-args>)
 command! -nargs=+ -complete=command  TabMessage call lib#utils#tab_message(<q-args>)
 command! -nargs=? -complete=customlist,lib#quickrun#Complete QuickRun call lib#quickrun#run(<f-args>)
 command! -nargs=+ -complete=customlist,lib#window#Complete SwitchWindow call lib#window#switch_window(<q-args>)
-command! -nargs=0 YarnWatch call floaterm#new(0, 'yarn watch', {
+command! -nargs=? YarnWatch call floaterm#new(0, empty(<q-args>) ? 'yarn watch' : <q-args>, {
   \ 'on_stdout': function('lib#floaterm#watch_cb'),
   \ 'on_stderr': function('lib#floaterm#watch_cb'),
   \ 'on_exit': function('lib#floaterm#watch_cb')

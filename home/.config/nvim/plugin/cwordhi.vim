@@ -54,6 +54,9 @@ function! s:cword_hi()
     let above = '\%<' . line('.') . 'l\%>' . line('w0') . 'l'
     let right = '\%>' . col('.') . 'c'
     let left  = '\%<' . max([0, col('.') - strlen(expand('<cword>'))]) . 'c'
+    if hlID('VisualNOS') == 0
+      hi VisualNOS guibg=#403D3D
+    endif
     let h = get(g:, 'cwordhi', 'VisualNOS')
     let w:illuminated_words_below = matchadd(h, '\V' . below . word)
     let w:illuminated_words_above = matchadd(h, '\V' . above . word)
