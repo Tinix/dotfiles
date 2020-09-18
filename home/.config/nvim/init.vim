@@ -804,10 +804,17 @@ let g:indentLine_fileTypeExclude = ['startify', 'vista', 'json', 'codi', 'transl
 " mhinz/vim-startify
 let g:webdevicons_enable_startify = 1
 noremap <silent> <Space><Space> <Esc>:Startify<CR>
+function! s:stdpath_config() abort
+  if has('nvim')
+    return stdpath('config')
+  else
+    return has('unix') ? '~/.config/nvim' : 'C:\Users\voldikss\AppData\Local\nvim'
+  endif
+endfunction
 let g:startify_bookmarks = [
-  \ {'c': stdpath('config') . '/coc-settings.json'},
-  \ {'v': stdpath('config') . '/init.vim'}
-\ ]
+  \ {'c': <SID>stdpath_config() . '/coc-settings.json'},
+  \ {'v': <SID>stdpath_config() . '/init.vim'}
+  \ ]
 let g:startify_files_number = 8
 let g:startify_padding_left = 15
 " let g:startify_custom_header = [
@@ -949,7 +956,7 @@ let g:Lf_PreviewResult        = {'Function':0, 'BufTag':0}
 let g:Lf_RgConfig = [
   \"--glob=!OmegaOptions.bak",
   \"--glob=!node_modules",
-  \"--glob=!lib/index.js",
+  \"--glob=!lib/*.js",
   \"--glob=!target",
   \"--glob=!tags",
   \"--glob=!build",
