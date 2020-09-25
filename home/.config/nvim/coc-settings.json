@@ -53,7 +53,8 @@
     "K": ["toggleSelection", "normal:k"],
     "gl": "expand:recursive",
     "gh": "collapse:recursive",
-    "o": "expandOrCollapse",
+    "o": ["expanded?", "collapse", "expand"],
+    "O": "systemExecute",
     "<cr>": "open",
     "<C-l>": "open",
     "e": "open",
@@ -185,7 +186,8 @@
   "snippets.extends": {
     "cpp": ["c"],
     "javascriptreact": ["javascript"],
-    "typescript": ["javascript"]
+    "typescript": ["javascript"],
+    "javascript": ["typescript"]
   },
   "snippets.priority": -10,
   "suggest.acceptSuggestionOnCommitCharacter": true,

@@ -800,7 +800,7 @@ let g:coc_global_extensions = [
 let g:indentLine_char = '│'
 let g:indentLine_enabled = 1
 let g:indentLine_color_term = 238
-let g:indentLine_fileTypeExclude = ['startify', 'vista', 'json', 'codi', 'translator', 'jsonc', 'coc-explorer', 'man', 'help']
+let g:indentLine_fileTypeExclude = ['startify', 'vista', 'json', 'codi', 'translator', 'jsonc', 'coc-explorer', 'man', 'help', 'floaterm']
 " mhinz/vim-startify
 let g:webdevicons_enable_startify = 1
 noremap <silent> <Space><Space> <Esc>:Startify<CR>
@@ -1103,7 +1103,7 @@ nmap <Space>f <Plug>(easymotion-overwin-w)
 let g:im_select_enable_focus_events = 0
 " vista.vim
 let g:vista_echo_cursor_strategy = 'floating_win'
-let g:vista_close_on_jump = 1
+let g:vista_close_on_jump = 0
 " nvim-treesitter
 " lua <<EOF
 " require'nvim-treesitter.configs'.setup {
