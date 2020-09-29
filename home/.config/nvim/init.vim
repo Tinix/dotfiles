@@ -360,9 +360,10 @@ function! s:OnColorSchemeLoaded() abort
   exe 'hi CursorLineNr          guibg='               . signcolumn_bg
   exe 'hi MyBookmarkSign        guifg=#0000FF guibg=' . signcolumn_bg
 
-  hi VertSplit guifg=cyan
-  hi CursorLineNr guifg=orange
-  hi Normal          guibg=#111111 guifg=#eeeeee
+  hi VertSplit                  guifg=cyan
+  " hi CocFloating                guibg=blue
+  hi CursorLineNr               guifg=orange
+  hi Normal                     guibg=#111111 guifg=#eeeeee
 
   let normal_bg = matchstr(execute('hi Normal'), 'guibg=\zs\S*')
   exe 'hi EndOfBuffer           guifg=' . normal_bg
@@ -430,6 +431,7 @@ command! OpenFileExplorer call lib#utils#open_file_explorer()
 command! CloseNoBuflistedBuffers call lib#buffer#close_nobuflisted_bufs()
 command! CloseNoCurrentBuffers call lib#buffer#close_nocurrent_bufs()
 command! CloseNoDisplayedBuffers call lib#buffer#close_nodisplayed_bufs()
+command! Gwa AsyncRun -cwd=<root> -silent=1 git add .
 command! -nargs=* Zeal call lib#utils#zeal(<q-args>)
 command! -nargs=* SyntaxAt call lib#utils#syntax_at(<f-args>)
 command! -nargs=? Bline call lib#utils#insert_line('bold', <f-args>)
@@ -731,8 +733,6 @@ nnoremap <silent> <Leader>ga :Gcommit --amend -v<CR>
 nnoremap <silent> <Leader>gp :Gpush<CR>
 " omap ic <Plug>(coc-text-object-inner)
 " xmap ic <Plug>(coc-text-object-inner)
-" coc-pairs
-let g:coc_pairs_expand = [['（', '）'], ['“', '”'], ['‘', '’'], ['《', '》']]
 " coc-smartf
 " nmap f <Plug>(coc-smartf-forward)
 " nmap F <Plug>(coc-smartf-backward)
