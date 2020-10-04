@@ -198,6 +198,7 @@ Plug 'tpope/vim-git'
 Plug 'brglng/vim-im-select', {'on': 'ImSelectEnable'}
 " Plug 'puremourning/vimspector'
 Plug 'easymotion/vim-easymotion'
+Plug 'yangmillstheory/vim-snipe'
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 Plug 'andrewradev/sideways.vim', {'on': ['SidewaysLeft', 'SidewaysRight']}
 Plug 'foosoft/vim-argwrap', {'on': '<Plug>(ArgWrapToggle)'}
@@ -329,6 +330,7 @@ if has('nvim')
 augroup TermSettings " neovim only
   autocmd!
   autocmd TermOpen *
+    \ setlocal undolevels=100|
     \ setlocal signcolumn=no |
     \ setlocal nobuflisted |
     \ setlocal nospell |
@@ -550,7 +552,7 @@ inoremap <silent> <C-v> <C-o>"+]p
 
 nnoremap <silent>       <Leader>w :w<CR>
 nnoremap <silent>       <Leader>W :wa<CR>
-nnoremap <silent>       <Leader>q q
+nnoremap <silent>       <M-q> q
 nnoremap <silent>       <Leader>Q Q
 nnoremap <silent><expr> q len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) < 2 ? ":q!\<CR>" : ":bd!\<CR>"
 nnoremap <silent>       Q         :qa!<CR>
@@ -1099,7 +1101,11 @@ let g:vimspector_enable_mappings = 'HUMAN'
 " easymotion.vim
 let g:EasyMotion_do_mapping = 0
 let g:EasyMotion_smartcase = 1
-nmap <Space>f <Plug>(easymotion-overwin-w)
+map <silent> <Space>f <Plug>(easymotion-overwin-w)
+map <silent> <Space>F <Plug>(easymotion-bd-f)
+" vim-snipe
+map <silent> f <Plug>(snipe-f)
+map <silent> F <Plug>(snipe-F)
 " brglng/vim-im-select
 let g:im_select_enable_focus_events = 0
 " vista.vim
