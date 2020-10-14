@@ -4,3 +4,9 @@ setlocal softtabstop=4
 setlocal foldmethod=indent
 setlocal commentstring=//\ %s
 setlocal nospell
+
+if !exists('b:match_words')
+  let b:match_words = ''
+endif
+let b:match_words .= ',\<if\>:\<else\>'
+let b:match_words .= ',\<switch\>:\<case\>:\<default\>'
