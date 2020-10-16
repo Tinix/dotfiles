@@ -7,6 +7,7 @@
   "coc.preferences.hoverTarget": "float",
   // "coc.preferences.jumpCommand": "wincmd o | vsplit",
   "coc.preferences.messageLevel": "more",
+  "coc.preferences.promptInput": false,
   "coc.preferences.promptWorkspaceEdit": true,
   "coc.preferences.rootPatterns": [
     ".git",
@@ -95,6 +96,11 @@
     "gj": "gitNext",
     "<<": "gitStage",
     ">>": "gitUnstage"
+  },
+  "explorer.openAction.select.filter": {
+    "buftypes": ["terminal"],
+    "filetypes": ["vista", "qf"],
+    "floatingWindows": true
   },
   "explorer.file.tabCD": false,
   "explorer.previewAction.onHover": false,

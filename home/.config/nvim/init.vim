@@ -91,6 +91,7 @@ set completeopt+=noinsert  " Don't insert text automatically
 set completeopt-=noselect  " Highlight the first completion automatically
 set modeline
 " style
+set noequalalways
 set display=lastline
 set termguicolors
 set guicursor=
@@ -170,6 +171,7 @@ endif
 call plug#begin('~/.cache/nvim/plugged')
 " Languages
 " Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh' } " use to debug nvim itself
 Plug 'alvan/vim-closetag', {'for': ['html', 'xml']}
 Plug 'fatih/vim-go'
 Plug 'iamcco/markdown-preview.nvim', {'for': 'markdown', 'do': 'cd app && npm install'}
@@ -554,7 +556,7 @@ nnoremap <silent>       <Leader>w :w<CR>
 nnoremap <silent>       <Leader>W :wa<CR>
 nnoremap <silent>       <M-q> q
 nnoremap <silent>       <Leader>Q Q
-nnoremap <silent><expr> q len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) < 2 ? ":q!\<CR>" : ":bd!\<CR>"
+nnoremap <silent><expr> q len(getbufinfo({'buflisted':1})) < 2 ? ":q!\<CR>" : ":bd!\<CR>"
 nnoremap <silent>       Q         :qa!<CR>
 nnoremap <silent><expr> <Leader>d lib#keymap#n#q()
 " nnoremap <silent> <Leader>Q :qa!<CR>
@@ -688,10 +690,10 @@ let g:semshi#always_update_all_highlights = v:true
 let g:semshi#error_sign = v:false
 " neoclide/coc.nvim
 let g:coc_data_home = '~/.config/coc'
-nnoremap <silent><expr> <C-f> coc#util#has_float() ? coc#util#float_scroll(1) : "\<C-f>"
-nnoremap <silent><expr> <C-b> coc#util#has_float() ? coc#util#float_scroll(0) : "\<C-b>"
-inoremap <silent><expr> <M-j> coc#util#has_float() ? lib#coc#float_scroll(1) : "\<down>"
-inoremap <silent><expr> <M-k> coc#util#has_float() ? lib#coc#float_scroll(0) :  "\<up>"
+nnoremap <expr><C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+nnoremap <expr><C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+inoremap <expr><C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<Right>"
+inoremap <expr><C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<Left>"
 nmap <expr> <silent> <C-c> <SID>select_current_word_and_go_next()
 function! s:select_current_word_and_go_next()
   if !get(g:, 'coc_cursors_activated', 0)
@@ -701,22 +703,18 @@ function! s:select_current_word_and_go_next()
   " because I have mapped * to m`:keepjumps normal! *``zz<cr>
   return "*n\<Plug>(coc-cursors-word):nohlsearch\<CR>"
 endfunc
-nmap <silent> <C-s> :CocSearch <C-r><C-w><Cr>
-nmap <silent> <M-n> <Plug>(coc-diagnostic-next)
-nmap <silent> <M-p> <Plug>(coc-diagnostic-prev)
-nmap <silent> <Leader>ca :CocAction<CR>
-nmap <silent> <Leader>cd :call lib#coc#goto_def()<CR>
-nmap <silent> <Leader>ci <Plug>(coc-implementation)
-" nmap <silent> gd :call lib#coc#goto_def()<CR>
-" nmap <silent> gr <Plug>(coc-references)
+nmap <silent> <M-n>      <Plug>(coc-diagnostic-next)
+nmap <silent> <M-p>      <Plug>(coc-diagnostic-prev)
+nmap <silent> <Leader>cl :<C-u>CocList<CR>
+nmap <silent> <Leader>cs :<C-u>CocSearch <C-r><C-w><CR>
 nmap <silent> <Leader>cf <Plug>(coc-fix-current)
-nmap <silent> <Leader>rf <Plug>(coc-references)
-nmap <silent> <Leader>cr :CocRestart<CR>
-nmap <silent> cl :CocList<CR>
-nmap <silent> <Leader>ct :CocList tasks<CR>
-nmap <silent> ,cr        :call CocAction('rename')<CR>
-" xmap if <Plug>(coc-funcobj-a)
-" omap if <Plug>(coc-funcobj-a)
+nmap <silent> <Leader>cd <Plug>(coc-definition)
+nmap <silent> <Leader>ci <Plug>(coc-implementation)
+nmap <silent> <Leader>rn <Plug>(coc-rename)
+nmap <silent> <Leader>rf <Plug>(coc-references-used)
+nmap <silent> <Leader>rs :<C-u>CocRestart<CR>
+xmap if <Plug>(coc-funcobj-a)
+omap if <Plug>(coc-funcobj-a)
 omap ig <Plug>(coc-git-chunk-inner)
 xmap ig <Plug>(coc-git-chunk-inner)
 " coc-git
@@ -747,8 +745,8 @@ nmap <silent> ,a <Plug>(coc-bookmark-annotate)
 nmap <silent> gh <Plug>(coc-bookmark-prev)
 nmap <silent> gl <Plug>(coc-bookmark-next)
 " coc-snippets
+" 不要改动
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? coc#_select_confirm() :
       \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
       \ <SID>check_back_space() ? "\<TAB>" :
       \ coc#refresh()
@@ -910,19 +908,7 @@ nmap <Leader>0 <Plug>lightline#bufferline#go(10)
 " skywind3000/asyncrun.vim
 let g:asyncrun_status = ''  " asyncrun is lazy loaded
 let g:asyncrun_open = 9
-let g:asyncrun_rootmarks = [
-  \ '.git',
-  \ '.svn',
-  \ '.root',
-  \ '.project',
-  \ '.hg',
-  \ '.idea',
-  \ '.gitignore',
-  \ 'Makefile',
-  \ 'CMakeLists.txt',
-  \ '*.pro',
-  \ '.tasks'
-  \ ]
+let g:asyncrun_rootmarks = ['.git', '.root', '.tasks']
 command! -bang -nargs=* -complete=file Make AsyncRun -cwd=<root> -program=make @ <args>
 " skywind3000/asynctasks.vim
 let g:asynctasks_term_pos = 'bottom'
@@ -944,7 +930,8 @@ noremap <silent> <Leader>fp :<C-U><C-R>=printf("Leaderf gtags --previous %s", ""
 let g:Lf_CacheDirectory       = expand('~/.cache/nvim')
 let g:Lf_CommandMap = {
   \'<Up>': ['<C-p>'],
-  \'<Down>': ['<C-n>']
+  \'<Down>': ['<C-n>'],
+  \'<Home>': ['<C-A>'],
 \}
 let g:Lf_Ctags                = "/usr/local/bin/ctags"
 let g:Lf_DefaultExternalTool = ""
@@ -973,11 +960,8 @@ let g:Lf_RootMarkers    = [
   \'.svn',
   \'.git',
   \'.idea',
-  \'.gitignore',
   \'.tasks',
   \'.clang-format',
-  \'CMakeLists.txt',
-  \'compile_commands.json'
 \]
 let g:Lf_ShowHidden           = 1
 let g:Lf_ShowRelativePath     = 1
@@ -1077,6 +1061,8 @@ nmap <silent> cx  <Plug>(Exchange)
 xmap <silent> X   <Plug>(Exchange)
 nmap <silent> cxc <Plug>(ExchangeClear)
 nmap <silent> cxx <Plug>(ExchangeLine)
+" tomtom/tcomment_vim
+let g:tcomment_types = {'c': '// %s'}
 " matze/vim-move
 let g:move_map_keys    = 0
 let g:move_auto_indent = 1

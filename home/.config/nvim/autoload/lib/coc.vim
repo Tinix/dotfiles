@@ -41,14 +41,3 @@ function! lib#coc#showdoc() abort
     call CocAction('doHover')
   endif
 endfunc
-
-" GoToDefinition:
-function! lib#coc#goto_def()
-  if CocAction('jumpDefinition')
-    return v:true
-  endif
-  let ret = execute("silent! normal \<C-]>")
-  if ret =~ "Error" || ret =~ "错误"
-    call searchdecl(expand('<cword>'))
-  endif
-endfunc
