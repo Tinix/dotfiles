@@ -7,5 +7,7 @@ setlocal nospell
 " html match_words
 if !exists('b:match_words')
   let b:match_words = ''
+else
+  let b:match_words .= ','
 endif
 let b:match_words .= '<:>,<\@<=[ou]l\>[^>]*\%(>\|$\):<\@<=li\>:<\@<=/[ou]l>,<\@<=dl\>[^>]*\%(>\|$\):<\@<=d[td]\>:<\@<=/dl>,<\@<=\([^/][^ \t>]*\)[^>]*\%(>\|$\):<\@<=/\1>'
