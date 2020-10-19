@@ -338,7 +338,10 @@ augroup TermSettings " neovim only
     \ setlocal nospell |
     \ setlocal modifiable |
     \ nmap <silent><buffer> q :q<CR> |
-    \ call timer_start(10, 'lib#asyncrun#term_style')
+    \ call timer_start(10, 'lib#asyncrun#term_style') |
+    \ if empty(&ft) |
+    \   setlocal filetype=terminal |
+    \ endif
 augroup END
 
 augroup FloatermSettings

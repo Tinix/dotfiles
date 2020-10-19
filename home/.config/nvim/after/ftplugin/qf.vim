@@ -43,10 +43,11 @@ function! s:preview_file()
 	endif
   let winid = lib#floatwin#open(0, 80, 20, 'topright')
   execute cmd
+  setlocal number
   let s:preview_float_winid = winid
   wincmd p
   augroup close_preview_float_win
-    autocmd CursorMoved * call timer_start(200, function('s:close_float_win'))
+    autocmd CursorMoved <buffer> call timer_start(200, function('s:close_float_win'))
   augroup END
 endfunction
 
