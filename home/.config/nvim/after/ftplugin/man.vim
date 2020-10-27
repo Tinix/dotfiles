@@ -1,7 +1,9 @@
 setlocal number
 setlocal relativenumber
 
-" func s:helper(timer)
-"   colorscheme onedark
-" endfunc
-" call timer_start(1, 's:helper')
+autocmd BufWinEnter <buffer> wincmd H
+
+func s:settings(timer)
+  colorscheme onedark
+endfunc
+call timer_start(1, function('s:settings'))
