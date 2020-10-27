@@ -695,8 +695,6 @@ let g:semshi#error_sign = v:false
 let g:coc_data_home = '~/.config/coc'
 nnoremap <expr><C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
 nnoremap <expr><C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-inoremap <expr><C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<Right>"
-inoremap <expr><C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<Left>"
 nmap <expr> <silent> <C-c> <SID>select_current_word_and_go_next()
 function! s:select_current_word_and_go_next()
   if !get(g:, 'coc_cursors_activated', 0)
