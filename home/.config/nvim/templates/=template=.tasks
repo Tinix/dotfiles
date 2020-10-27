@@ -17,7 +17,7 @@ command:markdown=:MarkdownPreview
 command:mysql=:%DB
 command:python=python "$(VIM_FILEPATH)"
 command:rust=RUST_BACKTRACE=1 cargo run
-command:sh=sh "$(VIM_FILEPATH)"
+command:sh=bash "$(VIM_FILEPATH)"
 command:sql=:%DB
 command:tex=:execute(b:vimtex.compiler.is_running() ? 'VimtexView' : 'VimtexCompile')
 command:typescript=tsc %

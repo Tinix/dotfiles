@@ -583,7 +583,9 @@ cnoremap <expr> [    lib#keymap#c#pairs('[]')
 cnoremap <expr> {    lib#keymap#c#pairs('{}')
 cnoremap <expr> <BS> lib#keymap#c#BS()
 " TerminalMode:
-tnoremap <Esc>  <C-\><C-n>
+if has('nvim')
+  tnoremap <Esc>  <C-\><C-n>
+endif
 " tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
 if has('win32') || has('win64')
   nnoremap <silent> <Leader>n :vert term<CR>
@@ -695,8 +697,6 @@ let g:semshi#error_sign = v:false
 let g:coc_data_home = '~/.config/coc'
 nnoremap <expr><C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
 nnoremap <expr><C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-inoremap <expr><C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<Right>"
-inoremap <expr><C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<Left>"
 nmap <expr> <silent> <C-c> <SID>select_current_word_and_go_next()
 function! s:select_current_word_and_go_next()
   if !get(g:, 'coc_cursors_activated', 0)
@@ -926,10 +926,11 @@ nmap <silent> <Leader>fl :Leaderf line<CR>
 nmap <silent> <Leader>fm :Leaderf mru<CR>
 nmap <silent> <Leader>ft :Leaderf bufTag<CR>
 nmap <silent> <Leader>fu :Leaderf function<CR>
-noremap <silent> <Leader>fr :<C-U><C-R>=printf("Leaderf! gtags -r %s --auto-jump", expand("<cword>"))<CR><CR>
-noremap <silent> <Leader>fd :<C-U><C-R>=printf("Leaderf! gtags -d %s --auto-jump", expand("<cword>"))<CR><CR>
-noremap <silent> <Leader>fn :<C-U><C-R>=printf("Leaderf gtags --next %s", "")<CR><CR>
-noremap <silent> <Leader>fp :<C-U><C-R>=printf("Leaderf gtags --previous %s", "")<CR><CR>
+nmap <silent> <Leader>fr :Leaderf! --recall --stayOpen<CR>
+" noremap <silent> <Leader>fr :<C-U><C-R>=printf("Leaderf! gtags -r %s --auto-jump", expand("<cword>"))<CR><CR>
+" noremap <silent> <Leader>fd :<C-U><C-R>=printf("Leaderf! gtags -d %s --auto-jump", expand("<cword>"))<CR><CR>
+" noremap <silent> <Leader>fn :<C-U><C-R>=printf("Leaderf gtags --next %s", "")<CR><CR>
+" noremap <silent> <Leader>fp :<C-U><C-R>=printf("Leaderf gtags --previous %s", "")<CR><CR>
 let g:Lf_CacheDirectory       = expand('~/.cache/nvim')
 let g:Lf_CommandMap = {
   \'<Up>': ['<C-p>'],
