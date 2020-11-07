@@ -1,1 +1,1 @@
-runtime! ./terminal.vim
+runtime! ftplugin/terminal.vim

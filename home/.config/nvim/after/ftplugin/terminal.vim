@@ -7,7 +7,7 @@
 " Use o or <CR> in the NORMAL mode to open the file in the terminal window
 nnoremap <buffer><silent> <CR> :call <SID>open_file()<CR>
 nnoremap <buffer><silent> o    :call <SID>open_file()<CR>
-nnoremap <silent><buffer> p  :call <SID>preview_file()<CR>
+nnoremap <silent><buffer> <C-p>  :call <SID>preview_file()<CR>
 
 function! s:open_file() abort
   if getbufvar(bufnr(), 'floaterm_winid', -1) != -1

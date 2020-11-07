@@ -21,7 +21,7 @@ let g:loaded_zipPlugin         = 1
 let g:loaded_netrwPlugin       = 1
 " HostProg:
 if has('win32') || has('win64') || has('win32unix')
-  let g:python3_host_prog='C:\Program Files\Python36/python.exe'
+  let g:python3_host_prog='C:\Program Files\Python38/python.exe'
 else
   let g:python3_host_prog='/usr/bin/python3'
 endif
@@ -170,8 +170,8 @@ endif
 " Plugin: {{{
 call plug#begin('~/.cache/nvim/plugged')
 " Languages
-" Plug 'nvim-treesitter/nvim-treesitter'
-Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh' } " use to debug nvim itself
+Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'sakhnik/nvim-gdb', {'do': ':!./install.sh', 'on': 'GdbStart'} " use to debug nvim itself
 Plug 'alvan/vim-closetag', {'for': ['html', 'xml']}
 Plug 'fatih/vim-go'
 Plug 'iamcco/markdown-preview.nvim', {'for': 'markdown', 'do': 'cd app && npm install'}
@@ -183,7 +183,7 @@ Plug 'posva/vim-vue', {'for': 'vue'}
 Plug 'rust-lang/rust.vim', {'for': 'rust'}
 Plug 'tpope/vim-dadbod', {'for': ['sql', 'mysql']}
 " Completion
-Plug 'neoclide/coc.nvim', {'do': 'npm install'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Style
 Plug 'Yggdroot/indentLine'
 Plug 'lukas-reineke/indent-blankline.nvim'
@@ -420,7 +420,7 @@ call s:SetCommandAbbrs('gpush', 'AsyncRun git push')
 call s:SetCommandAbbrs('gs', 'Gstatus')
 call s:SetCommandAbbrs('gw', 'Gw')
 call s:SetCommandAbbrs('gwa', 'Gwa')
-call s:SetCommandAbbrs('man', 'Man')
+call s:SetCommandAbbrs('man', 'Vman')
 call s:SetCommandAbbrs('pc', 'PlugClean')
 call s:SetCommandAbbrs('pi', 'PlugInstall')
 call s:SetCommandAbbrs('pu', 'PlugUpdate')
@@ -1012,7 +1012,7 @@ vmap <silent>    ,w        <Plug>TranslateWV
 vmap <silent>    ,r        <Plug>TranslateRV
 let g:translator_status = ''
 let g:translator_history_enable = 1
-let g:translator_default_engines = ['baicizhan', 'bing', 'google', 'haici', 'youdao']
+let g:translator_default_engines = ['bing', 'google', 'haici', 'youdao']
 let g:translator_window_max_height = 0.8
 let g:translator_window_max_width = 0.8
 " voldikss/vim-floaterm
@@ -1102,66 +1102,80 @@ let g:im_select_enable_focus_events = 0
 let g:vista_echo_cursor_strategy = 'floating_win'
 let g:vista_close_on_jump = 0
 " nvim-treesitter
-" lua <<EOF
-" require'nvim-treesitter.configs'.setup {
-"     highlight = {
-"         enable = true,
-"         disable = { 'c', 'cpp', 'rust', 'markdown' },
-"     },
-"     incremental_selection = {
-"         enable = true,
-"         disable = { 'cpp', 'lua' },
-"         keymaps = {
-"           init_selection = 'gnn',
-"           node_incremental = "grn",
-"           scope_incremental = "grc",
-"           node_decremental = "grm",
-"         }
-"     },
-"     refactor = {
-"       highlight_definitions = {
-"         enable = false
-"       },
-"       highlight_current_scope = {
-"         enable = false
-"       },
-"       smart_rename = {
-"         enable = true,
-"         keymaps = {
-"           smart_rename = "grr"
-"         }
-"       },
-"       navigation = {
-"         enable = true,
-"         keymaps = {
-"           goto_definition = "gnd",
-"           list_definitions = "gnD"
-"         }
-"       }
-"     },
-"     textobjects = {
-"       enable = true,
-"       disable = {},
-"       keymaps = {
-"           ["iL"] = {
-"             -- you can define your own textobjects directly here
-"             python = "(function_definition) @function",
-"             cpp = "(function_definition) @function",
-"             c = "(function_definition) @function",
-"             java = "(method_declaration) @function"
-"           },
-"           -- or you use the queries from supported languages with textobjects.scm
-"           ["af"] = "@function.outer",
-"           ["if"] = "@function.inner",
-"           ["aC"] = "@class.outer",
-"           ["iC"] = "@class.inner",
-"           ["ac"] = "@conditional.outer",
-"           ["ic"] = "@conditional.inner",
-"           ["ae"] = "@block.outer",
-"           ["ie"] = "@block.inner",
-"       }
-"     },
-"     ensure_installed = 'all' -- one of 'all', 'language', or a list of languages
-" }
-" EOF
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+    highlight = {
+        enable = true,
+        disable = { 'c', 'cpp', 'rust', 'markdown', 'python' },
+    },
+    incremental_selection = {
+        enable = true,
+        disable = { 'cpp', 'lua' },
+        keymaps = {
+          init_selection = 'gnn',
+          node_incremental = "grn",
+          scope_incremental = "grc",
+          node_decremental = "grm",
+        }
+    },
+    refactor = {
+      highlight_definitions = {
+        enable = false
+      },
+      highlight_current_scope = {
+        enable = false
+      },
+      smart_rename = {
+        enable = true,
+        keymaps = {
+          smart_rename = "grr"
+        }
+      },
+      navigation = {
+        enable = true,
+        keymaps = {
+          goto_definition = "gnd",
+          list_definitions = "gnD"
+        }
+      }
+    },
+    textobjects = {
+      enable = true,
+      disable = {},
+      keymaps = {
+          ["iL"] = {
+            -- you can define your own textobjects directly here
+            python = "(function_definition) @function",
+            cpp = "(function_definition) @function",
+            c = "(function_definition) @function",
+            java = "(method_declaration) @function"
+          },
+          -- or you use the queries from supported languages with textobjects.scm
+          ["af"] = "@function.outer",
+          ["if"] = "@function.inner",
+          ["aC"] = "@class.outer",
+          ["iC"] = "@class.inner",
+          ["ac"] = "@conditional.outer",
+          ["ic"] = "@conditional.inner",
+          ["ae"] = "@block.outer",
+          ["ie"] = "@block.inner",
+      }
+    },
+    ensure_installed = {
+      'bash',
+      'c',
+      'cpp',
+      'css',
+      'go',
+      'html',
+      'java',
+      'javascript',
+      'json',
+      'python',
+      'rust',
+      'toml',
+      'typescript'
+    }
+}
+EOF
 " }}}

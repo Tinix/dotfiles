@@ -1,1 +1,1 @@
-runtime! c.vim
+runtime! ftplugin/c.vim
