@@ -14,6 +14,9 @@ function! s:open_file() abort
     hide
   endif
   let cmd = s:get_editcmd()
+  if empty(cmd)
+    return
+  endif
   for winnr in range(1, winnr('$'))
     let bt = getbufvar(winbufnr(winnr), '&bt')
     let ft = getbufvar(winbufnr(winnr), '&ft')
@@ -31,6 +34,9 @@ endfunction
 let s:preview_float_winid = -1
 function! s:preview_file()
   let cmd = s:get_editcmd()
+  if empty(cmd)
+    return
+  endif
   let winid = lib#floatwin#open(0, 80, 20, 'topright')
   execute cmd
   setlocal number
@@ -63,18 +69,20 @@ function! s:get_editcmd() abort
   let curline = getline('.')
   let lnum = matchstr(curline, curfile . ':\zs\d\+\ze')
 
-  " search for the curfile
-  while curfile =~ '^\(../\|./\)'
-    let curfile = substitute(curfile, '^\(../\|./\)', '', 'g')
-  endwhile
-  if curfile !~ '^/' " not begin with '/'
-    let curfile = findfile(curfile, '.,**5;' . lib#path#get_root())
+  if !filereadable(curfile)
+    " search for the curfile
+    while curfile =~ '^\(../\|./\)'
+      let curfile = substitute(curfile, '^\(../\|./\)', '', 'g')
+    endwhile
+    if curfile !~ '^/' " not begin with '/'
+      let curfile = findfile(curfile, '.,**5;' . lib#path#get_root())
+    endif
+    if empty(curfile)
+      call lib#utils#ShowMsg('file not found', 'error')
+      return
+    endif
+    let curfile = fnamemodify(curfile, ':p')
   endif
-  if empty(curfile)
-    call lib#utils#ShowMsg('file not found', 'error')
-    return
-  endif
-  let curfile = fnamemodify(curfile, ':p')
 
   if empty('lnum')
     let cmd = printf('edit! %s', curfile)
