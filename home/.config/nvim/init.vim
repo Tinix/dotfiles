@@ -49,7 +49,7 @@ let g:winmgr_only_one_win = 0
 " Basic: {{{
 " file & directory & format
 set history=2000
-set pumheight=15
+set pumheight=20
 set updatetime=100
 set autoread
 set autowrite
@@ -163,7 +163,7 @@ if matchstr(execute('silent version'), 'NVIM v\zs[^\n-]*') >= '0.4.0'
   set inccommand=nosplit
   set wildoptions+=pum
   set signcolumn=yes:1
-  set pumblend=10
+  set pumblend=0
 endif
 " }}}
 
@@ -202,7 +202,7 @@ Plug 'brglng/vim-im-select', {'on': 'ImSelectEnable'}
 Plug 'easymotion/vim-easymotion'
 Plug 'yangmillstheory/vim-snipe'
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
-Plug 'andrewradev/sideways.vim', {'on': ['SidewaysLeft', 'SidewaysRight']}
+Plug 'andrewradev/sideways.vim'
 Plug 'foosoft/vim-argwrap', {'on': '<Plug>(ArgWrapToggle)'}
 Plug 'junegunn/vader.vim'
 Plug 'junegunn/vim-easy-align', {'on': '<Plug>(EasyAlign)'}
@@ -712,6 +712,7 @@ nmap <silent> <Leader>cl :<C-u>CocList<CR>
 nmap <silent> <Leader>cs :<C-u>CocSearch <C-r><C-w><CR>
 nmap <silent> <Leader>cf <Plug>(coc-fix-current)
 nmap <silent> <Leader>cd <Plug>(coc-definition)
+nmap <silent> <Leader>cr <Plug>(coc-refactor)
 nmap <silent> <Leader>ci <Plug>(coc-implementation)
 nmap <silent> <Leader>rn <Plug>(coc-rename)
 nmap <silent> <Leader>rf <Plug>(coc-references-used)
@@ -786,7 +787,6 @@ let g:coc_global_extensions = [
   \ 'coc-prettier',
   \ 'coc-python',
   \ 'coc-rust-analyzer',
-  \ 'coc-snippets',
   \ 'coc-syntax',
   \ 'coc-tag',
   \ 'coc-tasks',
@@ -1020,6 +1020,8 @@ let g:floaterm_title = 'floaterm ($1|$2)'
 let g:floaterm_width = 0.6
 let g:floaterm_height = 0.6
 let g:floaterm_position = 'center'
+" let g:floaterm_wintype = 'normal'
+let g:floaterm_position = 'random'
 let g:floaterm_gitcommit = 'split'
 let g:floaterm_autoclose = 2
 let g:floaterm_autohide = v:true
@@ -1032,22 +1034,14 @@ let g:floaterm_keymap_toggle = '<F12>'
 " hi FloatermNC guibg=skyblue
 hi FloatermBorder guifg=orange
 command! PythonREPL  :FloatermNew --wintype=normal --width=0.5 --position=right python
-" function! s:runner_proc(opts)
-"   let curr_bufnr = floaterm#curr()
-"   if has_key(a:opts, 'silent') && a:opts.silent == 1
-"     call floaterm#hide()
-"   endif
-"   let cmd = 'cd ' . shellescape(getcwd())
-"   call floaterm#terminal#send(curr_bufnr, [cmd])
-"   call floaterm#terminal#send(curr_bufnr, [a:opts.cmd])
-"   stopinsert
-"   if &filetype == 'floaterm' && g:floaterm_autoinsert
-"     call floaterm#util#startinsert()
-"   endif
-" endfunc
-" let g:asyncrun_runner = get(g:, 'asyncrun_runner', {})
-" let g:asyncrun_runner.floaterm = function('s:runner_proc')
-" let g:asynctasks_term_pos='floaterm'
+function! s:runner_proc(opts)
+  let cwd = getcwd()
+  let cmd = 'cd ' . shellescape(cwd) . ' && ' . a:opts.cmd
+  execute 'FloatermNew --position=topright --title=asyncrun_runner_floaterm --autoclose=0 ' . cmd
+endfunction
+let g:asyncrun_runner = get(g:, 'asyncrun_runner', {})
+let g:asyncrun_runner.floaterm = function('s:runner_proc')
+let g:asynctasks_term_pos = 'floaterm'
 " simnalamburt/vim-mundo
 let g:mundo_width              = 30
 let g:mundo_preview_height     = 10
