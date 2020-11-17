@@ -1010,6 +1010,7 @@ nmap <silent>    ,r        <Plug>TranslateR
 vmap <silent>    ,t        <Plug>TranslateV
 vmap <silent>    ,w        <Plug>TranslateWV
 vmap <silent>    ,r        <Plug>TranslateRV
+hi TranslatorBorder guifg=cyan
 let g:translator_status = ''
 let g:translator_history_enable = 1
 let g:translator_default_engines = ['bing', 'google', 'haici', 'youdao']
@@ -1020,8 +1021,6 @@ let g:floaterm_title = 'floaterm ($1|$2)'
 let g:floaterm_width = 0.6
 let g:floaterm_height = 0.6
 let g:floaterm_position = 'center'
-" let g:floaterm_wintype = 'normal'
-let g:floaterm_position = 'random'
 let g:floaterm_gitcommit = 'split'
 let g:floaterm_autoclose = 2
 let g:floaterm_autohide = v:true
@@ -1034,14 +1033,14 @@ let g:floaterm_keymap_toggle = '<F12>'
 " hi FloatermNC guibg=skyblue
 hi FloatermBorder guifg=orange
 command! PythonREPL  :FloatermNew --wintype=normal --width=0.5 --position=right python
-function! s:runner_proc(opts)
-  let cwd = getcwd()
-  let cmd = 'cd ' . shellescape(cwd) . ' && ' . a:opts.cmd
-  execute 'FloatermNew --position=topright --title=asyncrun_runner_floaterm --autoclose=0 ' . cmd
-endfunction
-let g:asyncrun_runner = get(g:, 'asyncrun_runner', {})
-let g:asyncrun_runner.floaterm = function('s:runner_proc')
-let g:asynctasks_term_pos = 'floaterm'
+" function! s:runner_proc(opts)
+"   let cwd = getcwd()
+"   let cmd = 'cd ' . shellescape(cwd) . ' && ' . a:opts.cmd
+"   execute 'FloatermNew --position=topright --title=asyncrun_runner_floaterm --autoclose=0 ' . cmd
+" endfunction
+" let g:asyncrun_runner = get(g:, 'asyncrun_runner', {})
+" let g:asyncrun_runner.floaterm = function('s:runner_proc')
+" let g:asynctasks_term_pos = 'floaterm'
 " simnalamburt/vim-mundo
 let g:mundo_width              = 30
 let g:mundo_preview_height     = 10
