@@ -1,12 +1,9 @@
 " ============================================================================
-" FileName: asyncrun.vim
+" FileName: number.vim
 " Author: voldikss <dyzplus@gmail.com>
 " GitHub: https://github.com/voldikss
 " ============================================================================
 
-function! lib#asyncrun#term_style(timer) abort
-  " to check if the terminal is opened by asyncrun
-  if exists('b:asyncrun_cmd')
-    setlocal number
-  endif
+function! fn#textobj#number#() abort
+  call fn#textobj#('\v\d+')
 endfunc

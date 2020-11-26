@@ -4,11 +4,11 @@
 " GitHub: https://github.com/voldikss
 " ============================================================================
 
-function! lib#api#win_exists(winid) abort
+function! fn#api#win_exists(winid) abort
   return !empty(getwininfo(a:winid))
 endfunction
 
-function! lib#api#win_execute(winid, cmd) abort
+function! fn#api#win_execute(winid, cmd) abort
   let winid = win_getid()
   if winid == a:winid
     execute a:cmd

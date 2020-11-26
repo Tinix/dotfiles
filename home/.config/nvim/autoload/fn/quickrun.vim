@@ -2,7 +2,7 @@
 " GitHub: https://github.com/voldikss
 
 " QuickRun:
-function! lib#quickrun#run(...) abort
+function! fn#quickrun#run(...) abort
   update
   if g:asyncrun_status ==# 'running'
     AsyncStop
@@ -28,7 +28,7 @@ function! lib#quickrun#run(...) abort
   endif
 endfunc
 
-function! lib#quickrun#Complete(arg_lead,cmd_line,cursor_pos) abort
+function! fn#quickrun#Complete(arg_lead,cmd_line,cursor_pos) abort
   let lst = ['AsyncRun'] + getcompletion('', 'shellcmd')
   let cmd_line_before_cursor = a:cmd_line[:a:cursor_pos - 1]
   let args = split(cmd_line_before_cursor, '\v\\@<!(\\\\)*\zs\s+', 1)

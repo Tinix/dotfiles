@@ -2,7 +2,7 @@
 " GitHub: https://github.com/voldikss
 
 " AbsPath:
-function! lib#lightline#AbsPath()
+function! fn#lightline#AbsPath()
   let path = substitute(expand('%:p'), $HOME, '~', 'g')
   if len(path) > winwidth(0)/3
     let path = pathshorten(path)
@@ -14,7 +14,7 @@ function! lib#lightline#AbsPath()
 endfunc
 
 " Mode:
-function! lib#lightline#Mode()
+function! fn#lightline#Mode()
   return &filetype ==# 'coc-explorer' ? 'coc-explorer' :
     \ &filetype ==# 'denite' ? 'Denite' :
     \ &filetype ==# 'gitv' ? 'GitV' :
@@ -30,14 +30,14 @@ function! lib#lightline#Mode()
 endfunc
 
 " FileName:
-function! lib#lightline#FileName()
+function! fn#lightline#FileName()
   let filename = expand('%:t') !=# '' ? expand('%:t') : ''
   let modified = &modified ? ' ✎' : ''
   return filename . modified
 endfunc
 
 " GitBranch:
-function! lib#lightline#GitBranch()
+function! fn#lightline#GitBranch()
   if exists('*FugitiveHead') && &filetype !~# '\v(denite|help|man|qf|tagbar|Mundo|vista)'
     let branch = FugitiveHead()
     return branch !=# '' ? ''. branch : ''
@@ -46,7 +46,7 @@ function! lib#lightline#GitBranch()
 endfunc
 
 " FileFormat:
-function! lib#lightline#FileFormat()
+function! fn#lightline#FileFormat()
   return &filetype !=# 'denite' &&
     \ &filetype !=# 'gitv' &&
     \ &filetype !=# 'help' &&
@@ -60,12 +60,12 @@ function! lib#lightline#FileFormat()
 endfunc
 
 " FileType:
-function! lib#lightline#FileType()
+function! fn#lightline#FileType()
   return strlen(&filetype) ? (WebDevIconsGetFileTypeSymbol() . ' ' . &filetype) : ''
 endfunc
 
 " FileEncoding:
-function! lib#lightline#FileEncoding()
+function! fn#lightline#FileEncoding()
   return &filetype !=# 'denite' &&
     \ &filetype !=# 'gitv' &&
     \ &filetype !=# 'help' &&
@@ -79,6 +79,6 @@ function! lib#lightline#FileEncoding()
 endfunc
 
 " ReadOnly:
-function! lib#lightline#ReadOnly()
+function! fn#lightline#ReadOnly()
   return &readonly && &filetype !~# '\v(denite|help|man|qf|startify)' && expand('%:t') !~ ('__vista__') ? '' : ''
 endfunc

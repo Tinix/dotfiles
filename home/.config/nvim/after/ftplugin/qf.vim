@@ -41,7 +41,7 @@ function! s:preview_file()
     let curfile = expand('<cfile>')
     let cmd = printf('edit! %s', curfile)
 	endif
-  let winid = lib#floatwin#open(0, 80, 20, 'topright')
+  let winid = fn#floatwin#open(0, 80, 20, 'topright')
   execute cmd
   setlocal number
   let s:preview_float_winid = winid
@@ -55,7 +55,7 @@ function! s:close_float_win(...) abort
   if win_getid() == s:preview_float_winid
     return
   else
-    if lib#api#win_exists(s:preview_float_winid)
+    if fn#api#win_exists(s:preview_float_winid)
       call nvim_win_close(s:preview_float_winid, v:true)
     endif
     autocmd! close_preview_float_win

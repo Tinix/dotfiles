@@ -5,7 +5,7 @@
 " ============================================================================
 
 " BrowserOpen:
-function! lib#utils#browser_open(obj) abort
+function! fn#utils#browser_open(obj) abort
   if has('win32') || has('win64') || has('win32unix')
     let cmd = 'rundll32 url.dll,FileProtocolHandler ' . a:obj
   elseif has('mac') || has('macunix') || has('gui_macvim') || system('uname') =~? '^darwin'
@@ -19,13 +19,13 @@ function! lib#utils#browser_open(obj) abort
 endfunc
 
 " OpenFileExplore:
-function! lib#utils#open_file_explorer() abort
+function! fn#utils#open_file_explorer() abort
   let path = expand(getcwd())
-  call lib#utils#browser_open(path)
+  call fn#utils#browser_open(path)
 endfunc
 
 " Grep:
-function! lib#utils#grep(string) abort
+function! fn#utils#grep(string) abort
   if executable('rg')
     execute "AsyncRun! rg -n " . a:string . " * "
     " execute "AsyncRun! -post=copen\ 8 rg -n " . a:string . " * "
@@ -44,12 +44,12 @@ function! lib#utils#grep(string) abort
 endfunc
 
 " TabMessage:
-function! lib#utils#tab_message(cmd) abort
+function! fn#utils#tab_message(cmd) abort
   redir => message
   silent execute a:cmd
   redir END
   if empty(message)
-    call lib#utils#ShowMsg('No Output', 'warning')
+    call fn#utils#ShowMsg('No Output', 'warning')
   else
     new
     setlocal buftype=nofile bufhidden=wipe noswapfile nobuflisted nomodified
@@ -58,7 +58,7 @@ function! lib#utils#tab_message(cmd) abort
 endfunc
 
 " ShowMessage:
-function! lib#utils#ShowMsg(message, ...) abort
+function! fn#utils#ShowMsg(message, ...) abort
   if a:0 == 0
     let msg_type = 'more'
   else
@@ -81,7 +81,7 @@ function! lib#utils#ShowMsg(message, ...) abort
 endfunc
 
 " SyntaxAt:
-function! lib#utils#syntax_at(...)
+function! fn#utils#syntax_at(...)
   syntax sync fromstart
   if a:0 < 2
     let l:pos = getpos('.')
@@ -103,7 +103,7 @@ function! lib#utils#syntax_at(...)
 endfunc
 
 " DelimiterLine:
-function! lib#utils#insert_line(style, ...) abort
+function! fn#utils#insert_line(style, ...) abort
   if a:0 > 0
     let count = a:1
   else
@@ -121,7 +121,7 @@ function! lib#utils#insert_line(style, ...) abort
 endfunc
 
 " Zeal:
-function! lib#utils#zeal(query) abort
+function! fn#utils#zeal(query) abort
   if empty(a:query)
     let query = expand('<cword>')
   else
@@ -132,7 +132,7 @@ function! lib#utils#zeal(query) abort
 endfunc
 
 " Delete buffer and go back:
-function! lib#utils#jumpback() abort
+function! fn#utils#jumpback() abort
   let buf = bufnr('%')
   let jumplst = getjumplist()
   let pos = jumplst[0][jumplst[-1]-1]
@@ -146,21 +146,21 @@ endfunc
 
 
 " WinDo: Like windo but restore the current window.
-function! lib#utils#windo(command)
+function! fn#utils#windo(command)
   let curwin=winnr()
   execute 'windo ' . a:command
   execute curwin . 'wincmd w'
 endfunction
 
 " BufDo: Like bufdo but restore the current buffer.
-function! lib#utils#bufdo(command)
+function! fn#utils#bufdo(command)
   let curbuf=bufnr("%")
   execute 'bufdo ' . a:command
   execute 'buffer ' . curbuf
 endfunction
 
 " TabDo: Like tabdo but restore the current tab.
-function! lib#utils#tabdo(command)
+function! fn#utils#tabdo(command)
   let curtab=tabpagenr()
   execute 'tabdo ' . a:command
   execute 'tabn ' . curtab

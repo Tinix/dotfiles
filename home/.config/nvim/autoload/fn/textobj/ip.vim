@@ -4,7 +4,7 @@
 " GitHub: https://github.com/voldikss
 " ============================================================================
 
-function! lib#textobj#ip#() abort
+function! fn#textobj#ip#() abort
   " pattern from https://github.com/deris/vim-textobj-ipmac/blob/master/plugin/textobj/ipmac.vim
   let pattern =
     \ '\%(\%(\%('
@@ -33,5 +33,5 @@ function! lib#textobj#ip#() abort
     \ .'\|\%(25[0-5]\|2[0-4]\d\|1\d\{2}\|[1-9]\?\d\)\%(\.\%(25[0-5]\|2[0-4]\d\|1\d\{2}\|[1-9]\?\d\)\)\{3}'
     \ .'\|[[:xdigit:]]\{2}\%(:[[:xdigit:]]\{2}\)\{5}'
     \ .'\)'
-  call lib#textobj#(pattern)
+  call fn#textobj#(pattern)
 endfunc

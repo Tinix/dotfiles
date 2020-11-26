@@ -73,7 +73,7 @@ function! s:floatwin_pos(width, height, pos) abort
   return [row, col, anchor]
 endfunction
 
-function! lib#floatwin#open(bufnr, width, height, pos) abort
+function! fn#floatwin#open(bufnr, width, height, pos) abort
   let [row, col, anchor] = s:floatwin_pos(a:width, a:height, a:pos)
   let opts = {
     \ 'relative': 'editor',

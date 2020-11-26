@@ -5,7 +5,7 @@
 " ============================================================================
 
 " AutoFormat:
-function! lib#file#autoformat() abort
+function! fn#file#autoformat() abort
   if &readonly || !&modifiable
     return
   endif
@@ -26,7 +26,7 @@ function! lib#file#autoformat() abort
 endfunc
 
 " AutoSave:
-function! lib#file#autosave() abort
+function! fn#file#autosave() abort
   if &readonly || !&modifiable || &bt == 'acwrite'
     return
   endif
@@ -71,7 +71,7 @@ function! s:remove_white_spaces()
 endfunc
 
 " RenameFile:
-function! lib#file#rename(name) abort
+function! fn#file#rename(name) abort
   let old = expand('%')
   if empty(a:name)
     let new = input('New file name: ', expand('%'), 'file')
@@ -91,7 +91,7 @@ function! lib#file#rename(name) abort
 endfunc
 
 " RemoveFile: remove current file
-function! lib#file#remove() abort
+function! fn#file#remove() abort
   let fname = expand('%')
   execute 'bdelete ' fname
   if has('unix')
