@@ -49,7 +49,7 @@ function! fn#utils#tab_message(cmd) abort
   silent execute a:cmd
   redir END
   if empty(message)
-    call fn#utils#ShowMsg('No Output', 'warning')
+    call fn#utils#show_message('No Output', 'warning')
   else
     new
     setlocal buftype=nofile bufhidden=wipe noswapfile nobuflisted nomodified
@@ -58,7 +58,7 @@ function! fn#utils#tab_message(cmd) abort
 endfunc
 
 " ShowMessage:
-function! fn#utils#ShowMsg(message, ...) abort
+function! fn#utils#show_message(content, ...) abort
   if a:0 == 0
     let msg_type = 'more'
   else
@@ -71,10 +71,10 @@ function! fn#utils#ShowMsg(message, ...) abort
   elseif msg_type == 'error'
     echohl ErrorMsg
   endif
-  if type(a:message) != 1
-    let message = join(a:message, "\n")
+  if type(a:content) != 1
+    let message = join(a:content, "\n")
   else
-    let message = a:message
+    let message = a:content
   endif
   echo message
   echohl None

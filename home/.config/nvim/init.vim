@@ -68,9 +68,9 @@ set nowrap
 set fileignorecase
 set formatoptions+=m
 set formatoptions+=B
-set dictionary+=~/.vim/dict/dictionary.txt
+set dictionary+=~/.config/nvim/dict/dictionary.txt
 set nospell
-set spellfile=~/.vim/spell/en.utf-8.add
+set spellfile=~/.config/nvim/spell/en.utf-8.add
 set tags=./tags;,tags
 set tagfunc=CocTagFunc
 " key
@@ -220,6 +220,7 @@ Plug 'tomtom/tcomment_vim'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'voldikss/vim-browser-search'
+Plug 'voldikss/vim-skylight'
 Plug 'voldikss/vim-codelf'
 Plug 'voldikss/vim-floaterm'
 Plug 'voldikss/vim-fnote'
@@ -483,6 +484,9 @@ vnoremap >  >gv
 nnoremap <C-u> <C-u>zz
 nnoremap <C-d> <C-d>zz
 nnoremap <silent> <C-g> :call fn#keymap#ctrlg#()<CR>
+" PreviewAndOpen:
+nnoremap <silent> go  :SkylightJumpTo<CR>
+nnoremap <silent> gp  :SkylightPreview<CR>
 " Move:
 nnoremap <silent> [[  :<C-u>call fn#keymap#n#right_square_brackets()<CR>
 nnoremap <silent> ]]  :<C-u>call fn#keymap#n#left_square_brackets()<CR>

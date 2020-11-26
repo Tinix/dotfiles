@@ -19,3 +19,7 @@ function! fn#api#win_execute(winid, cmd) abort
     endif
   endif
 endfunction
+
+function! fn#api#bufamount() abort
+  return len(getbufinfo({'buflisted':1}))
+endfunction
