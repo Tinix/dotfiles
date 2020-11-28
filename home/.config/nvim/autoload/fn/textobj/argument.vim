@@ -5,7 +5,7 @@
 " ============================================================================
 
 " https://github.com/gaving/vim-textobj-argument/blob/master/plugin/argtextobj.vim
-function! lib#textobj#argument#(inner, visual)
+function! fn#textobj#argument#(inner, visual)
   let cnt = v:count1
   let current_c = getline('.')[getpos('.')[2]-1]
   if current_c==',' || current_c=='('

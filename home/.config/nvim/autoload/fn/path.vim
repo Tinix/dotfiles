@@ -125,7 +125,7 @@ function! s:path_join(home, name) abort
   endif
 endfunction
 
-function! lib#path#get_root() abort
+function! fn#path#get_root() abort
   let markers = ['.git', '.root']
   let strict = 0
   let l:hr = s:find_root(getcwd(), markers, strict)
@@ -135,7 +135,7 @@ function! lib#path#get_root() abort
   return l:hr
 endfunction
 
-function! lib#path#chdir(path) abort
+function! fn#path#chdir(path) abort
   if has('nvim')
     let cmd = haslocaldir()? 'lcd' : (haslocaldir(-1, 0)? 'tcd' : 'cd')
   else

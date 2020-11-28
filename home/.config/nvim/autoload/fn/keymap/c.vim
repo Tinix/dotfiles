@@ -5,7 +5,7 @@
 " ============================================================================
 
 " Command: <BS>
-function! lib#keymap#c#BS() abort
+function! fn#keymap#c#BS() abort
   let pos = getcmdpos()
   let surround = getcmdline()[pos-2:pos-1]
   if index(["''", '<>', '()', '[]', '{}'], surround) >=0
@@ -16,7 +16,7 @@ function! lib#keymap#c#BS() abort
 endfunc
 
 " Command: ''|<>|()|[]|{}
-function! lib#keymap#c#pairs(pairs) abort
+function! fn#keymap#c#pairs(pairs) abort
   let pos = getcmdpos()
   let prechar = getcmdline()[pos-2]
   if prechar == a:pairs[0]

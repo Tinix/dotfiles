@@ -21,7 +21,7 @@ let g:loaded_zipPlugin         = 1
 let g:loaded_netrwPlugin       = 1
 " HostProg:
 if has('win32') || has('win64') || has('win32unix')
-  let g:python3_host_prog='C:\Program Files\Python36/python.exe'
+  let g:python3_host_prog='C:\Program Files\Python38/python.exe'
 else
   let g:python3_host_prog='/usr/bin/python3'
 endif
@@ -49,7 +49,7 @@ let g:winmgr_only_one_win = 0
 " Basic: {{{
 " file & directory & format
 set history=2000
-set pumheight=15
+set pumheight=20
 set updatetime=100
 set autoread
 set autowrite
@@ -68,9 +68,9 @@ set nowrap
 set fileignorecase
 set formatoptions+=m
 set formatoptions+=B
-set dictionary+=~/.vim/dict/dictionary.txt
+set dictionary+=~/.config/nvim/dict/dictionary.txt
 set nospell
-set spellfile=~/.vim/spell/en.utf-8.add
+set spellfile=~/.config/nvim/spell/en.utf-8.add
 set tags=./tags;,tags
 set tagfunc=CocTagFunc
 " key
@@ -106,7 +106,7 @@ set shortmess+=c
 set shortmess-=S
 set scrolloff=6
 set listchars=tab:\|\ ,trail:.,extends:>,precedes:<
-colorscheme molokai
+colorscheme srcery
 " match & search
 set showmatch
 set matchtime=0
@@ -163,15 +163,15 @@ if matchstr(execute('silent version'), 'NVIM v\zs[^\n-]*') >= '0.4.0'
   set inccommand=nosplit
   set wildoptions+=pum
   set signcolumn=yes:1
-  set pumblend=10
+  set pumblend=0
 endif
 " }}}
 
 " Plugin: {{{
 call plug#begin('~/.cache/nvim/plugged')
 " Languages
-" Plug 'nvim-treesitter/nvim-treesitter'
-Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh' } " use to debug nvim itself
+Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'sakhnik/nvim-gdb', {'do': ':!./install.sh', 'on': 'GdbStart'} " use to debug nvim itself
 Plug 'alvan/vim-closetag', {'for': ['html', 'xml']}
 Plug 'fatih/vim-go'
 Plug 'iamcco/markdown-preview.nvim', {'for': 'markdown', 'do': 'cd app && npm install'}
@@ -183,7 +183,7 @@ Plug 'posva/vim-vue', {'for': 'vue'}
 Plug 'rust-lang/rust.vim', {'for': 'rust'}
 Plug 'tpope/vim-dadbod', {'for': ['sql', 'mysql']}
 " Completion
-Plug 'neoclide/coc.nvim', {'do': 'npm install'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Style
 Plug 'Yggdroot/indentLine'
 Plug 'lukas-reineke/indent-blankline.nvim'
@@ -202,7 +202,7 @@ Plug 'brglng/vim-im-select', {'on': 'ImSelectEnable'}
 Plug 'easymotion/vim-easymotion'
 Plug 'yangmillstheory/vim-snipe'
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
-Plug 'andrewradev/sideways.vim', {'on': ['SidewaysLeft', 'SidewaysRight']}
+Plug 'andrewradev/sideways.vim'
 Plug 'foosoft/vim-argwrap', {'on': '<Plug>(ArgWrapToggle)'}
 Plug 'junegunn/vader.vim'
 Plug 'junegunn/vim-easy-align', {'on': '<Plug>(EasyAlign)'}
@@ -220,6 +220,7 @@ Plug 'tomtom/tcomment_vim'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'voldikss/vim-browser-search'
+Plug 'voldikss/vim-skylight'
 Plug 'voldikss/vim-codelf'
 Plug 'voldikss/vim-floaterm'
 Plug 'voldikss/vim-fnote'
@@ -254,7 +255,7 @@ augroup END
 
 augroup AutoSaveBuffer
   autocmd!
-  autocmd FocusLost,InsertLeave * call lib#file#autosave()
+  autocmd FocusLost,InsertLeave * call fn#file#autosave()
 augroup END
 
 augroup LineNumber
@@ -316,7 +317,7 @@ augroup END
 
 " augroup AutoNohlsearch
 "   autocmd!
-"   autocmd CursorMoved * call lib#hlsearch#start_hl()
+"   autocmd CursorMoved * call fn#hlsearch#start_hl()
 " augroup END
 
 augroup CocExplorerCustom
@@ -338,7 +339,7 @@ augroup TermSettings " neovim only
     \ setlocal nospell |
     \ setlocal modifiable |
     \ nmap <silent><buffer> q :q<CR> |
-    \ call timer_start(10, 'lib#asyncrun#term_style') |
+    \ call timer_start(10, 'fn#asyncrun#term_style') |
     \ if empty(&ft) |
     \   setlocal filetype=terminal |
     \ endif
@@ -371,6 +372,8 @@ function! s:OnColorSchemeLoaded() abort
   " hi CocFloating                guibg=blue
   hi CursorLineNr               guifg=orange
   hi Normal                     guibg=#111111 guifg=#eeeeee
+  hi PmenuThumb                  guifg=white guibg=white
+  hi VisualNOS                  guibg=#404D3D
 
   let normal_bg = matchstr(execute('hi Normal'), 'guibg=\zs\S*')
   exe 'hi EndOfBuffer           guifg=' . normal_bg
@@ -420,7 +423,7 @@ call s:SetCommandAbbrs('gpush', 'AsyncRun git push')
 call s:SetCommandAbbrs('gs', 'Gstatus')
 call s:SetCommandAbbrs('gw', 'Gw')
 call s:SetCommandAbbrs('gwa', 'Gwa')
-call s:SetCommandAbbrs('man', 'Man')
+call s:SetCommandAbbrs('man', 'Vman')
 call s:SetCommandAbbrs('pc', 'PlugClean')
 call s:SetCommandAbbrs('pi', 'PlugInstall')
 call s:SetCommandAbbrs('pu', 'PlugUpdate')
@@ -434,32 +437,32 @@ call s:SetCommandAbbrs('w!!', '%!sudo tee >/dev/null %')
 
 " Commands: {{{
 command! CwordhiToggle call CwordhiToggle()
-command! AutoFormat call lib#file#autoformat()
-command! OpenFileExplorer call lib#utils#open_file_explorer()
-command! CloseNoBuflistedBuffers call lib#buffer#close_nobuflisted_bufs()
-command! CloseNoCurrentBuffers call lib#buffer#close_nocurrent_bufs()
-command! CloseNoDisplayedBuffers call lib#buffer#close_nodisplayed_bufs()
+command! AutoFormat call fn#file#autoformat()
+command! OpenFileExplorer call fn#utils#open_file_explorer()
+command! CloseNoBuflistedBuffers call fn#buffer#close_nobuflisted_bufs()
+command! CloseNoCurrentBuffers call fn#buffer#close_nocurrent_bufs()
+command! CloseNoDisplayedBuffers call fn#buffer#close_nodisplayed_bufs()
 command! Gwa AsyncRun -cwd=<root> -silent=1 git add .
-command! -nargs=* Zeal call lib#utils#zeal(<q-args>)
-command! -nargs=* SyntaxAt call lib#utils#syntax_at(<f-args>)
-command! -nargs=? Bline call lib#utils#insert_line('bold', <f-args>)
-command! -nargs=? Cline call lib#utils#insert_line('comment', <f-args>)
-command! -nargs=? Line call lib#utils#insert_line('light', <f-args>)
-command! -nargs=? RenameFile call lib#file#rename(<q-args>)
-command! -nargs=? RemoveFile call lib#file#remove()
-command! -nargs=+ Grep  call lib#utils#grep(<q-args>)
-command! -nargs=? -bang Conceal call lib#conceal#pattern(<bang>0, <q-args>)
-command! -nargs=+ -complete=file  BrowserOpen  call lib#utils#browser_open(<q-args>)
-command! -nargs=+ -complete=command Windo call lib#utils#windo(<q-args>)
-command! -nargs=+ -complete=command Bufdo call lib#utils#bufdo(<q-args>)
-command! -nargs=+ -complete=command Tabdo call lib#utils#tabdo(<q-args>)
-command! -nargs=+ -complete=command  TabMessage call lib#utils#tab_message(<q-args>)
-command! -nargs=? -complete=customlist,lib#quickrun#Complete QuickRun call lib#quickrun#run(<f-args>)
-command! -nargs=+ -complete=customlist,lib#window#Complete SwitchWindow call lib#window#switch_window(<q-args>)
+command! -nargs=* Zeal call fn#utils#zeal(<q-args>)
+command! -nargs=* SyntaxAt call fn#utils#syntax_at(<f-args>)
+command! -nargs=? Bline call fn#utils#insert_line('bold', <f-args>)
+command! -nargs=? Cline call fn#utils#insert_line('comment', <f-args>)
+command! -nargs=? Line call fn#utils#insert_line('light', <f-args>)
+command! -nargs=? RenameFile call fn#file#rename(<q-args>)
+command! -nargs=? RemoveFile call fn#file#remove()
+command! -nargs=+ Grep  call fn#utils#grep(<q-args>)
+command! -nargs=? -bang Conceal call fn#conceal#pattern(<bang>0, <q-args>)
+command! -nargs=+ -complete=file  SystemOpen  call fn#utils#system_open(<q-args>)
+command! -nargs=+ -complete=command Windo call fn#utils#windo(<q-args>)
+command! -nargs=+ -complete=command Bufdo call fn#utils#bufdo(<q-args>)
+command! -nargs=+ -complete=command Tabdo call fn#utils#tabdo(<q-args>)
+command! -nargs=+ -complete=command  TabMessage call fn#utils#tab_message(<q-args>)
+command! -nargs=? -complete=customlist,fn#quickrun#Complete QuickRun call fn#quickrun#run(<f-args>)
+command! -nargs=+ -complete=customlist,fn#window#Complete SwitchWindow call fn#window#switch_window(<q-args>)
 command! -nargs=? YarnWatch call floaterm#new(0, empty(<q-args>) ? 'yarn watch' : <q-args>, {
-  \ 'on_stdout': function('lib#floaterm#watch_cb'),
-  \ 'on_stderr': function('lib#floaterm#watch_cb'),
-  \ 'on_exit': function('lib#floaterm#watch_cb')
+  \ 'on_stdout': function('fn#floaterm#watch_cb'),
+  \ 'on_stderr': function('fn#floaterm#watch_cb'),
+  \ 'on_exit': function('fn#floaterm#watch_cb')
   \ }, {})
 " }}}
 
@@ -469,9 +472,9 @@ let g:mapleader = ';'
 noremap  H  ^
 noremap  L  $
 " Esc:
-inoremap <C-c> <C-R>=lib#keymap#i#Esc()<CR>
-inoremap <C-[> <C-R>=lib#keymap#i#Esc()<CR>
-inoremap <Esc> <C-r>=lib#keymap#i#Esc()<CR>
+inoremap <C-c> <C-R>=fn#keymap#i#Esc()<CR>
+inoremap <C-[> <C-R>=fn#keymap#i#Esc()<CR>
+inoremap <Esc> <C-r>=fn#keymap#i#Esc()<CR>
 "cannot use noremap
 nmap     M  %
 omap     M  %
@@ -482,24 +485,27 @@ vnoremap <  <gv
 vnoremap >  >gv
 nnoremap <C-u> <C-u>zz
 nnoremap <C-d> <C-d>zz
-nnoremap <silent> <C-g> :call lib#keymap#ctrlg#()<CR>
+nnoremap <silent> <C-g> :call fn#keymap#ctrlg#()<CR>
+" PreviewAndOpen:
+nnoremap <silent> go  :<C-u>SkylightJumpTo<CR>
+nnoremap <silent> gp  :<C-u>SkylightPreview<CR>
 " Move:
-nnoremap <silent> [[  :<C-u>call lib#keymap#n#right_square_brackets()<CR>
-nnoremap <silent> ]]  :<C-u>call lib#keymap#n#left_square_brackets()<CR>
+nnoremap <silent> [[  :<C-u>call fn#keymap#n#right_square_brackets()<CR>
+nnoremap <silent> ]]  :<C-u>call fn#keymap#n#left_square_brackets()<CR>
 vnoremap <silent> [[  {j
 vnoremap <silent> ]]  }k
 " Jump:
-nnoremap <silent> <C-j>      :<C-u>call lib#keymap#n#jump()<CR>
-nnoremap <silent> <C-k>      :<C-u>call lib#coc#showdoc()<CR>
+nnoremap <silent> <C-j>      :<C-u>call fn#keymap#n#jump()<CR>
+nnoremap <silent> <C-k>      :<C-u>call fn#coc#showdoc()<CR>
 nnoremap <silent> <C-w><C-j> <C-W>v<C-]>zz
-nnoremap <silent> <C-w><C-o> :<C-u>call lib#utils#jumpback()<CR>
+nnoremap <silent> <C-w><C-o> :<C-u>call fn#utils#jumpback()<CR>
 " Search:
 nnoremap <expr> n  'Nn'[v:searchforward].'zz'
 nnoremap <expr> N  'nN'[v:searchforward].'zz'
 nnoremap * m`:keepjumps normal! *``zz<cr>
 nnoremap # #zz
-xnoremap * :<C-u>call lib#keymap#x#visual_star_search('/')<CR>/<C-R>=@/<CR><CR>N
-xnoremap # :<C-u>call lib#keymap#x#visual_star_search('?')<CR>?<C-R>=@/<CR><CR>n
+xnoremap * :<C-u>call fn#keymap#x#visual_star_search('/')<CR>/<C-R>=@/<CR><CR>N
+xnoremap # :<C-u>call fn#keymap#x#visual_star_search('?')<CR>?<C-R>=@/<CR><CR>n
 " TextObject:
 " document
 xnoremap <silent> id GoggV
@@ -511,19 +517,19 @@ onoremap <silent> il :normal vil<CR>
 xnoremap i? [*o]*
 onoremap i? :<C-u>normal va?V<CR>
 " url
-xnoremap <silent> iu :<C-u>call lib#textobj#url#()<CR>
+xnoremap <silent> iu :<C-u>call fn#textobj#url#()<CR>
 onoremap <silent> iu :normal viu<CR>
 " ip
-xnoremap <silent> iI :<C-u>call lib#textobj#ip#()<CR>
+xnoremap <silent> iI :<C-u>call fn#textobj#ip#()<CR>
 onoremap <silent> iI :normal viI<CR>
 " number
-xnoremap <silent> in :<C-u>call lib#textobj#number#()<CR>
+xnoremap <silent> in :<C-u>call fn#textobj#number#()<CR>
 onoremap <silent> in :normal vin<CR>
 " function argument
-xnoremap <silent> ia :<C-u>call lib#textobj#argument#(1, 1)<CR>
-xnoremap <silent> aa :<C-u>call lib#textobj#argument#(0, 1)<CR>
-onoremap <silent> ia :<C-u>call lib#textobj#argument#(1, 0)<CR>
-onoremap <silent> aa :<C-u>call lib#textobj#argument#(0, 0)<CR>
+xnoremap <silent> ia :<C-u>call fn#textobj#argument#(1, 1)<CR>
+xnoremap <silent> aa :<C-u>call fn#textobj#argument#(0, 1)<CR>
+onoremap <silent> ia :<C-u>call fn#textobj#argument#(1, 0)<CR>
+onoremap <silent> aa :<C-u>call fn#textobj#argument#(0, 0)<CR>
 " BufferOperation:
 nnoremap <expr> <silent> <C-h>  (&filetype == 'floaterm') ? ':FloatermPrev<CR>' : ':bprev<CR>'
 nnoremap <expr> <silent> <C-l>  (&filetype == 'floaterm') ? ':FloatermNext<CR>' : ':bnext<CR>'
@@ -546,8 +552,8 @@ inoremap <silent> <C-j> <Down>
 " snoremap <silent> <C-j> <Down>
 inoremap <silent> <C-h> <Left>
 inoremap <silent> <C-l> <Right>
-inoremap <silent> <C-b> <C-r>=lib#keymap#exec('normal! b')<CR>
-inoremap <silent> <C-f> <C-r>=lib#keymap#exec('normal! w')<CR>
+inoremap <silent> <C-b> <C-r>=fn#keymap#exec('normal! b')<CR>
+inoremap <silent> <C-f> <C-r>=fn#keymap#exec('normal! w')<CR>
 inoremap <silent> <C-a> <Home>
 inoremap <silent> <C-e> <End>
 inoremap <silent> <C-o> <End><CR>
@@ -561,7 +567,7 @@ nnoremap <silent>       <M-q> q
 nnoremap <silent>       <Leader>Q Q
 nnoremap <silent><expr> q len(getbufinfo({'buflisted':1})) < 2 ? ":q!\<CR>" : ":bd!\<CR>"
 nnoremap <silent>       Q         :qa!<CR>
-nnoremap <silent><expr> <Leader>d lib#keymap#n#q()
+nnoremap <silent><expr> <Leader>d fn#keymap#n#q()
 " nnoremap <silent> <Leader>Q :qa!<CR>
 " noremap  <silent> <Leader>d :bp<bar>sp<bar>bn<bar>bd!<bar>:redraw!<CR>
 " QuickMessage:
@@ -576,14 +582,16 @@ cnoremap <C-b> <S-Left>
 cnoremap <C-f> <S-Right>
 cnoremap <C-h> <Left>
 cnoremap <C-l> <Right>
-" cnoremap <expr> '    lib#keymap#c#pairs("''")
-cnoremap <expr> <    lib#keymap#c#pairs('<>')
-" cnoremap <expr> (    lib#keymap#c#pairs('()')
-cnoremap <expr> [    lib#keymap#c#pairs('[]')
-cnoremap <expr> {    lib#keymap#c#pairs('{}')
-cnoremap <expr> <BS> lib#keymap#c#BS()
+" cnoremap <expr> '    fn#keymap#c#pairs("''")
+cnoremap <expr> <    fn#keymap#c#pairs('<>')
+" cnoremap <expr> (    fn#keymap#c#pairs('()')
+cnoremap <expr> [    fn#keymap#c#pairs('[]')
+cnoremap <expr> {    fn#keymap#c#pairs('{}')
+cnoremap <expr> <BS> fn#keymap#c#BS()
 " TerminalMode:
-tnoremap <Esc>  <C-\><C-n>
+if has('nvim')
+  tnoremap <Esc>  <C-\><C-n>
+endif
 " tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
 if has('win32') || has('win64')
   nnoremap <silent> <Leader>n :vert term<CR>
@@ -610,9 +618,9 @@ if has('nvim')
   cnoremap <expr> <C-p>  pumvisible() ? '<Left>' : '<Up>'
   cnoremap <expr> <Up>   pumvisible() ? '<C-p>' : '<up>'
   cnoremap <expr> <Down> pumvisible() ? '<C-n>' : '<down>'
-  inoremap <silent> <M-]> <C-R>=lib#keymap#i#flyoutpairs(']')<CR>
-  inoremap <silent> <M-}> <C-R>=lib#keymap#i#flyoutpairs('}')<CR>
-  inoremap <silent> <M-)> <C-R>=lib#keymap#i#flyoutpairs(')')<CR>
+  inoremap <silent> <M-]> <C-R>=fn#keymap#i#flyoutpairs(']')<CR>
+  inoremap <silent> <M-}> <C-R>=fn#keymap#i#flyoutpairs('}')<CR>
+  inoremap <silent> <M-)> <C-R>=fn#keymap#i#flyoutpairs(')')<CR>
 endif
 " WindowSize:
 if has('nvim')
@@ -652,9 +660,9 @@ tnoremap <silent> <F10>            <C-\><C-n>:SwitchWindow vista<CR>
 noremap  <silent> <F12>            <Esc>:SwitchWindow floaterm<CR>
 noremap! <silent> <F12>            <Esc>:SwitchWindow floaterm<CR>
 tnoremap <silent> <F12>            <C-\><C-n>:SwitchWindow floaterm<CR>
-nnoremap <expr>   <CR>             lib#keymap#n#CR() . "\<Esc>"
-inoremap <expr>   <CR>             lib#keymap#i#CR()
-inoremap <expr>   <BS>             lib#keymap#i#BS()
+nnoremap <expr>   <CR>             fn#keymap#n#CR() . "\<Esc>"
+inoremap <expr>   <CR>             fn#keymap#i#CR()
+inoremap <expr>   <BS>             fn#keymap#i#BS()
 " }}}
 
 " Plugin Config: {{{
@@ -693,8 +701,10 @@ let g:semshi#always_update_all_highlights = v:true
 let g:semshi#error_sign = v:false
 " neoclide/coc.nvim
 let g:coc_data_home = '~/.config/coc'
-nnoremap <expr><C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-nnoremap <expr><C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "<C-r>=fn#keymap#exec('normal! w')<CR>"
+inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "<C-r>=fn#keymap#exec('normal! b')<CR>"
 nmap <expr> <silent> <C-c> <SID>select_current_word_and_go_next()
 function! s:select_current_word_and_go_next()
   if !get(g:, 'coc_cursors_activated', 0)
@@ -710,6 +720,7 @@ nmap <silent> <Leader>cl :<C-u>CocList<CR>
 nmap <silent> <Leader>cs :<C-u>CocSearch <C-r><C-w><CR>
 nmap <silent> <Leader>cf <Plug>(coc-fix-current)
 nmap <silent> <Leader>cd <Plug>(coc-definition)
+nmap <silent> <Leader>cr <Plug>(coc-refactor)
 nmap <silent> <Leader>ci <Plug>(coc-implementation)
 nmap <silent> <Leader>rn <Plug>(coc-rename)
 nmap <silent> <Leader>rf <Plug>(coc-references-used)
@@ -784,7 +795,6 @@ let g:coc_global_extensions = [
   \ 'coc-prettier',
   \ 'coc-python',
   \ 'coc-rust-analyzer',
-  \ 'coc-snippets',
   \ 'coc-syntax',
   \ 'coc-tag',
   \ 'coc-tasks',
@@ -861,15 +871,15 @@ let g:lightline = {
     \ 'vim_logo': "😆 "
   \ },
   \ 'component_function': {
-    \ 'mode': 'lib#lightline#Mode',
-    \ 'fugitive': 'lib#lightline#GitBranch',
+    \ 'mode': 'fn#lightline#Mode',
+    \ 'fugitive': 'fn#lightline#GitBranch',
     \ 'cocstatus': 'coc#status',
-    \ 'readonly': 'lib#lightline#ReadOnly',
-    \ 'filename': 'lib#lightline#FileName',
-    \ 'fileformat': 'lib#lightline#FileFormat',
-    \ 'fileencoding': 'lib#lightline#FileEncoding',
-    \ 'filetype': 'lib#lightline#FileType',
-    \ 'absolutepath': 'lib#lightline#AbsPath'
+    \ 'readonly': 'fn#lightline#ReadOnly',
+    \ 'filename': 'fn#lightline#FileName',
+    \ 'fileformat': 'fn#lightline#FileFormat',
+    \ 'fileencoding': 'fn#lightline#FileEncoding',
+    \ 'filetype': 'fn#lightline#FileType',
+    \ 'absolutepath': 'fn#lightline#AbsPath'
   \ },
   \ 'tabline': {
     \ 'left': [['vim_logo', 'buffers']],
@@ -924,10 +934,11 @@ nmap <silent> <Leader>fl :Leaderf line<CR>
 nmap <silent> <Leader>fm :Leaderf mru<CR>
 nmap <silent> <Leader>ft :Leaderf bufTag<CR>
 nmap <silent> <Leader>fu :Leaderf function<CR>
-noremap <silent> <Leader>fr :<C-U><C-R>=printf("Leaderf! gtags -r %s --auto-jump", expand("<cword>"))<CR><CR>
-noremap <silent> <Leader>fd :<C-U><C-R>=printf("Leaderf! gtags -d %s --auto-jump", expand("<cword>"))<CR><CR>
-noremap <silent> <Leader>fn :<C-U><C-R>=printf("Leaderf gtags --next %s", "")<CR><CR>
-noremap <silent> <Leader>fp :<C-U><C-R>=printf("Leaderf gtags --previous %s", "")<CR><CR>
+nmap <silent> <Leader>fr :Leaderf! --recall --stayOpen<CR>
+" noremap <silent> <Leader>fr :<C-U><C-R>=printf("Leaderf! gtags -r %s --auto-jump", expand("<cword>"))<CR><CR>
+" noremap <silent> <Leader>fd :<C-U><C-R>=printf("Leaderf! gtags -d %s --auto-jump", expand("<cword>"))<CR><CR>
+" noremap <silent> <Leader>fn :<C-U><C-R>=printf("Leaderf gtags --next %s", "")<CR><CR>
+" noremap <silent> <Leader>fp :<C-U><C-R>=printf("Leaderf gtags --previous %s", "")<CR><CR>
 let g:Lf_CacheDirectory       = expand('~/.cache/nvim')
 let g:Lf_CommandMap = {
   \'<Up>': ['<C-p>'],
@@ -1007,9 +1018,10 @@ nmap <silent>    ,r        <Plug>TranslateR
 vmap <silent>    ,t        <Plug>TranslateV
 vmap <silent>    ,w        <Plug>TranslateWV
 vmap <silent>    ,r        <Plug>TranslateRV
+hi TranslatorBorder guifg=cyan
 let g:translator_status = ''
 let g:translator_history_enable = 1
-let g:translator_default_engines = ['baicizhan', 'bing', 'google', 'haici', 'youdao']
+let g:translator_default_engines = ['bing', 'google', 'haici', 'youdao']
 let g:translator_window_max_height = 0.8
 let g:translator_window_max_width = 0.8
 " voldikss/vim-floaterm
@@ -1030,21 +1042,13 @@ let g:floaterm_keymap_toggle = '<F12>'
 hi FloatermBorder guifg=orange
 command! PythonREPL  :FloatermNew --wintype=normal --width=0.5 --position=right python
 " function! s:runner_proc(opts)
-"   let curr_bufnr = floaterm#curr()
-"   if has_key(a:opts, 'silent') && a:opts.silent == 1
-"     call floaterm#hide()
-"   endif
-"   let cmd = 'cd ' . shellescape(getcwd())
-"   call floaterm#terminal#send(curr_bufnr, [cmd])
-"   call floaterm#terminal#send(curr_bufnr, [a:opts.cmd])
-"   stopinsert
-"   if &filetype == 'floaterm' && g:floaterm_autoinsert
-"     call floaterm#util#startinsert()
-"   endif
-" endfunc
+"   let cwd = getcwd()
+"   let cmd = 'cd ' . shellescape(cwd) . ' && ' . a:opts.cmd
+"   execute 'FloatermNew --position=topright --title=asyncrun_runner_floaterm --autoclose=0 ' . cmd
+" endfunction
 " let g:asyncrun_runner = get(g:, 'asyncrun_runner', {})
 " let g:asyncrun_runner.floaterm = function('s:runner_proc')
-" let g:asynctasks_term_pos='floaterm'
+" let g:asynctasks_term_pos = 'floaterm'
 " simnalamburt/vim-mundo
 let g:mundo_width              = 30
 let g:mundo_preview_height     = 10
@@ -1099,66 +1103,80 @@ let g:im_select_enable_focus_events = 0
 let g:vista_echo_cursor_strategy = 'floating_win'
 let g:vista_close_on_jump = 0
 " nvim-treesitter
-" lua <<EOF
-" require'nvim-treesitter.configs'.setup {
-"     highlight = {
-"         enable = true,
-"         disable = { 'c', 'cpp', 'rust', 'markdown' },
-"     },
-"     incremental_selection = {
-"         enable = true,
-"         disable = { 'cpp', 'lua' },
-"         keymaps = {
-"           init_selection = 'gnn',
-"           node_incremental = "grn",
-"           scope_incremental = "grc",
-"           node_decremental = "grm",
-"         }
-"     },
-"     refactor = {
-"       highlight_definitions = {
-"         enable = false
-"       },
-"       highlight_current_scope = {
-"         enable = false
-"       },
-"       smart_rename = {
-"         enable = true,
-"         keymaps = {
-"           smart_rename = "grr"
-"         }
-"       },
-"       navigation = {
-"         enable = true,
-"         keymaps = {
-"           goto_definition = "gnd",
-"           list_definitions = "gnD"
-"         }
-"       }
-"     },
-"     textobjects = {
-"       enable = true,
-"       disable = {},
-"       keymaps = {
-"           ["iL"] = {
-"             -- you can define your own textobjects directly here
-"             python = "(function_definition) @function",
-"             cpp = "(function_definition) @function",
-"             c = "(function_definition) @function",
-"             java = "(method_declaration) @function"
-"           },
-"           -- or you use the queries from supported languages with textobjects.scm
-"           ["af"] = "@function.outer",
-"           ["if"] = "@function.inner",
-"           ["aC"] = "@class.outer",
-"           ["iC"] = "@class.inner",
-"           ["ac"] = "@conditional.outer",
-"           ["ic"] = "@conditional.inner",
-"           ["ae"] = "@block.outer",
-"           ["ie"] = "@block.inner",
-"       }
-"     },
-"     ensure_installed = 'all' -- one of 'all', 'language', or a list of languages
-" }
-" EOF
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+    highlight = {
+        enable = true,
+        disable = { 'rust', 'markdown', 'python' },
+    },
+    incremental_selection = {
+        enable = true,
+        disable = { 'cpp', 'lua' },
+        keymaps = {
+          init_selection = 'gnn',
+          node_incremental = "grn",
+          scope_incremental = "grc",
+          node_decremental = "grm",
+        }
+    },
+    refactor = {
+      highlight_definitions = {
+        enable = false
+      },
+      highlight_current_scope = {
+        enable = false
+      },
+      smart_rename = {
+        enable = true,
+        keymaps = {
+          smart_rename = "grr"
+        }
+      },
+      navigation = {
+        enable = true,
+        keymaps = {
+          goto_definition = "gnd",
+          list_definitions = "gnD"
+        }
+      }
+    },
+    textobjects = {
+      enable = true,
+      disable = {},
+      keymaps = {
+          ["iL"] = {
+            -- you can define your own textobjects directly here
+            python = "(function_definition) @function",
+            cpp = "(function_definition) @function",
+            c = "(function_definition) @function",
+            java = "(method_declaration) @function"
+          },
+          -- or you use the queries from supported languages with textobjects.scm
+          ["af"] = "@function.outer",
+          ["if"] = "@function.inner",
+          ["aC"] = "@class.outer",
+          ["iC"] = "@class.inner",
+          ["ac"] = "@conditional.outer",
+          ["ic"] = "@conditional.inner",
+          ["ae"] = "@block.outer",
+          ["ie"] = "@block.inner",
+      }
+    },
+    ensure_installed = {
+      'bash',
+      'c',
+      'cpp',
+      'css',
+      'go',
+      'html',
+      'java',
+      'javascript',
+      'json',
+      'python',
+      'rust',
+      'toml',
+      'typescript'
+    }
+}
+EOF
 " }}}
