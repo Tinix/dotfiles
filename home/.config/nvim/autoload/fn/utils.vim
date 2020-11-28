@@ -5,7 +5,7 @@
 " ============================================================================
 
 " BrowserOpen:
-function! fn#utils#browser_open(obj) abort
+function! fn#utils#system_open(obj) abort
   if has('win32') || has('win64') || has('win32unix')
     let cmd = 'rundll32 url.dll,FileProtocolHandler ' . a:obj
   elseif has('mac') || has('macunix') || has('gui_macvim') || system('uname') =~? '^darwin'
@@ -21,7 +21,7 @@ endfunc
 " OpenFileExplore:
 function! fn#utils#open_file_explorer() abort
   let path = expand(getcwd())
-  call fn#utils#browser_open(path)
+  call fn#utils#system_open(path)
 endfunc
 
 " Grep:

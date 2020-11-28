@@ -106,7 +106,7 @@ set shortmess+=c
 set shortmess-=S
 set scrolloff=6
 set listchars=tab:\|\ ,trail:.,extends:>,precedes:<
-colorscheme molokai
+colorscheme srcery
 " match & search
 set showmatch
 set matchtime=0
@@ -372,6 +372,8 @@ function! s:OnColorSchemeLoaded() abort
   " hi CocFloating                guibg=blue
   hi CursorLineNr               guifg=orange
   hi Normal                     guibg=#111111 guifg=#eeeeee
+  hi PmenuThumb                  guifg=white guibg=white
+  hi VisualNOS                  guibg=#404D3D
 
   let normal_bg = matchstr(execute('hi Normal'), 'guibg=\zs\S*')
   exe 'hi EndOfBuffer           guifg=' . normal_bg
@@ -450,7 +452,7 @@ command! -nargs=? RenameFile call fn#file#rename(<q-args>)
 command! -nargs=? RemoveFile call fn#file#remove()
 command! -nargs=+ Grep  call fn#utils#grep(<q-args>)
 command! -nargs=? -bang Conceal call fn#conceal#pattern(<bang>0, <q-args>)
-command! -nargs=+ -complete=file  BrowserOpen  call fn#utils#browser_open(<q-args>)
+command! -nargs=+ -complete=file  SystemOpen  call fn#utils#system_open(<q-args>)
 command! -nargs=+ -complete=command Windo call fn#utils#windo(<q-args>)
 command! -nargs=+ -complete=command Bufdo call fn#utils#bufdo(<q-args>)
 command! -nargs=+ -complete=command Tabdo call fn#utils#tabdo(<q-args>)
@@ -485,8 +487,8 @@ nnoremap <C-u> <C-u>zz
 nnoremap <C-d> <C-d>zz
 nnoremap <silent> <C-g> :call fn#keymap#ctrlg#()<CR>
 " PreviewAndOpen:
-nnoremap <silent> go  :SkylightJumpTo<CR>
-nnoremap <silent> gp  :SkylightPreview<CR>
+nnoremap <silent> go  :<C-u>SkylightJumpTo<CR>
+nnoremap <silent> gp  :<C-u>SkylightPreview<CR>
 " Move:
 nnoremap <silent> [[  :<C-u>call fn#keymap#n#right_square_brackets()<CR>
 nnoremap <silent> ]]  :<C-u>call fn#keymap#n#left_square_brackets()<CR>
@@ -699,8 +701,10 @@ let g:semshi#always_update_all_highlights = v:true
 let g:semshi#error_sign = v:false
 " neoclide/coc.nvim
 let g:coc_data_home = '~/.config/coc'
-nnoremap <expr><C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-nnoremap <expr><C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "<C-r>=fn#keymap#exec('normal! w')<CR>"
+inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "<C-r>=fn#keymap#exec('normal! b')<CR>"
 nmap <expr> <silent> <C-c> <SID>select_current_word_and_go_next()
 function! s:select_current_word_and_go_next()
   if !get(g:, 'coc_cursors_activated', 0)
@@ -1103,7 +1107,7 @@ lua <<EOF
 require'nvim-treesitter.configs'.setup {
     highlight = {
         enable = true,
-        disable = { 'c', 'cpp', 'rust', 'markdown', 'python' },
+        disable = { 'rust', 'markdown', 'python' },
     },
     incremental_selection = {
         enable = true,
