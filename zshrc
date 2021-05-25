@@ -150,7 +150,8 @@ function mkd(){
 export FZF_DEFAULT_OPS="--extended"
 
 # Export my command on dotfiles
-PATH=$PATH:$HOME/dotfiles/bin
+PATH=$HOME/dotfiles/bin:$HOME/dotfiles/bin:$PATH
+#PATH="$HOME/.rbenv/plugins/ruby-build/bin:$HOME/.rbenv/bin:$PATH"
 export PATH 
 
 

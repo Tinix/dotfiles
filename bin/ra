@@ -8,5 +8,5 @@ set -oe pipefail
 # HELP: ru command show Ruby Version currently
 
 function ra() {
-  rails -v
+  $rails -v
 }
