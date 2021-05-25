@@ -6,12 +6,13 @@
 
 - link:
     ~/.tmux.conf: tmux.conf
+    ~/.tmux: tmux
     ~/.zshrc: zshrc 
     ~/.bashrc: bashrc 
     ~/.gitconfig:  
     ~/.vim: vim
     ~/.config/nvim: config/nvim
-    #~/.ssh: ssh
+      #~/.ssh: ssh
 
 - create:
     - ~/Work
