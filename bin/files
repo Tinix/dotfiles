@@ -1,0 +1,3 @@
+#!/bin/bash
+# Print list of files in one column
+ls -l --color | awk '{ print $9 }'

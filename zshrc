@@ -149,11 +149,10 @@ function mkd(){
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_DEFAULT_OPS="--extended"
 
-# Homebrew
-#eval $(~/.linuxbrew/bin/brew shellenv)
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+# Export my command on dotfiles
+PATH=$PATH:$HOME/dotfiles/bin
+export PATH 
 
-# Set  Variables
-# Syntax highlighting for man pages using bat
-export MANAGER="sh -c 'col -bx | bat -l man -p'"
 
+
+set -g status-right "#(wemux status_users)"
