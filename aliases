@@ -1,4 +1,7 @@
-# .bash_aliases
+# Author: Daniel Tinivella
+# bitbucket: https://bitbucket.org/GeorgeDanielTinix/dotfiles
+# github: https://github.com/tinix
+# Aliases
 
 alias cp="cp -i"                          # confirm before overwriting something
 alias df='df -h'                          # human-readable sizes
@@ -6,21 +9,6 @@ alias free='free -m'                      # show sizes in MB
 alias np='nano -w PKGBUILD'
 alias more=less
 
-# Personali Unix alias
-
-alias ..="cd .."
-alias c="cd"
-alias ll="ls -l"
-alias t="touch"
-alias ru="ruby -v"
-alias ra="rails -v"
-alias e="emacs &"
-alias java="java -version"
-alias je="cd"
-alias cls="clear"
-alias p="pwd"
-alias lll="ls -lai"
-alias st="status"
 
 alias tm="tmux"
 alias n="nvim"
@@ -31,6 +19,13 @@ alias dk="docker"
 alias open="Thunar"
 
 # Unix
+alias ..="cd .."
+alias t="touch"
+alias java="java -version"
+alias je="cd"
+alias p="pwd"
+alias lll="ls -lai"
+alias st="status"
 alias ll="ls -l"
 alias lll="ls -lai"
 alias ln="ln -v"
@@ -52,8 +47,7 @@ alias path='echo $PATH | tr -s ":" "\n"'
 
 ##------------------------ Git --------------------------##
 alias g="git status"
-alias gd="git diff"
-alias gl="git log"
-alias ga="git add ."
-alias gc="git commit"
-alias gp="git push"
+alias gdiff="git diff"
+alias glog="git log"
+alias gadd="git add ."
+alias gcommit="git commit"
