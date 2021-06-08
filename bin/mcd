@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -oe pipefail
+
+# HELP: mcd create a new directory anh move inside them
+
+function mcd(){
+  mkdir -p "$@" && cd "$_"
+}

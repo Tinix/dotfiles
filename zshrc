@@ -16,7 +16,7 @@ export ZSH="/home/tinix/.oh-my-zsh"
 # ZSH_THEME="gnzh"
 #ZSH_THEME="awesomepanda"
 #ZSH_THEME="gruvbox"
-ZSH_THEME="robbyrussell"
+ZSH_THEME="cloud"
 
 #ZSH_THEME="gruvbox"
 SOLARIZED_THEME="dark"

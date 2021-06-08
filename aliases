@@ -8,7 +8,7 @@ alias df='df -h'                          # human-readable sizes
 alias free='free -m'                      # show sizes in MB
 alias np='nano -w PKGBUILD'
 alias more=less
-
+alias mcd="mkdir -p"
 
 alias tm="tmux"
 alias n="nvim"
@@ -19,6 +19,7 @@ alias dk="docker"
 alias open="Thunar"
 
 # Unix
+alias ll="ls -la"
 alias ..="cd .."
 alias t="touch"
 alias java="java -version"
@@ -33,7 +34,7 @@ alias e="$EDITOR"
 
 # Bundler
 alias be="bundle exec"
-alias b="bunder"
+alias b="bundler"
 
 # Rails
 alias migrate="rake db:migrate db:rollback && rake db:migrate db:test:prepare"
