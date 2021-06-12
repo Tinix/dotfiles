@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+
+#!/usr/bin/env bash
+
+set -oe pipefail
+
+# HELP: ru command show Ruby Version currently
+
+elixir --version

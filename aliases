@@ -8,7 +8,7 @@ alias df='df -h'                          # human-readable sizes
 alias free='free -m'                      # show sizes in MB
 alias np='nano -w PKGBUILD'
 alias more=less
-alias mcd="mkdir -p"
+# alias mcd="mkdir -p"
 
 alias tm="tmux"
 alias n="nvim"
