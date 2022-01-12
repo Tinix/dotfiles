@@ -20,14 +20,18 @@ alias open="Thunar"
 
 # Unix
 alias ll="ls -la"
+alias lll="ls -lai"
 alias ..="cd .."
 alias t="touch"
 alias java="java -version"
-alias je="cd"
 alias p="pwd"
 alias st="status"
 alias ln="ln -v"
+
 alias c="cd"
+alias z="cd"
+alias je="cd"
+
 alias pw="pwd"
 alias mkdir="mkdir -p"
 alias e="$EDITOR"
@@ -39,6 +43,7 @@ alias b="bundler"
 # Rails
 alias migrate="rake db:migrate db:rollback && rake db:migrate db:test:prepare"
 alias s="rspec"
+alias rc="rails console"
 
 # Pretty print the path
 alias path='echo $PATH | tr -s ":" "\n"'

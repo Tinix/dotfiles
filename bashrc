@@ -31,3 +31,4 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 # Set  Variables
 # Syntax highlighting for man pages using bat
 export MANAGER="sh -c 'col -bx | bat -l man -p'"
+. "$HOME/.cargo/env"
