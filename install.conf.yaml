@@ -13,6 +13,7 @@
     ~/.vim: vim
     ~/.config/nvim: config/nvim
     ~/.aliases: aliases
+    ~/.emacs: emacs
 
 - create:
     - ~/Work
