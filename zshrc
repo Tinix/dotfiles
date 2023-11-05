@@ -9,11 +9,23 @@ export ZSH="/home/tinix/.oh-my-zsh"
 # ZSH_THEME="jbergantine"
 # ZSH_THEME="sobole"
 # ZSH_THEME="gnzh"
+# ZSH_THEME="agnoster"
 # ZSH_THEME="awesomepanda"
 # ZSH_THEME="gruvbox"
 # ZSH_THEME="cloud"
 # ZSH_THEME="robbyrussell"
-ZSH_THEME="half-life"
+# ZSH_THEME="half-life"
+
+# ZSH_THEME="nanotech"
+# ZSH_THEME="bira"
+
+# ZSH_THEME="fletcherm"
+# ZSH_THEME="darkblood"
+# ZSH_THEME="jnrowe"
+# ZSH_THEME="jonathan" 
+# ZSH_THEME="sonicradish"
+
+ZSH_THEME="intheloop"
 
 # SOLARIZED_THEME="dark"
 
@@ -60,28 +72,6 @@ compinit
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-PATH="$HOME/.rbenv/plugins/ruby-build/bin:$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/tinix/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/tinix/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/tinix/anaconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/home/tinix/anaconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-
-# Handly Functions
-function mkd(){ 
-  mkdir -p "$@" && cd "$_";
-}
 
 # FZF Config
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -93,5 +83,37 @@ PATH=$HOME/dotfiles/dep/local-dev/bin:$HOME/dotfiles/dep/local-dev/bin:$PATH
 PATH=$HOME/dotfiles/dep/local-dev-generic-code/bin:$HOME/dotfiles/dep/local-dev-generic-code/bin:$PATH
 export PATH 
 
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
+CLIENT_ID=92c86ade47998bc64605
+CLIENT_SECRET=36a6a986877353612d7a35cb6f36349c86ff2b4c
+GITHUB_LOGIN='dtinivella@gmail.com'
+GITHUB_PASSWORD='p_kQhzt4E6HNPVMUJzUVWJy4gN9SOdLu2QVIBE'
+
+# Arch config
+# export PATH="$PATH:$(go env GOPATH)/bin"
+# export GOPATH=~/go
+# export PATH=$PATH:/usr/bin/go
+
+# export GOPATH=$HOME/go
+# export PATH=$PATH:$GOPATH/bin
+
+# Debian config
+export PATH=$PATH:/usr/local/go/bin
+
+# Nova framework to erlang Api
+export PATH=/home/tinix/.cache/rebar3/bin:$PATH
+
+export PATH="HOME/.cargo/bin/:$PATH"
+
+source $HOME/.cargo/env
+
+export VISUAL=vim
+export EDITOR="$VISUAL"
+
+. /home/tinix/.asdf/asdf.sh
+. /home/tinix/.asdf/completions/asdf.bash
+
+# Var environment Amber framework
+export DATABASE_URL="postgres://tinix:password@localhost/blog_development"
