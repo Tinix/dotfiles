@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -5,9 +12,8 @@
 export ZSH="/home/tinix/.oh-my-zsh"
 
 # Themes usados
-# ZSH_THEME="intheloop"
+ZSH_THEME="intheloop"
 # ZSH_THEME="jbergantine"
-# ZSH_THEME="sobole"
 # ZSH_THEME="gnzh"
 # ZSH_THEME="agnoster"
 # ZSH_THEME="awesomepanda"
@@ -25,9 +31,10 @@ export ZSH="/home/tinix/.oh-my-zsh"
 # ZSH_THEME="jonathan" 
 # ZSH_THEME="sonicradish"
 
-ZSH_THEME="intheloop"
-
-# SOLARIZED_THEME="dark"
+# ZSH_THEME="intheloop"
+# ZSH_THEME="fino"
+# ZSH_THEME="strug"
+# SOLARIZED_THEME="gruvbox-dark"
 
 plugins=(git)
 
@@ -96,11 +103,16 @@ GITHUB_PASSWORD='p_kQhzt4E6HNPVMUJzUVWJy4gN9SOdLu2QVIBE'
 # export GOPATH=~/go
 # export PATH=$PATH:/usr/bin/go
 
+# Go config
 # export GOPATH=$HOME/go
 # export PATH=$PATH:$GOPATH/bin
-
+export PATH=$PATH:$GOPATH/bin
 # Debian config
-export PATH=$PATH:/usr/local/go/bin
+# export PATH=$PATH:/usr/local/go/bin
+plugins=(… buffalo)
+  autoload -U compinit && compinit
+
+
 
 # Nova framework to erlang Api
 export PATH=/home/tinix/.cache/rebar3/bin:$PATH
@@ -116,4 +128,60 @@ export EDITOR="$VISUAL"
 . /home/tinix/.asdf/completions/asdf.bash
 
 # Var environment Amber framework
-export DATABASE_URL="postgres://tinix:password@localhost/blog_development"
+# export DATABASE_URL="postgres://tinix:password@localhost/blog_development"
+
+ # OpenAI- ChatGPT
+# Load private tokens (not in git)
+[ -f ~/.secrets/openai.sh ] && source ~/.secrets/openai.sh
+
+
+
+# Postgres to project in Rust -- uncamment all line below to work on Rust
+# export DATABASE_URL=postgresql://localhost:5432/users
+
+# export DATABASE_URL="postgres://postgres:password@localhost/users"
+
+# export DATABASE_URL=postgres://postgres:password@localhost/tweeter_clone
+
+# Config history
+export HISTFILE="$HOME/.zsh_history"
+export HISTSIZE=10000000
+export SAVEHIST=10000000
+setopt BANG_HIST                 # Treat the '!' character specially during expansion.
+setopt EXTENDED_HISTORY          # Write the history file in the ":start:elapsed;command" format.
+setopt INC_APPEND_HISTORY        # Write to the history file immediately, not when the shell exits.
+setopt SHARE_HISTORY             # Share history between all sessions.
+setopt HIST_EXPIRE_DUPS_FIRST    # Expire duplicate entries first when trimming history.
+setopt HIST_IGNORE_DUPS          # Don't record an entry that was just recorded again.
+setopt HIST_IGNORE_ALL_DUPS      # Delete old recorded entry if new entry is a duplicate.
+setopt HIST_FIND_NO_DUPS         # Do not display a line previously found.
+setopt HIST_IGNORE_SPACE         # Don't record an entry starting with a space.
+setopt HIST_SAVE_NO_DUPS         # Don't write duplicate entries in the history file.
+setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording entry.
+setopt HIST_VERIFY               # Don't execute immediately upon history expansion.
+
+
+# Load Angular CLI autocompletion.
+source <(ng completion script)
+
+# pnpm
+export PNPM_HOME="/home/tinix/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+
+# export PATH="$HOME/.rbenv/bin:$PATH"
+# eval "$(rbenv init --no-rehash -)"
+
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+#source ~/powerlevel10k/powerlevel10k.zsh-theme
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+#source ~/powerlevel10k/powerlevel10k.zsh-theme
+export PATH=$HOME/.local/bin:$PATH

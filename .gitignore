@@ -48,3 +48,9 @@ Thumbs.db
 *.mov
 *.wmv
 
+.secrets/
+.env
+.env.*
+*.pem
+*.key
+*.p12
